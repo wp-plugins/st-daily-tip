@@ -28,10 +28,8 @@ register_activation_hook(__FILE__,'st_daily_tip_install');
 /* Runs on plugin deactivation*/
 register_deactivation_hook( __FILE__, 'st_daily_tip_uninstall' );
 
-
 global $st_daily_tip_db_ver;
 global $table_suffix;
-
 
 $st_daily_tip_db_ver = "0.2";
 $table_suffix = "dailytipdata";
@@ -43,34 +41,30 @@ function select_today_tip(){
 	$table_name = $wpdb->prefix . $table_suffix;
 	
 	//Case 1 : If a tip is set to display today (date), display it
-	$case = "1 : ";
 	$tips = $wpdb->get_row("SELECT * FROM $table_name WHERE DATE(Display_Date)=DATE(NOW()) OR DATE(Shown_Date)=DATE(NOW());", ARRAY_A);
 	if($tips['tip_text'] == null) 
 	{ 	
 		//Case 2: No tip is set to specifically display today, then select a tip that is to be displayed based on Day
-		$case = "2 : ";
 		$tips = $wpdb->get_row("SELECT * FROM $table_name WHERE (Display_Date='0000-00-00' AND Display_Day = DAYOFWEEK(NOW())) ORDER BY Shown_Date;", ARRAY_A);
 		if($tips['tip_text'] == null) 
 		{
 			//Case 3: No tip is set to specifically display today(date or day), then select a tip where Shown Date is null or today
-			$case = "3 : ";
 			$tips = $wpdb->get_row("SELECT * FROM $table_name WHERE (Display_Date='0000-00-00' AND Display_Day = 0 AND Shown_Date='0000-00-00');", ARRAY_A);
 			if($tips['tip_text'] == null) 
 			{ 	
 				//Case 4: No tip is set to specifically display today, and no tip found that is not shown then select the oldest tip that is not set to display for a specific date
-				$case = "4 : ";
 				$tips = $wpdb->get_row("SELECT * FROM $table_name WHERE Display_Date='0000-00-00' ORDER BY Shown_Date;", ARRAY_A, 0); 
 				if($tips['tip_text'] == null) 
 				{
 					//Case 5: Show one default tip 
-					$today_tip = "5 : Give 10 (ten) minutes to make list of your pending work.";
+					$today_tip = "No Tips to Display";
 				}
 			}
 		}
 	}
 	if($tips['tip_text'] != null) 
 	{	
-		$today_tip = $case . $tips['tip_text']; 	
+		$today_tip = $tips['tip_text']; 	
 		$wpdb->query("UPDATE $table_name SET Shown_Date = DATE(NOW()) WHERE ID = " . $tips['id']);
 	}
 	return $today_tip; 
@@ -111,7 +105,7 @@ if ( is_admin() ){
 	add_action('admin_menu', 'daily_tip_admin_menu');
 
 	function daily_tip_admin_menu() {
-		add_options_page('Daily Tip Plugin', 'Daily Tip Plugin', 'administrator',	'daily-tip', 'daily_tip_option_page');
+		add_options_page('Daily Tips', 'Daily Tips', 'administrator',	'daily-tip', 'daily_tip_option_page');
 	}
 }
 
@@ -124,6 +118,7 @@ function check_input($data)
     $data = htmlspecialchars($data);
     return $data;
 }
+
 function get_abs_path_from_src_file($src_file)
 {
 	if(preg_match("/http/",$src_file))
@@ -207,22 +202,99 @@ function readAndDump($src_file,$table_name,$column_string="",$start_row=2)
 }
 function daily_tip_option_page() {
 
-	$weekdays = array(1 => "Monday", 2 => "Tuesday",3 => "Wednessday", 4 => "Thursday",5 => "Friday",6 => "Saturday",7 => "Sunday");
+	$weekdays = array(1 => "Sunday",2 => "Monday", 3 => "Tuesday",4 => "Wednessday", 5 => "Thursday",6 => "Friday",7 => "Saturday");
 
 	global $wpdb;
 	global $table_suffix;	
 	
 	$table_name = $wpdb->prefix . $table_suffix;
-	$column_string = "added_date,tip_text,display_date,shown_date,display_day";
+	$column_string = "tip_text,display_date,display_day";
 	
 ?>
 <div>
+	<style type="text/css">
+			//Data Table
+			#display_data{
+				border:1px solid #686868;
+				border-collapse:collapse;
+				width:70%;				
+			}
+			#display_data thead{
+				align:left;
+			}
+			#display_data th{
+				background-color:#2a2a2a;
+				color:white;
+				padding:5px;
+			}
+			#display_data tr:nth-child(even)
+			{
+				background-color:#CFCFCF;
+			}
+			#display_data tr:nth-child(odd)
+			{
+				background-color:#EBEBEB;
+			}
+			#display_data td{
+				padding:5px;
+			}
+			.display_box {
+				display:block;
+				padding:5px;
+				margin:15px;
+			}
+			#edit_data label{
+				display:inline-block;
+				width:150px;
+				font-size:1.2em;
+				font-weight:bold;
+				vertical-align:top;
+			}
+			#edit_data textarea{
+				display:inline-block;
+				width:250px;
+				border-radius:5px;
+				padding:2px;
+				font-size:1.2em;
+			}
+			#edit_data textarea:focus{
+				border:2px solid #9B9B9B;
+				background:#ffffff;
+				
+			}
+			#edit_data input{
+				border-radius:5px;
+				width:240px;
+				padding:2px;
+				font-size:1.2em;
+			}
+			#edit_data input:focus{
+				border:2px solid #9B9B9B;
+				background:#ffffff;
+			}
+			#edit_data select{
+				width:250px;
+				border-radius:5px;
+				padding:2px;
+				font-size:1.2em;
+			}
+			input.button{
+				border-radius:8px;
+				padding:5px;
+				font-size:1.2em;
+				
+			}
+			input.button:hover{
+				cursor:pointer;
+				border:2px solid #9B9B9B;
+			}
+		</style>
 	<h2>Daily Tip Plugin</h2>
 	<?php 
 		if (isset($_POST['Delete'])) {
 			$id = check_input($_POST["id"]);
 			$wpdb->query("DELETE FROM $table_name WHERE ID = " . $id);
-			echo "Data Deleted";
+			echo "<div id=\"message\" class=\"updated fade\"><p><strong>Tip Deleted Successfully!</strong></p></div>";
 		}
 		//Store the Data input if data is submitted
 		if (isset($_POST['Submit'])) { 
@@ -234,14 +306,13 @@ function daily_tip_option_page() {
 				//Update
 				$id = check_input($_POST["id"]);
 				$wpdb->query("UPDATE $table_name SET tip_text = '" . $tip_text . "', display_date='" . $display_date . "', display_day = ". $display_day ." WHERE ID = " . $id);
-				echo "Data Updated";
+				echo "<div id=\"message\" class=\"updated fade\"><p><strong>Tip Updated Successfully!</strong></p></div>";
 			}
 			else
 			{
 				//Insert
 				$rows_affected = $wpdb->insert( $table_name, array( 'added_date' => current_time('mysql'), 'tip_text' => $tip_text, 'display_date' => $display_date, 'display_day' => $display_day ) );
-			
-				echo "$rows_affected rows inserted";
+				echo "<div id=\"message\" class=\"updated fade\"><p><strong>Tip Inserted Successfully!</strong></p></div>";
 			}
 			
 		}
@@ -279,47 +350,32 @@ function daily_tip_option_page() {
 			echo '</strong></p></div>';
 		}
 	?>
-	
-	<div>
-		Display Current Data
+	<div class="display_box">
+		<h2>Upload a File</h2>
 		
-		<?php 
-
-			$table_result = $wpdb->get_results("SELECT * FROM $table_name");
-			
-			echo "<table>";
-			echo "<thead><tr><th>ID</th><th>Added Date </th><th>Tip Text</th><th>Display Date</th><th>Shown Date</th><th>Display Day</th><th>Edit</th><th>Delete</th></tr></thead>";	
-			echo "<tbody>";
-			foreach ( $table_result as $table_row ) 
-			{
-				echo "<tr>";
-				echo "<form action=\"" .$_SERVER["REQUEST_URI"] . "\" method=\"post\">";
-				echo "<input type=\"hidden\" name=\"edit_id\" value=\"" . $table_row->id . "\" />";
-				echo "<input type=\"hidden\" name=\"edit_tip_text\" value=\"" . $table_row->tip_text . "\" />";
-				echo "<input type=\"hidden\" name=\"edit_display_date\" value=\"" . $table_row->display_date . "\" />";
-				echo "<input type=\"hidden\" name=\"edit_display_day\" value=\"" . $table_row->display_day . "\" />";
-				echo "<td>" . $table_row->id . "</td>";
-				echo "<td>" . $table_row->added_date . "</td>";
-				echo "<td>" . $table_row->tip_text . "</td>";
-				echo "<td>" . $table_row->display_date . "</td>";
-				echo "<td>" . $table_row->shown_date . "</td>";
-				echo "<td>" . $weekdays[$table_row->display_day] . "</td>";
-				echo "<td><input type=\"submit\" name=\"Edit\" value=\"Edit\" /></td>";
-				echo "<td><input type=\"submit\" name=\"Delete\" value=\"Delete\" /></td>";
-				echo "</form>";
-				echo "</tr>";
-			}
-			echo "</tbody>";
-			echo "</table>";
-
-		?>
-		
+		<form enctype="multipart/form-data" action="<?php echo $_SERVER["REQUEST_URI"]; ?>" method="POST">
+			<input type="hidden" name="file_upload" id="file_upload" value="true" />
+			<input type="hidden" name="MAX_FILE_SIZE" value="1000000" />
+			<strong>Choose a CSV file to upload: </strong><input name="uploadedfile" type="file" /><br />
+			<input type="submit" value="Upload File" />
+		</form>
+		<h3>Note : </h3>
+		<p><strong>The Format of CSV File must be as below :</strong><br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;The First line must be headers as it is ignored while uploading on database<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;From the second line, the data should begin in following order :<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;Tip Text, Display Date,Display Day.<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Tip Text : The Actual Statement to be displayed.<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Display Date : Any Specific Date in format YYYY-MM-DD when you want to display the Tip.<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Display Day : Day of week (number format) on which the Tip Should Come. (1 = Monday , 2 = Tuesday, 3 = Wednessday ...7 = Sunday) <br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>Please Note:</strong>Display Day is ignored if Display Date is mentioned.</p>
 	</div>
-	<div>Option to Enter Manual Data
+	<div class="display_box">
+	<h2>OR</h2>
+	<h2>Enter Manual Data</h2>
 	<form id="edit_data" action="<?php echo $_SERVER["REQUEST_URI"]; ?>" method="post">
 		<?php  if (isset($_POST['Edit'])) { echo "<input type='hidden'name=\"id\" value=\"" . check_input($_POST["edit_id"]) . "\" />"; }  ?>
- 		<div><label>Tip Text</label><textarea name="tiptext"><?php if (isset($_POST['Edit'])) { echo check_input($_POST["edit_tip_text"]); } ?></textarea></div>
-		<div><label>Display Date (YYYY-MM-DD)</label><input name="display_date" value="<?php if (isset($_POST['Edit'])) { echo check_input($_POST["edit_display_date"]); } ?>"/></div>
+ 		<div><label>Tip Text</label><textarea name="tiptext" rows="5" cols="100"><?php if (isset($_POST['Edit'])) { echo check_input($_POST["edit_tip_text"]); } ?></textarea></div>
+		<div><label>Display Date</label><input name="display_date" value="<?php if (isset($_POST['Edit'])) { echo check_input($_POST["edit_display_date"]); } ?>"/><span> (YYYY-MM-DD)</span></div>
 		<div><label>Display Day</label><select name="display_day">
 		<option value='0' <?php if (isset($_POST['Edit'])) { if(check_input($_POST["edit_display_day"])=='0') {echo "selected=\"selected\"";}} ?>></option>
 		<?php
@@ -345,19 +401,44 @@ function daily_tip_option_page() {
 			
 		?>
 		</select></div>
-		<input type="submit" name="Submit" value="Submit" />
+		<input class="button" type="submit" name="Submit" value="Submit" />
  	</form>
 	</div>
-	<div><strong>Upload a File</strong>
-	<form enctype="multipart/form-data" action="<?php echo $_SERVER["REQUEST_URI"]; ?>" method="POST">
-	<input type="hidden" name="file_upload" id="file_upload" value="true" />
+	<div class="display_box">
+		
+		<?php 
 
-	<input type="hidden" name="MAX_FILE_SIZE" value="1000000" />
-	Choose a CSV file to upload: <input name="uploadedfile" type="file" /><br />
-	<input type="submit" value="Upload File" />
+			$table_result = $wpdb->get_results("SELECT * FROM $table_name");
+			
+			echo "<table id=\"display_data\" >";
+			echo "<thead><tr><th>ID</th><th>Tip Text</th><th>Display Date</th><th>Display Day</th><th>Last Shown On</th><th>Edit</th><th>Delete</th></tr></thead>";	
+			echo "<tbody>";
+			foreach ( $table_result as $table_row ) 
+			{
+				echo "<tr>";
+				echo "<form action=\"" .$_SERVER["REQUEST_URI"] . "\" method=\"post\">";
+				echo "<input type=\"hidden\" name=\"edit_id\" value=\"" . $table_row->id . "\" />";
+				echo "<input type=\"hidden\" name=\"edit_tip_text\" value=\"" . $table_row->tip_text . "\" />";
+				echo "<input type=\"hidden\" name=\"edit_display_date\" value=\"" . $table_row->display_date . "\" />";
+				echo "<input type=\"hidden\" name=\"edit_display_day\" value=\"" . $table_row->display_day . "\" />";
+				echo "<td>" . $table_row->id . "</td>";
+				echo "<td>" . $table_row->tip_text . "</td>";
+				echo "<td>" . $table_row->display_date . "</td>";
+				echo "<td>" . $weekdays[$table_row->display_day] . "</td>";
+				echo "<td>" . $table_row->shown_date . "</td>";
+				echo "<td><input type=\"submit\" name=\"Edit\" value=\"Edit\" id=\"btnsubmit\" /></td>";
+				echo "<td><input type=\"submit\" name=\"Delete\" value=\"Delete\" id=\"btnsubmit\"/></td>";
+				echo "</form>";
+				echo "</tr>";
+			}
+			echo "</tbody>";
+			echo "</table>";
 
-	</form>
+		?>
+		
 	</div>
+	
+	
 </div>
 <?php
 }
