@@ -1,10 +1,10 @@
 === Plugin Name ===
-Contributors: markjaquith, mdawaffe (this should be a list of wordpress.org userid's)
+Contributors: dharashah
 Donate link: http://sanskrutitech.in/index.php/wordpress-plugins/
 Tags: daily tip, upload
 Requires at least: 3.3.1
 Tested up to: 3.3.1
-Stable tag: 0.1
+Stable tag: 0.2
 
 Plugin to display different daily tips from a list that can be uploaded from a CSV file. Option to mention specific date to display a tip
 
