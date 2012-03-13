@@ -246,6 +246,7 @@ function daily_tip_option_page() {
 			#edit_data label{
 				display:inline-block;
 				width:150px;
+				height:20px;
 				font-size:1.2em;
 				font-weight:bold;
 				vertical-align:top;
@@ -262,29 +263,31 @@ function daily_tip_option_page() {
 				background:#ffffff;
 				
 			}
-			#edit_data input{
+			#upload input , #edit_data input{
 				border-radius:5px;
 				width:240px;
+				height:20px;
 				padding:2px;
 				font-size:1.2em;
 			}
-			#edit_data input:focus{
+			#upload input:focus ,#edit_data input:focus{
 				border:2px solid #9B9B9B;
 				background:#ffffff;
 			}
 			#edit_data select{
 				width:250px;
+				height:20px;
 				border-radius:5px;
 				padding:2px;
 				font-size:1.2em;
 			}
-			input.button{
+			#edit_data input.button{
 				border-radius:8px;
-				padding:5px;
+				padding:2px;
 				font-size:1.2em;
-				
+				height:20px;
 			}
-			input.button:hover{
+			#edit_data input.button:hover{
 				cursor:pointer;
 				border:2px solid #9B9B9B;
 			}
@@ -321,8 +324,6 @@ function daily_tip_option_page() {
 			$target_path = WP_CONTENT_DIR.'/plugins/'.WP_DAILY_TIP_FOLDER."/uploads/";
 			$target_path = $target_path . basename( $_FILES['uploadedfile']['name']);
 			
-			echo "<br />Target Path: ".$target_path;
-			
 			echo '<div id="message" class="updated fade"><p><strong>';
 			if(move_uploaded_file($_FILES['uploadedfile']['tmp_name'], $target_path))
 			{
@@ -353,7 +354,7 @@ function daily_tip_option_page() {
 	<div class="display_box">
 		<h2>Upload a File</h2>
 		
-		<form enctype="multipart/form-data" action="<?php echo $_SERVER["REQUEST_URI"]; ?>" method="POST">
+		<form id="upload" enctype="multipart/form-data" action="<?php echo $_SERVER["REQUEST_URI"]; ?>" method="POST">
 			<input type="hidden" name="file_upload" id="file_upload" value="true" />
 			<input type="hidden" name="MAX_FILE_SIZE" value="1000000" />
 			<strong>Choose a CSV file to upload: </strong><input name="uploadedfile" type="file" /><br />
@@ -366,7 +367,7 @@ function daily_tip_option_page() {
 			&nbsp;&nbsp;&nbsp;&nbsp;Tip Text, Display Date,Display Day.<br/>
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Tip Text : The Actual Statement to be displayed.<br/>
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Display Date : Any Specific Date in format YYYY-MM-DD when you want to display the Tip.<br/>
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Display Day : Day of week (number format) on which the Tip Should Come. (1 = Monday , 2 = Tuesday, 3 = Wednessday ...7 = Sunday) <br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Display Day : Day of week (number format) on which the Tip Should Come. (1 = Sunday ,2 = Monday , 3 = Tuesday, 4 = Wednessday ...7 = Saturday) <br/>
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>Please Note:</strong>Display Day is ignored if Display Date is mentioned.</p>
 	</div>
 	<div class="display_box">
