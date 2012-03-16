@@ -211,8 +211,13 @@ function daily_tip_option_page() {
 	$column_string = "tip_text,display_date,display_day";
 	
 ?>
-<div>
+<div class="wrap">  
 	<style type="text/css">
+		.display_box {
+			display:block;
+			padding:5px;
+			margin:15px;
+		}
 			//Data Table
 			#display_data{
 				border:1px solid #686868;
@@ -238,11 +243,7 @@ function daily_tip_option_page() {
 			#display_data td{
 				padding:5px;
 			}
-			.display_box {
-				display:block;
-				padding:5px;
-				margin:15px;
-			}
+			
 			#edit_data label{
 				display:inline-block;
 				width:150px;
@@ -352,7 +353,7 @@ function daily_tip_option_page() {
 		}
 	?>
 	<div class="display_box">
-		<h2>Upload a File</h2>
+		<h3>Upload a File</h3>
 		
 		<form id="upload" enctype="multipart/form-data" action="<?php echo $_SERVER["REQUEST_URI"]; ?>" method="POST">
 			<input type="hidden" name="file_upload" id="file_upload" value="true" />
@@ -360,19 +361,19 @@ function daily_tip_option_page() {
 			<strong>Choose a CSV file to upload: </strong><input name="uploadedfile" type="file" /><br />
 			<input type="submit" value="Upload File" />
 		</form>
-		<h3>Note : </h3>
-		<p><strong>The Format of CSV File must be as below :</strong><br/>
+		<h4>Note : </h4>
+		<span class="description"><strong>The Format of CSV File must be as below :</strong><br/>
 			&nbsp;&nbsp;&nbsp;&nbsp;The First line must be headers as it is ignored while uploading on database<br/>
 			&nbsp;&nbsp;&nbsp;&nbsp;From the second line, the data should begin in following order :<br/>
 			&nbsp;&nbsp;&nbsp;&nbsp;Tip Text, Display Date,Display Day.<br/>
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Tip Text : The Actual Statement to be displayed.<br/>
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Display Date : Any Specific Date in format YYYY-MM-DD when you want to display the Tip.<br/>
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Display Day : Day of week (number format) on which the Tip Should Come. (1 = Sunday ,2 = Monday , 3 = Tuesday, 4 = Wednessday ...7 = Saturday) <br/>
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>Please Note:</strong>Display Day is ignored if Display Date is mentioned.</p>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>Please Note:</strong>Display Day is ignored if Display Date is mentioned.</span>
 	</div>
 	<div class="display_box">
-	<h2>OR</h2>
-	<h2>Enter Manual Data</h2>
+	<h3>OR</h3>
+	<h3>Enter Manual Data</h3>
 	<form id="edit_data" action="<?php echo $_SERVER["REQUEST_URI"]; ?>" method="post">
 		<?php  if (isset($_POST['Edit'])) { echo "<input type='hidden'name=\"id\" value=\"" . check_input($_POST["edit_id"]) . "\" />"; }  ?>
  		<div><label>Tip Text</label><textarea name="tiptext" rows="5" cols="100"><?php if (isset($_POST['Edit'])) { echo check_input($_POST["edit_tip_text"]); } ?></textarea></div>
