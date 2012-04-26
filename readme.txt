@@ -30,7 +30,9 @@ The oldest tip ( that was displayed first) will be displayed if no un-displayed 
    OR 
    Upload folder `st-daily-tip` to the `/wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
+3. Add Tips in Settings > Daily Tips (See How to use in Other Notes)
 3. Place [stdailytip] in your page/post where you want to display the daily tip
+4. You may also use the Daily Tip Widget to display the tips
 
 == How To Use ==
 1. Go To **Settings > Daily Tips**

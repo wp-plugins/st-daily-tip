@@ -114,6 +114,7 @@ function daily_tip_option_page() {
 
 	<h2>Daily Tip Plugin</h2>
 	<p><strong>Place [stdailytip] in your page/post where you want to display the daily tip</strong></p>
+	<p><strong>You may also use the Daily Tip Widget to display the tip</strong></p>
 	<?php 
 		if (isset($_POST['Delete'])) {
 			$id = check_input($_POST["edit_id"]);
