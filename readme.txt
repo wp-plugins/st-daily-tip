@@ -3,8 +3,8 @@ Contributors: dharashah
 Donate link: http://sanskrutitech.in/index.php/wordpress-plugins/
 Tags: daily tip, upload
 Requires at least: 3.3.1
-Tested up to: 3.3.1
-Stable tag: 0.3
+Tested up to: 3.3.2
+Stable tag: 0.4
 
 Simple plugin to display different daily tips from a list. Option to select specific date or day of week to display a tip.
 
