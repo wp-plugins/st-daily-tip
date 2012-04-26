@@ -196,8 +196,8 @@ function daily_tip_option_page() {
 	<form id="edit_data" action="<?php echo $_SERVER["REQUEST_URI"]; ?>" method="post">
 		<?php  if (isset($_POST['Edit'])) { echo "<input type='hidden'name=\"id\" value=\"" . check_input($_POST["edit_id"]) . "\" />"; }  ?>
  		<div><label>Tip Text</label><textarea name="tiptext" rows="5" cols="62"><?php if (isset($_POST['Edit'])) { echo check_input($_POST["edit_tip_text"]); } ?></textarea></div>
-		<div><label>Display Date</label><input name="display_date" class="regular-text code" value="<?php if (isset($_POST['Edit'])) { echo check_input($_POST["edit_display_date"]); } ?>"/><span> (YYYY-MM-DD)</span></div>
-		<div><label>Display Day</label><select name="display_day">
+		<div><label>Display Date (Optional)</label><input name="display_date" class="regular-text code" value="<?php if (isset($_POST['Edit'])) { echo check_input($_POST["edit_display_date"]); } ?>"/><span> (YYYY-MM-DD)</span></div>
+		<div><label>Display Day (Optional)</label><select name="display_day">
 		<option value='0' <?php if (isset($_POST['Edit'])) { if(check_input($_POST["edit_display_day"])=='0') {echo "selected=\"selected\"";}} ?>></option>
 		<?php
 			for ($i=1; $i<=7; $i++)
