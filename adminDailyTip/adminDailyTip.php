@@ -238,7 +238,7 @@ function daily_tip_option_page() {
 	<form id="edit_data" action="<?php echo $_SERVER['PHP_SELF']."?page=daily-tip"; ?>" method="post">
 		<?php  if (isset($_REQUEST['op'])&&isset($_REQUEST['edit_id'])) { echo "<input type='hidden'name=\"id\" value=\"" . check_input($_REQUEST["edit_id"]) . "\" />"; }  ?>
  		<div><label>Tip Text</label><textarea name="tiptext" rows="5" cols="62"><?php if (isset($_REQUEST['op'])&&isset($_REQUEST['edit_id'])) { echo check_input($_REQUEST["edit_tip_text"]); } ?></textarea>
-		<span class="description">You can use HTML code to format your tip. e.g.&lt;strong&gt;Hi&lt;/strong&gt;
+		<span class="description">You can use HTML code to format your tip. e.g.&lt;strong&gt;Hello&lt;/strong&gt;
 		</span>
 		</div>
 		

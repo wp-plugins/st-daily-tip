@@ -4,7 +4,7 @@ Donate link: http://sanskrutitech.in/index.php/wordpress-plugins/
 Tags: daily tip, upload
 Requires at least: 3.3.1
 Tested up to: 3.3.2
-Stable tag: 0.4
+Stable tag: 0.5
 
 Simple plugin to display different daily tips from a list. Option to select specific date or day of week to display a tip.
 
@@ -69,6 +69,12 @@ The oldest tip ( that was displayed first) will be displayed if no un-displayed 
 = 0.4 =
 * Widget Added
 * Pagination added for Tips
+
+= 0.5 =
+* Repeat the tips Yearly on Same Date
+* Add tips with HTML Formatting
+* Delete Tips in Bulk
+* See Daily Tips in Side Panel
 
 == Upgrade Notice ==
 
