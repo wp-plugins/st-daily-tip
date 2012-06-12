@@ -1,14 +1,18 @@
 <?php
 /*
 Plugin Name: St-Daily-Tip
-Plugin URI: http://sanskrutitech.in/index.php/wordpress-plugins/
+Plugin URI: http://wordpress.org/extend/plugins/st-daily-tip/
 Description: A plugin to automatically refresh daily tip from a list uploaded from CSV file.
-Version: 0.4
+if (function_exists('add_daily_tip')) {
+		print add_daily_tip('[stdailytip]');
+	}
+	?>
+Version: 0.5
 Author: Dhara Shah
 Author URI: http://sanskrutitech.in/
 License: GPL
 */
-define('WP_DAILY_TIP_VERSION', "0.4");
+define('WP_DAILY_TIP_VERSION', "0.5");
 define('WP_DAILY_TIP_FOLDER', dirname(plugin_basename(__FILE__)));
 define('WP_DAILY_TIP_URL', plugins_url('',__FILE__));
 
@@ -32,13 +36,14 @@ register_deactivation_hook( __FILE__, 'st_daily_tip_uninstall' );
 global $st_daily_tip_db_ver;
 global $table_suffix;
 
-$st_daily_tip_db_ver = "0.4";
+$st_daily_tip_db_ver = "0.5";
 $table_suffix = "dailytipdata";
 
 function select_today_tip(){
 	global $wpdb;
 	global $table_suffix;
 	
+	$table_suffix = "dailytipdata";
 	$table_name = $wpdb->prefix . $table_suffix;
 	
 	//Case 1 : If a tip is set to display today (date), display it
@@ -64,9 +69,17 @@ function select_today_tip(){
 		}
 	}
 	if($tips['tip_text'] != null) 
-	{	
-		$today_tip = $tips['tip_text']; 	
+	{
+		$today_tip = $tips['tip_text'];
 		$wpdb->query("UPDATE $table_name SET Shown_Date = DATE(NOW()) WHERE ID = " . $tips['id']);
+		
+		if($tips['Display_yearly']!=null)
+		{
+			global $yearlaterdate;
+			$yearlaterdate=date('Y-m-d', strtotime('+1 year'));
+			
+			$wpdb->query("UPDATE $table_name SET display_date = '$yearlaterdate' WHERE ID = " . $tips['id']);
+		}
 	}
 	return $today_tip; 
 }
@@ -77,21 +90,32 @@ function st_daily_tip_install(){
 	global $st_daily_tip_db_ver;
 	
 	$table_name = $wpdb->prefix . $table_suffix;
+
+	$db_ver=get_option('st_daily_tip_db_ver',0);
+	$db_ver=(float) $db_ver;
+	/** If DB Version is 0.4 or less */
+	if($db_ver!=0 && $db_ver < $st_daily_tip_db_ver)
+	{
+		$wpdb->query("alter table ". $table_name ." add column Display_yearly text NOT NULL");
+		update_option("st_daily_tip_db_ver", $st_daily_tip_db_ver);
+	}
+	/* If new installation*/ 
+	else{
+		$sql = "CREATE TABLE " . $table_name . " (
+			id mediumint(9) NOT NULL AUTO_INCREMENT,
+			added_date date DEFAULT '0000-00-00' NOT NULL,
+			tip_text text NOT NULL,
+			Display_yearly text NOT NULL,
+			display_date date DEFAULT '0000-00-00' ,
+			shown_date date DEFAULT '0000-00-00' ,
+			display_day int(2),
+			PRIMARY KEY id (id)
+		);";
+		require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+		dbDelta($sql);
 	
-	$sql = "CREATE TABLE " . $table_name . " (
-		id mediumint(9) NOT NULL AUTO_INCREMENT,
-		added_date date DEFAULT '0000-00-00' NOT NULL,
-		tip_text text NOT NULL,
-		display_date date DEFAULT '0000-00-00' ,
-		shown_date date DEFAULT '0000-00-00' ,
-		display_day int(2),
-		PRIMARY KEY id (id)
-	);";
-	
-	require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
-	dbDelta($sql);
-	
-	add_option("st_daily_tip_db_ver", $st_daily_tip_db_ver);
+		add_option("st_daily_tip_db_ver", $st_daily_tip_db_ver);
+	}
 }
 
 function st_daily_tip_uninstall () {
@@ -100,17 +124,15 @@ function st_daily_tip_uninstall () {
 
 ?>
 <?php
-
 if ( is_admin() )
-{	
+{
 	require_once dirname( __FILE__ ) . '/adminDailyTip/adminDailyTip.php';
 	
 	/* add  css and js */
 	add_action('admin_print_scripts', 'add_admin_scripts');
-		
 }
 
-function add_admin_scripts() 
+function add_admin_scripts()
 {
 	wp_register_script('sortable.js',WP_DAILY_TIP_URL.'/scripts/sortable.js');
 	wp_enqueue_script('sortable.js');
