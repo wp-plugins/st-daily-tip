@@ -85,6 +85,12 @@ The oldest tip ( that was displayed first) will be displayed if no un-displayed 
 * Daily Tip Widget 
 * Tips will now be shown page wise. With 15 tips on each Page
 
+= 0.5 =
+* Repeat the tips Yearly on Same Date
+* Add tips with HTML Formatting
+* Delete Tips in Bulk
+* See Daily Tips in Side Panel
+
 
 
 
