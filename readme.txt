@@ -19,6 +19,7 @@ You can add the tips manually, or can upload the tips in batch from a CSV file.
 You can decide a specific Date to display a tip, Or a specific day of the week to display the tip.
 If the Date to display a tip is specified, the tip will only be displayed on that date.
 If the Day of week is specified for a tip, the tip will only be displayed on that day of week.
+You can also Opt to repeat the tip Yearly on same date.
 
 Also, the tip once displayed will not be displayed again untill there are tips that are not displayed.
 The oldest tip ( that was displayed first) will be displayed if no un-displayed tips are left
@@ -61,35 +62,39 @@ The oldest tip ( that was displayed first) will be displayed if no un-displayed 
 
 == Changelog ==
 
-= 0.2 =
-* First Deployed Version
-* Provision to Upload a CSV File
-* Provision to Enter Manual Data
+= 0.5 =
+* Repeat the tips Yearly on Same Date
+* Add tips with HTML Formatting
+* Delete Tips in Bulk
+* See Daily Tips in Side Panel
 
 = 0.4 =
 * Widget Added
 * Pagination added for Tips
 
+= 0.2 =
+* First Deployed Version
+* Provision to Upload a CSV File
+* Provision to Enter Manual Data
+
+
+== Upgrade Notice ==
 = 0.5 =
 * Repeat the tips Yearly on Same Date
 * Add tips with HTML Formatting
 * Delete Tips in Bulk
 * See Daily Tips in Side Panel
-
-== Upgrade Notice ==
-
-= 0.2 =
-* First Deployed version
 
 = 0.4 =
 * Daily Tip Widget 
 * Tips will now be shown page wise. With 15 tips on each Page
 
-= 0.5 =
-* Repeat the tips Yearly on Same Date
-* Add tips with HTML Formatting
-* Delete Tips in Bulk
-* See Daily Tips in Side Panel
+= 0.2 =
+* First Deployed version
+
+
+
+
 
 
 
