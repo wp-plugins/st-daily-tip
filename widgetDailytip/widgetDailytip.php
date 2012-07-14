@@ -49,9 +49,13 @@
 		{
 			echo $before_title . $title . $after_title;
 		}
-		
+		$group=apply_filters('group_name',$instance['group']);
+		if($group==null)
+		{
+			$group="Tip";
+		}
 		echo '<div class="st_tip">';
-		$today_tip = select_today_tip();
+		$today_tip = select_today_tip($group);
 		echo $today_tip;
 		echo '</div>';
 	 }
@@ -61,6 +65,7 @@
 
 		/* Strip tags for title and name to remove HTML (important for text inputs). */
 		$instance['title'] = strip_tags( $new_instance['title'] );
+		$instance['group'] = strip_tags( $new_instance['group'] );
 		
 		return $instance;
 	}
@@ -75,12 +80,17 @@
 	{
 		/* Set up some default widget settings. */
 		$defaults = array( 'title' => __('Daily Tip', 'Daily Tip') );
+		$defaults = array( 'group' => __('Tip', 'Tip') );
 		$instance = wp_parse_args( (array) $instance, $defaults );
 	?>
 		<!-- Widget Title: Text Input -->
 		<p>
 			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e('Title:', 'hybrid'); ?></label>
 			<input id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo $instance['title']; ?>" style="width:100%;" />
+		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id( 'group' ); ?>"><?php _e('Group Name:', 'hybrid'); ?></label>
+			<input id="<?php echo $this->get_field_id( 'group' ); ?>" name="<?php echo $this->get_field_name( 'group' ); ?>" value="<?php echo $instance['group']; ?>" style="width:100%;" />
 		</p>
 	<?php
 	}

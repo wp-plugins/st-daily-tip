@@ -7,10 +7,10 @@ margin:15px;
 #display_data{
 	border:1px solid #686868;
 	border-collapse:collapse;
-width:70%;				
+	width:70%;				
 }
 #display_data thead{
-	align:left;
+	text-align:left;
 }
 #display_data th{
 	background-color:#2a2a2a;
@@ -27,6 +27,9 @@ width:70%;
 }
 #display_data td{
 	padding:5px;
+}
+#display_data a{
+text-decoration:none;
 }
 	
 #edit_data label{

@@ -4,26 +4,42 @@ Plugin Name: St-Daily-Tip
 Plugin URI: http://wordpress.org/extend/plugins/st-daily-tip/
 Description: A plugin to automatically refresh daily tip from a list uploaded from CSV file.
 if (function_exists('add_daily_tip')) {
-		print add_daily_tip('[stdailytip]');
+		print add_daily_tip('[stdailytip group="Tip"]');
 	}
 	?>
-Version: 0.5
+Version: 0.6
 Author: Dhara Shah
 Author URI: http://sanskrutitech.in/
 License: GPL
 */
-define('WP_DAILY_TIP_VERSION', "0.5");
+define('WP_DAILY_TIP_VERSION', "0.6");
 define('WP_DAILY_TIP_FOLDER', dirname(plugin_basename(__FILE__)));
 define('WP_DAILY_TIP_URL', plugins_url('',__FILE__));
 
 
-add_filter('the_content','add_daily_tip');
+/*add_filter('the_content','add_daily_tip');
 
 function add_daily_tip($text)
 {
 	$today_tip = select_today_tip();
 	$text = str_replace("[stdailytip]", $today_tip, $text);
 	return $text;
+}*/
+
+add_shortcode( 'stdailytip', 'add_daily_tip');
+function add_daily_tip($attr)
+{
+	global $group;
+	if(isset($attr['group']))
+	{
+		$group = $attr['group'];
+	}
+	else
+	{
+		$group = "Tip";
+	}
+	$today_tip = select_today_tip($group);	
+	return $today_tip;
 }
 ?>
 <?php
@@ -36,10 +52,10 @@ register_deactivation_hook( __FILE__, 'st_daily_tip_uninstall' );
 global $st_daily_tip_db_ver;
 global $table_suffix;
 
-$st_daily_tip_db_ver = "0.5";
+$st_daily_tip_db_ver = "0.6";
 $table_suffix = "dailytipdata";
 
-function select_today_tip(){
+function select_today_tip($group){
 	global $wpdb;
 	global $table_suffix;
 	
@@ -47,19 +63,19 @@ function select_today_tip(){
 	$table_name = $wpdb->prefix . $table_suffix;
 	
 	//Case 1 : If a tip is set to display today (date), display it
-	$tips = $wpdb->get_row("SELECT * FROM $table_name WHERE DATE(Display_Date)=DATE(NOW()) OR DATE(Shown_Date)=DATE(NOW());", ARRAY_A);
+	$tips = $wpdb->get_row("SELECT * FROM $table_name WHERE (DATE(Display_Date)=DATE(NOW()) OR DATE(Shown_Date)=DATE(NOW())) AND group_name='$group';", ARRAY_A);
 	if($tips['tip_text'] == null) 
 	{ 	
 		//Case 2: No tip is set to specifically display today, then select a tip that is to be displayed based on Day
-		$tips = $wpdb->get_row("SELECT * FROM $table_name WHERE (Display_Date='0000-00-00' AND Display_Day = DAYOFWEEK(NOW())) ORDER BY Shown_Date;", ARRAY_A);
+		$tips = $wpdb->get_row("SELECT * FROM $table_name WHERE (Display_Date='0000-00-00' AND Display_Day = DAYOFWEEK(NOW()) AND group_name='$group') ORDER BY Shown_Date;", ARRAY_A);
 		if($tips['tip_text'] == null) 
 		{
 			//Case 3: No tip is set to specifically display today(date or day), then select a tip where Shown Date is null or today
-			$tips = $wpdb->get_row("SELECT * FROM $table_name WHERE (Display_Date='0000-00-00' AND Display_Day = 0 AND Shown_Date='0000-00-00');", ARRAY_A);
+			$tips = $wpdb->get_row("SELECT * FROM $table_name WHERE (Display_Date='0000-00-00' AND Display_Day = 0 AND Shown_Date='0000-00-00' AND group_name='$group');", ARRAY_A);
 			if($tips['tip_text'] == null) 
 			{ 	
 				//Case 4: No tip is set to specifically display today, and no tip found that is not shown then select the oldest tip that is not set to display for a specific date
-				$tips = $wpdb->get_row("SELECT * FROM $table_name WHERE Display_Date='0000-00-00' ORDER BY Shown_Date;", ARRAY_A, 0); 
+				$tips = $wpdb->get_row("SELECT * FROM $table_name WHERE Display_Date='0000-00-00' AND group_name='$group' ORDER BY Shown_Date;", ARRAY_A, 0); 
 				if($tips['tip_text'] == null) 
 				{
 					//Case 5: Show one default tip 
@@ -93,10 +109,13 @@ function st_daily_tip_install(){
 
 	$db_ver=get_option('st_daily_tip_db_ver',0);
 	$db_ver=(float) $db_ver;
-	/** If DB Version is 0.4 or less */
+	/** If Updating from an older version */
 	if($db_ver!=0 && $db_ver < $st_daily_tip_db_ver)
 	{
-		$wpdb->query("alter table ". $table_name ." add column Display_yearly text NOT NULL");
+		if($db_ver < 0.5){
+			$wpdb->query("alter table ". $table_name ." add column Display_yearly text NOT NULL");
+		}
+		$wpdb->query("alter table ". $table_name ." add column group_name varchar(20) NOT NULL");
 		update_option("st_daily_tip_db_ver", $st_daily_tip_db_ver);
 	}
 	/* If new installation*/ 
@@ -136,6 +155,8 @@ function add_admin_scripts()
 {
 	wp_register_script('sortable.js',WP_DAILY_TIP_URL.'/scripts/sortable.js');
 	wp_enqueue_script('sortable.js');
+	wp_register_script('checkuncheck.js',WP_DAILY_TIP_URL.'/scripts/checkuncheck.js');
+	wp_enqueue_script('checkuncheck.js');
 	wp_register_style('style.css',WP_DAILY_TIP_URL.'/css/style.css');
 	wp_enqueue_style('style.css');
 }

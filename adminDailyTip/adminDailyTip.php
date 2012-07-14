@@ -109,7 +109,7 @@ function daily_tip_option_page() {
 	$table_suffix = "dailytipdata";
 	
 	$table_name = $wpdb->prefix . $table_suffix;
-	$column_string = "tip_text,display_date,display_day";
+	$column_string = "tip_text,display_date,display_day,Display_yearly";
 	
 ?>
 
@@ -125,12 +125,13 @@ function daily_tip_option_page() {
 			if(isset($_REQUEST['checkbox']))
 			{
 				//$id = check_input($_REQUEST["edit_id"]);
+				$i=0;
 				foreach($_REQUEST['checkbox']  as $chkid)
 				{
 					$wpdb->query("DELETE FROM $table_name WHERE ID = " .$chkid."");
-					echo "<div id=\"message\" class=\"updated fade\"><p><strong>Tip Deleted Successfully!</strong></p></div>";
-					//echo $chkid;
+					$i++;
 				}
+				echo "<div id=\"message\" class=\"updated fade\"><p><strong>$i Tip(s) Deleted Successfully!</strong></p></div>";
 			}
 		}		
 		/*if (isset($_REQUEST['Edit'])) {
@@ -139,14 +140,18 @@ function daily_tip_option_page() {
 		}*/
 		
 		if (isset($_REQUEST['op']) && isset($_REQUEST['edit_id'])) {
-			$id = check_input($_REQUEST["edit_id"]);		}		
+			$id = check_input($_REQUEST["edit_id"]);
+		}		
 		
 		//Store the Data input if data is submitted
 		if (isset($_REQUEST['Submit'])) { 
 			$tip_text = check_input($_REQUEST["tiptext"]);
 			$display_date = check_input($_REQUEST["display_date"]); 
 			$display_day = check_input($_REQUEST["display_day"]);
-			
+			$group_name = check_input($_REQUEST["group_name"]);
+			if($group_name==null){
+				$group_name="Tip";
+			}
 			if(isset($_REQUEST["chkyearly"]))
 			{
 				$yearly ="on";
@@ -160,7 +165,7 @@ function daily_tip_option_page() {
 				//Update
 				$id = check_input($_REQUEST["id"]);
 				
-				$wpdb->query("UPDATE $table_name SET tip_text = '" . $tip_text . "',Display_yearly='" . $yearly . "', display_date='" . $display_date . "', display_day = ". $display_day ." WHERE ID = " . $id);
+				$wpdb->query("UPDATE $table_name SET tip_text = '" . $tip_text . "',Display_yearly='" . $yearly . "', display_date='" . $display_date . "', display_day = ". $display_day .", group_name = '".$group_name."' WHERE ID = " . $id);
 				echo "<div id=\"message\" class=\"updated fade\"><p><strong>Tip Updated Successfully!</strong></p></div>";
 			}
 			else
@@ -170,12 +175,16 @@ function daily_tip_option_page() {
 				{
 					if($display_date!=null)
 					{
-						$rows_affected = $wpdb->insert( $table_name, array( 'added_date' => current_time('mysql'), 'tip_text' => $tip_text, 'display_date' => $display_date, 'display_day' => $display_day, 'Display_yearly' =>$yearly ) );
+						$rows_affected = $wpdb->insert( $table_name, array( 'added_date' => current_time('mysql'), 'tip_text' => $tip_text, 'display_date' => $display_date, 'display_day' => $display_day, 'Display_yearly' =>$yearly,'group_name' => $group_name ) );
 						echo "<div id=\"message\" class=\"updated fade\"><p><strong>Tip Inserted Successfully!</strong></p></div>";
 					}
 					else if($display_day!=0 )
 					{
-						$rows_affected = $wpdb->insert( $table_name, array( 'added_date' => current_time('mysql'), 'tip_text' => $tip_text, 'display_date' => $display_date, 'display_day' => $display_day ) );
+						$rows_affected = $wpdb->insert( $table_name, array( 'added_date' => current_time('mysql'), 'tip_text' => $tip_text, 'display_date' => $display_date, 'display_day' => $display_day,'group_name' => $group_name ) );
+						echo "<div id=\"message\" class=\"updated fade\"><p><strong>Tip Inserted Successfully!</strong></p></div>";
+					}
+					else{
+						$rows_affected = $wpdb->insert( $table_name, array( 'added_date' => current_time('mysql'), 'tip_text' => $tip_text, 'display_date' => $display_date, 'display_day' => $display_day, 'Display_yearly' =>$yearly,'group_name' => $group_name ) );
 						echo "<div id=\"message\" class=\"updated fade\"><p><strong>Tip Inserted Successfully!</strong></p></div>";
 					}
 				}
@@ -230,17 +239,15 @@ function daily_tip_option_page() {
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Tip Text : The Actual Statement to be displayed.<br/>
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Display Date : Any Specific Date in format YYYY-MM-DD when you want to display the Tip.<br/>
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Display Day : Day of week (number format) on which the Tip Should Come. (1 = Sunday ,2 = Monday , 3 = Tuesday, 4 = Wednessday ...7 = Saturday) <br/>
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>Please Note:</strong>Display Day is ignored if Display Date is mentioned.</span>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>Please Note:</strong>Display Day is ignored if Display Date is mentioned.
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Repeat Yearly : <strong>on</strong> - To repeat yearly. Leave blank otherwise.</span>
 	</div>
 	<div class="display_box">
 	<h3>OR</h3>
 	<h3>Enter Manual Data</h3>
 	<form id="edit_data" action="<?php echo $_SERVER['PHP_SELF']."?page=daily-tip"; ?>" method="post">
 		<?php  if (isset($_REQUEST['op'])&&isset($_REQUEST['edit_id'])) { echo "<input type='hidden'name=\"id\" value=\"" . check_input($_REQUEST["edit_id"]) . "\" />"; }  ?>
- 		<div><label>Tip Text</label><textarea name="tiptext" rows="5" cols="62"><?php if (isset($_REQUEST['op'])&&isset($_REQUEST['edit_id'])) { echo check_input($_REQUEST["edit_tip_text"]); } ?></textarea>
-		<span class="description">You can use HTML code to format your tip. e.g.&lt;strong&gt;Hello&lt;/strong&gt;
-		</span>
-		</div>
+ 		<div><span style="color:red;vertical-align:top;">*</span><label>Tip Text</label><textarea name="tiptext" rows="5" cols="62"><?php if (isset($_REQUEST['op'])&&isset($_REQUEST['edit_id'])) { echo check_input($_REQUEST["edit_tip_text"]); } ?></textarea></div>
 		
 		<div><label>Display Date</label><input name="display_date" class="regular-text code" value="<?php if (isset($_REQUEST['op'])&&isset($_REQUEST['edit_id'])) { echo check_input($_REQUEST["edit_display_date"]); } ?>"/><span> (YYYY-MM-DD)</span></div>
 		<div><label>Display Day</label><select name="display_day">
@@ -279,13 +286,14 @@ function daily_tip_option_page() {
 				$showyearly="";
 			}
 		} ?>
-		<label>Repeat Yearly?</label><input type="checkbox" name="chkyearly" <?php echo $showyearly;?>></input><span class="description">Tip will be repeated on the Display Date Every year</span><br/>
+		<div><label>Repeat Yearly?</label><input type="checkbox" name="chkyearly" <?php echo $showyearly;?>></input>
+		<div><label>Group Name</label><input name="group_name" class="regular-text code" value="<?php if (isset($_REQUEST['op'])&&isset($_REQUEST['edit_id'])) { echo check_input($_REQUEST["edit_group_name"]); }?>"/><span></span></div>
 		<p class="submit">
 			<input class="button" type="submit" name="Submit" value="Submit" />
 			<input class="button" type="submit" name="Cancel" value="Cancel" />
 		</p>
  	</form>
-	
+	</div>
 	<div class="display_box">
 		
 		<?php 
@@ -319,9 +327,9 @@ function daily_tip_option_page() {
 			
 			
 			echo "<table class=\"sort\" id=\"display_data\" >";
-			echo "<thead><tr><th class=\"unsortable\"></th><th>Tip Text</th><th>Display Date</th><th>Display Day</th><th class=\"unsortable\">Last Shown On</th><th class=\"unsortable\"></th></tr></thead>";	
+			echo "<thead><tr><th class=\"unsortable\"><input type='checkbox' name='checkall' onclick='checkedAll();'></th><th>Tip Text</th><th>Display Date</th><th>Display Day</th><th class=\"unsortable\">Last Shown On</th><th>Group Name</th><th class=\"unsortable\"></th></tr></thead>";	
 			echo "<tbody>";
-			echo "<form action=\"" .$_SERVER["PHP_SELF"] . "?page=daily-tip\" method=\"post\">";
+			echo "<form id=\"myform\" action=\"" .$_SERVER["PHP_SELF"] . "?page=daily-tip\" method=\"post\">";
 			echo "<input type=\"submit\" name=\"Delete\" value=\"Delete\" id=\"btnsubmit\" class=\"button\" />";
 			
 			foreach ( $table_result as $table_row ) 
@@ -333,14 +341,16 @@ function daily_tip_option_page() {
 				echo "<input type=\"hidden\" name=\"edit_display_date\" value=\"" . $table_row->display_date . "\" />";
 				echo "<input type=\"hidden\" name=\"edit_display_day\" value=\"" . $table_row->display_day . "\" />";
 				echo "<input type=\"hidden\" name=\"edit_display_yearly\" value=\"" . $table_row->Display_yearly . "\" />";
+				echo "<input type=\"hidden\" name=\"edit_group_name\" value=\"" . $table_row->group_name . "\" />";
 				echo "<td><input type=\"checkbox\" name=\"checkbox[]\" value=\"" . $table_row->id . "\"></input></td>";
 				//echo "<td>" . $table_row->id . "</td>";
 				echo "<td>" . $table_row->tip_text . "</td>";
 				echo "<td>" . $table_row->display_date . "</td>";
 				echo "<td>" . $weekdays[$table_row->display_day] . "</td>";
 				echo "<td>" . $table_row->shown_date . "</td>";
+				echo "<td>" . $table_row->group_name . "</td>";
 				//echo "<td><input type=\"submit\" name=\"Edit[]\" value=\"Edit\" id=\"btnsubmit\" class=\"button\" /></td>";
-				echo "<td><a href=\"".$_SERVER['PHP_SELF']."?page=daily-tip&op=edit&edit_id=".$table_row->id."&edit_tip_text=".$table_row->tip_text."&edit_display_date=".$table_row->display_date."&edit_display_day=".$table_row->display_day."&edit_display_yearly=".$table_row->Display_yearly."\" class=\"button\" style=\"color:#41411D;\">Edit</a></td>";
+				echo "<td><a href=\"".$_SERVER['PHP_SELF']."?page=daily-tip&op=edit&edit_id=".$table_row->id."&edit_tip_text=".$table_row->tip_text."&edit_display_date=".$table_row->display_date."&edit_display_day=".$table_row->display_day."&edit_display_yearly=".$table_row->Display_yearly."&edit_group_name=".$table_row->group_name."\" class=\"button\" style=\"color:#41411D;\">Edit</a></td>";
 				//echo "</form>";
 				echo "</tr>";
 			}
