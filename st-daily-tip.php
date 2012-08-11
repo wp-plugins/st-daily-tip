@@ -124,6 +124,7 @@ function st_daily_tip_install(){
 			id mediumint(9) NOT NULL AUTO_INCREMENT,
 			added_date date DEFAULT '0000-00-00' NOT NULL,
 			tip_text text NOT NULL,
+			group_name varchar(20) NOT NULL,
 			Display_yearly text NOT NULL,
 			display_date date DEFAULT '0000-00-00' ,
 			shown_date date DEFAULT '0000-00-00' ,
