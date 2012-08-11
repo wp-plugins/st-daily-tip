@@ -247,7 +247,7 @@ function daily_tip_option_page() {
 	<h3>Enter Manual Data</h3>
 	<form id="edit_data" action="<?php echo $_SERVER['PHP_SELF']."?page=daily-tip"; ?>" method="post">
 		<?php  if (isset($_REQUEST['op'])&&isset($_REQUEST['edit_id'])) { echo "<input type='hidden'name=\"id\" value=\"" . check_input($_REQUEST["edit_id"]) . "\" />"; }  ?>
- 		<div><span style="color:red;vertical-align:top;">*</span><label>Tip Text</label><textarea name="tiptext" rows="5" cols="62"><?php if (isset($_REQUEST['op'])&&isset($_REQUEST['edit_id'])) { echo check_input($_REQUEST["edit_tip_text"]); } ?></textarea></div>
+ 		<div><label>Tip Text<span style="color:red;vertical-align:top;">*</span></label><textarea name="tiptext" rows="5" cols="62"><?php if (isset($_REQUEST['op'])&&isset($_REQUEST['edit_id'])) { echo check_input($_REQUEST["edit_tip_text"]); } ?></textarea></div>
 		
 		<div><label>Display Date</label><input name="display_date" class="regular-text code" value="<?php if (isset($_REQUEST['op'])&&isset($_REQUEST['edit_id'])) { echo check_input($_REQUEST["edit_display_date"]); } ?>"/><span> (YYYY-MM-DD)</span></div>
 		<div><label>Display Day</label><select name="display_day">
@@ -301,9 +301,10 @@ function daily_tip_option_page() {
 			$count = $wpdb->query("SELECT * FROM $table_name");
 											
 			/* Instantiate class */
-			require_once("pager.php");
+			//require_once("pager.php");
 			//require_once dirname( __FILE__ ) . '/adminDailyTip/pager.php';
-			$p = new Pager;
+			require_once dirname( __FILE__ ) . '/pager.php';
+			$p = new pager();
  
 			/* Show many results per page? */
 			$limit = 15;

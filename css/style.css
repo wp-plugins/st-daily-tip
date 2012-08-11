@@ -34,13 +34,14 @@ text-decoration:none;
 	
 #edit_data label{
 	display:inline-block;
-	width:150px;
+	width:250px;
 	height:20px;
 	font-size:1.2em;
 	font-weight:bold;
 	vertical-align:top;
 	cursor:pointer;
 }
+
 .sort a{
 	color:#ffffff;
 }
