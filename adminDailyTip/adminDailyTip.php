@@ -109,7 +109,7 @@ function daily_tip_option_page() {
 	$table_suffix = "dailytipdata";
 	
 	$table_name = $wpdb->prefix . $table_suffix;
-	$column_string = "tip_text,display_date,display_day,Display_yearly";
+	$column_string = "tip_text,display_date,display_day,group_name,Display_yearly";
 	
 ?>
 
@@ -199,7 +199,7 @@ function daily_tip_option_page() {
 			echo '<div id="message" class="updated fade"><p><strong>';
 			if(move_uploaded_file($_FILES['uploadedfile']['tmp_name'], $target_path))
 			{
-				echo "The file ".  basename( $_FILES['uploadedfile']['name'])." has been uploaded";
+				//echo "The file ".  basename( $_FILES['uploadedfile']['name'])." has been uploaded";
 				$file_name = WP_DAILY_TIP_URL.'/uploads/'.basename( $_FILES['uploadedfile']['name']);
 			} 
 			else
@@ -236,12 +236,13 @@ function daily_tip_option_page() {
 		<span class="description"><strong>The Format of CSV File must be as below :</strong><br/>
 			&nbsp;&nbsp;&nbsp;&nbsp;The First line must be headers as it is ignored while uploading on database<br/>
 			&nbsp;&nbsp;&nbsp;&nbsp;From the second line, the data should begin in following order :<br/>
-			&nbsp;&nbsp;&nbsp;&nbsp;Tip Text, Display Date,Display Day.<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;Tip Text, Display Date,Display Day,Group Name,Repeat Yearly.<br/>
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Tip Text : The Actual Statement to be displayed.<br/>
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Display Date : Any Specific Date in format YYYY-MM-DD when you want to display the Tip.<br/>
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Display Day : Day of week (number format) on which the Tip Should Come. (1 = Sunday ,2 = Monday , 3 = Tuesday, 4 = Wednessday ...7 = Saturday) <br/>
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>Please Note:</strong>Display Day is ignored if Display Date is mentioned.
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Repeat Yearly : <strong>on</strong> - To repeat yearly. Leave blank otherwise.</span>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Group Name : Group Name in which the tip is to be added. <strong>Group name is Must. Keep "Tip" Group Name in case single group</strong><br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Repeat Yearly : <strong>on</strong> - To repeat yearly. Leave blank otherwise.<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>Please Note:</strong>Display Day is ignored if Display Date is mentioned.<br/></span>
 	</div>
 	<div class="display_box">
 	<h3>OR</h3>
