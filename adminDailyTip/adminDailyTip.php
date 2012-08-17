@@ -165,6 +165,7 @@ function daily_tip_option_page() {
 				//Update
 				$id = check_input($_REQUEST["id"]);
 				
+				$tip_text = str_replace ( "'" , "\"" , $tip_text);
 				$wpdb->query("UPDATE $table_name SET tip_text = '" . $tip_text . "',Display_yearly='" . $yearly . "', display_date='" . $display_date . "', display_day = ". $display_day .", group_name = '".$group_name."' WHERE ID = " . $id);
 				echo "<div id=\"message\" class=\"updated fade\"><p><strong>Tip Updated Successfully!</strong></p></div>";
 			}
