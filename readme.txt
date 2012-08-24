@@ -61,6 +61,9 @@ The oldest tip ( that was displayed first) will be displayed if no un-displayed 
 8. 	If *Display Date* is not specified and *Display Day* is specified, the tip will only be shown on that date
 
 == Changelog ==
+= 0.7 =
+* Bug removal - Update Strings with quotes.
+
 = 0.6 =
 * Create Tips Group Wise. Display Different Tips in different Groups.
 
@@ -81,6 +84,9 @@ The oldest tip ( that was displayed first) will be displayed if no un-displayed 
 
 
 == Upgrade Notice ==
+= 0.7 =
+* Bug removal - Update Strings with quotes.
+
 = 0.6 =
 * Repeat the tips Yearly on Same Date
 

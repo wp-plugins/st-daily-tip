@@ -14,7 +14,7 @@ function check_input($data)
 {
     $data = trim($data);
     $data = stripslashes($data);
-    //$data = htmlspecialchars($data);
+    $data = htmlspecialchars($data);
     return $data;
 }
 
@@ -146,6 +146,7 @@ function daily_tip_option_page() {
 		//Store the Data input if data is submitted
 		if (isset($_REQUEST['Submit'])) { 
 			$tip_text = check_input($_REQUEST["tiptext"]);
+			
 			$display_date = check_input($_REQUEST["display_date"]); 
 			$display_day = check_input($_REQUEST["display_day"]);
 			$group_name = check_input($_REQUEST["group_name"]);
@@ -164,9 +165,10 @@ function daily_tip_option_page() {
 			if (isset($_REQUEST['id'])) { 
 				//Update
 				$id = check_input($_REQUEST["id"]);
+				$tip_text = mysql_real_escape_string($tip_text);
+				$qry = "UPDATE $table_name SET tip_text = '" . $tip_text . "',Display_yearly='" . $yearly . "', display_date='" . $display_date . "', display_day = ". $display_day .", group_name = '".$group_name."' WHERE ID = " . $id;
 				
-				$tip_text = str_replace ( "'" , "\"" , $tip_text);
-				$wpdb->query("UPDATE $table_name SET tip_text = '" . $tip_text . "',Display_yearly='" . $yearly . "', display_date='" . $display_date . "', display_day = ". $display_day .", group_name = '".$group_name."' WHERE ID = " . $id);
+				$wpdb->query($qry);
 				echo "<div id=\"message\" class=\"updated fade\"><p><strong>Tip Updated Successfully!</strong></p></div>";
 			}
 			else
