@@ -77,9 +77,18 @@ function readAndDump($src_file,$table_name,$column_string="",$start_row=2)
 	        	$query_vals = "'".$wpdb->escape($line_of_text[0])."'";
 	        	for($c=1;$c<$columns;$c++)
 	        	{
+					/** Populate the Group Name if not mentioned in CSV**/
+					if ($c == 3)
+					{
+						if ($line_of_text[$c] == '')
+						{
+							$line_of_text[$c]='Tip';
+						}
+					}					
 	        		$line_of_text[$c] = utf8_encode($line_of_text[$c]);
 					$line_of_text[$c] = addslashes($line_of_text[$c]);
 	                $query_vals .= ",'".$wpdb->escape($line_of_text[$c])."'";
+					
 	        	}
 	        	//echo "<br />Query Val: ".$query_vals."<br />";
                         $query = "INSERT INTO $table_name ($column_string) VALUES ($query_vals)";

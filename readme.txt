@@ -3,8 +3,8 @@ Contributors: dharashah
 Donate link: http://sanskrutitech.in/index.php/wordpress-plugins/
 Tags: daily tips 
 Requires at least: 3.3.1
-Tested up to: 3.4.1
-Stable tag: 0.6
+Tested up to: 3.4.2
+Stable tag: 0.8
 
 Simple plugin to display different daily tips from a list. Option to select specific date or day of week to display a tip.
 
@@ -61,6 +61,9 @@ The oldest tip ( that was displayed first) will be displayed if no un-displayed 
 8. 	If *Display Date* is not specified and *Display Day* is specified, the tip will only be shown on that date
 
 == Changelog ==
+= 0.8 =
+* Solved Problem of Blank Group Name in CSV
+
 = 0.7 =
 * Bug removal - Update Strings with quotes.
 
@@ -84,6 +87,9 @@ The oldest tip ( that was displayed first) will be displayed if no un-displayed 
 
 
 == Upgrade Notice ==
+= 0.8 =
+* Solved Problem of Blank Group Name in CSV
+
 = 0.7 =
 * Bug removal - Update Strings with quotes.
 
