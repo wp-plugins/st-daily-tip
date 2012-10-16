@@ -14,7 +14,7 @@ function check_input($data)
 {
     $data = trim($data);
     $data = stripslashes($data);
-    $data = htmlspecialchars($data);
+    
     return $data;
 }
 
@@ -155,10 +155,12 @@ function daily_tip_option_page() {
 		//Store the Data input if data is submitted
 		if (isset($_REQUEST['Submit'])) { 
 			$tip_text = check_input($_REQUEST["tiptext"]);
-			
 			$display_date = check_input($_REQUEST["display_date"]); 
+			$display_date = htmlspecialchars($display_date);
 			$display_day = check_input($_REQUEST["display_day"]);
+			$display_day = htmlspecialchars($display_day);
 			$group_name = check_input($_REQUEST["group_name"]);
+			$group_name = htmlspecialchars($group_name);
 			if($group_name==null){
 				$group_name="Tip";
 			}
@@ -260,7 +262,9 @@ function daily_tip_option_page() {
 	<h3>Enter Manual Data</h3>
 	<form id="edit_data" action="<?php echo $_SERVER['PHP_SELF']."?page=daily-tip"; ?>" method="post">
 		<?php  if (isset($_REQUEST['op'])&&isset($_REQUEST['edit_id'])) { echo "<input type='hidden'name=\"id\" value=\"" . check_input($_REQUEST["edit_id"]) . "\" />"; }  ?>
- 		<div><label>Tip Text<span style="color:red;vertical-align:top;">*</span></label><textarea name="tiptext" rows="5" cols="62"><?php if (isset($_REQUEST['op'])&&isset($_REQUEST['edit_id'])) { echo check_input($_REQUEST["edit_tip_text"]); } ?></textarea></div>
+ 		<div><label>Tip Text<span style="color:red;vertical-align:top;">*</span><br/>
+		<span style="font-weight:normal;font-size:.8em;"><em>(Use HTML tags for Formatting.e.g. &lt;strong&gt;, &lt;em&gt;, etc.)</em></span>
+		</label><textarea name="tiptext" rows="5" cols="62"><?php if (isset($_REQUEST['op'])&&isset($_REQUEST['edit_id'])) { echo check_input($_REQUEST["edit_tip_text"]); } ?></textarea></div>
 		
 		<div><label>Display Date</label><input name="display_date" class="regular-text code" value="<?php if (isset($_REQUEST['op'])&&isset($_REQUEST['edit_id'])) { echo check_input($_REQUEST["edit_display_date"]); } ?>"/><span> (YYYY-MM-DD)</span></div>
 		<div><label>Display Day</label><select name="display_day">
