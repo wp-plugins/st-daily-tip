@@ -62,7 +62,8 @@ The oldest tip ( that was displayed first) will be displayed if no un-displayed 
 
 == Changelog ==
 = 0.9 =
-* Use HTML Tags for writing Tips
+* Removed Few Bugs
+* Added Little Formatting to Admin Panel
 
 = 0.8 =
 * Solved Problem of Blank Group Name in CSV
