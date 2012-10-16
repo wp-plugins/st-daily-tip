@@ -80,3 +80,32 @@ color:#fff;
 float:left;
 margin: 2px 2px 2px 0;
 }
+
+.information{
+  display:block;
+  width:250px;
+  float:right;
+  padding:0px 10px 10px 10px;
+  background: #FFFF99;  
+}
+a.facebook {
+	display:inline-block;
+	background-image:url('facebook_small.png');
+	width:33px;
+	height:32px;
+	margin-right:5px;
+}
+a.twitter {
+	display:inline-block;
+	background-image:url('twitter_small.png');
+	width:33px;
+	height:32px;	
+	margin-right:5px;
+}
+a.googleplus {
+	display:inline-block;
+	background-image:url('googleplus_small.png');
+	width:33px;
+	height:32px;	
+	margin-right:5px;
+}

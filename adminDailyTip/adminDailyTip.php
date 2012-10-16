@@ -236,83 +236,92 @@ function daily_tip_option_page() {
 			echo '</strong></p></div>';
 		}
 	?>
-	<div class="display_box">
-		<h3>Upload a File</h3>
-		
-		<form id="upload" enctype="multipart/form-data" action="<?php echo $_SERVER['PHP_SELF']."?page=daily-tip"; ?>" method="POST">
-			<input type="hidden" name="file_upload" id="file_upload" value="true" />
-			<input type="hidden" name="MAX_FILE_SIZE" value="1000000" />
-			<p><strong>Choose a CSV file to upload: </strong><input name="uploadedfile" id="upload" type="file" size="25" /><br /></p>
-			<p class="submit"><input type="submit" class="button" value="Upload File" /></p>
-		</form>
-		<h4>Note : </h4>
-		<span class="description"><strong>The Format of CSV File must be as below :</strong><br/>
-			&nbsp;&nbsp;&nbsp;&nbsp;The First line must be headers as it is ignored while uploading on database<br/>
-			&nbsp;&nbsp;&nbsp;&nbsp;From the second line, the data should begin in following order :<br/>
-			&nbsp;&nbsp;&nbsp;&nbsp;Tip Text, Display Date,Display Day,Group Name,Repeat Yearly.<br/>
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Tip Text : The Actual Statement to be displayed.<br/>
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Display Date : Any Specific Date in format YYYY-MM-DD when you want to display the Tip.<br/>
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Display Day : Day of week (number format) on which the Tip Should Come. (1 = Sunday ,2 = Monday , 3 = Tuesday, 4 = Wednessday ...7 = Saturday) <br/>
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Group Name : Group Name in which the tip is to be added. <strong>Group name is Must. Keep "Tip" Group Name in case single group</strong><br/>
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Repeat Yearly : <strong>on</strong> - To repeat yearly. Leave blank otherwise.<br/>
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>Please Note:</strong>Display Day is ignored if Display Date is mentioned.<br/></span>
-	</div>
-	<div class="display_box">
-	<h3>OR</h3>
-	<h3>Enter Manual Data</h3>
-	<form id="edit_data" action="<?php echo $_SERVER['PHP_SELF']."?page=daily-tip"; ?>" method="post">
-		<?php  if (isset($_REQUEST['op'])&&isset($_REQUEST['edit_id'])) { echo "<input type='hidden'name=\"id\" value=\"" . check_input($_REQUEST["edit_id"]) . "\" />"; }  ?>
- 		<div><label>Tip Text<span style="color:red;vertical-align:top;">*</span><br/>
-		<span style="font-weight:normal;font-size:.8em;"><em>(Use HTML tags for Formatting.e.g. &lt;strong&gt;, &lt;em&gt;, etc.)</em></span>
-		</label><textarea name="tiptext" rows="5" cols="62"><?php if (isset($_REQUEST['op'])&&isset($_REQUEST['edit_id'])) { echo check_input($_REQUEST["edit_tip_text"]); } ?></textarea></div>
-		
-		<div><label>Display Date</label><input name="display_date" class="regular-text code" value="<?php if (isset($_REQUEST['op'])&&isset($_REQUEST['edit_id'])) { echo check_input($_REQUEST["edit_display_date"]); } ?>"/><span> (YYYY-MM-DD)</span></div>
-		<div><label>Display Day</label><select name="display_day">
-		<option value='0' <?php if (isset($_REQUEST['op'])&&isset($_REQUEST['edit_id'])) { if(check_input($_REQUEST["edit_display_day"])=='0') {echo "selected=\"selected\"";}} ?>></option>
-		<?php
-			for ($i=1; $i<=7; $i++)
-			{
-				if (isset($_REQUEST['op'])&&isset($_REQUEST['edit_id']))
-				{ 
-						if(check_input($_REQUEST["edit_display_day"])==$i) 
-						{
-							echo "<option value='$i' selected=\"selected\">$weekdays[$i]</option>";
-						}
-						else
-						{
-							echo "<option value='$i'>$weekdays[$i]</option>";
-						}
-				}
-				else
-				{
-					echo "<option value='$i'>$weekdays[$i]</option>";
-				}
-			}
-		?>
-		</select></div>
-		
-		<?php 
-		global $showyearly;
-		if (isset($_REQUEST['op'])&&isset($_REQUEST['edit_id'])) {
-			if($_REQUEST["edit_display_yearly"]=="on")
-			{
-				$showyearly=checked;
-			}
-			else
-			{
-				$showyearly="";
-			}
-		} ?>
-		<div><label>Repeat Yearly?</label><input type="checkbox" name="chkyearly" <?php echo $showyearly;?>></input>
-		<div><label>Group Name</label><input name="group_name" class="regular-text code" value="<?php if (isset($_REQUEST['op'])&&isset($_REQUEST['edit_id'])) { echo check_input($_REQUEST["edit_group_name"]); }?>"/><span></span></div>
-		<p class="submit">
-			<input class="button" type="submit" name="Submit" value="Submit" />
-			<input class="button" type="submit" name="Cancel" value="Cancel" />
-		</p>
- 	</form>
-	</div>
-	<div class="display_box">
-		
+	<div class="postbox-container" style="width:70%;padding-right:25px;">
+	    <div class="metabox-holder">
+			<div class="meta-box-sortables">
+				<div id="toc" class="postbox">
+					<div class="handlediv" title="Click to toggle"><br /></div>
+					<h3 class="hndle"><span>Upload a File</span></h3>
+					<div class="inside">
+						<form id="upload" enctype="multipart/form-data" action="<?php echo $_SERVER['PHP_SELF']."?page=daily-tip"; ?>" method="POST">
+							<input type="hidden" name="file_upload" id="file_upload" value="true" />
+							<input type="hidden" name="MAX_FILE_SIZE" value="1000000" />
+							<p><strong>Choose a CSV file to upload: </strong><input name="uploadedfile" id="upload" type="file" size="25" /><br /></p>
+							<p class="submit"><input type="submit" class="button" value="Upload File" /></p>
+						</form>
+						<h4>Note : </h4>
+						<span class="description"><strong>The Format of CSV File must be as below :</strong><br/>
+							&nbsp;&nbsp;&nbsp;&nbsp;The First line must be headers as it is ignored while uploading on database<br/>
+							&nbsp;&nbsp;&nbsp;&nbsp;From the second line, the data should begin in following order :<br/>
+							&nbsp;&nbsp;&nbsp;&nbsp;Tip Text, Display Date,Display Day,Group Name,Repeat Yearly.<br/>
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Tip Text : The Actual Statement to be displayed.<br/>
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Display Date : Any Specific Date in format YYYY-MM-DD when you want to display the Tip.<br/>
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Display Day : Day of week (number format) on which the Tip Should Come. (1 = Sunday ,2 = Monday , 3 = Tuesday, 4 = Wednessday ...7 = Saturday) <br/>
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Group Name : Group Name in which the tip is to be added. <strong>Group name is Must. Keep "Tip" Group Name in case single group</strong><br/>
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Repeat Yearly : <strong>on</strong> - To repeat yearly. Leave blank otherwise.<br/>
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>Please Note:</strong>Display Day is ignored if Display Date is mentioned.<br/></span>
+					</div>
+				</div>
+				<div id="toc" class="postbox">
+					<div class="handlediv" title="Click to toggle"><br /></div>
+					<h3 class="hndle"><span>Enter Manual Data</span></h3>
+					<div class="inside">
+					<form id="edit_data" action="<?php echo $_SERVER['PHP_SELF']."?page=daily-tip"; ?>" method="post">
+						<?php  if (isset($_REQUEST['op'])&&isset($_REQUEST['edit_id'])) { echo "<input type='hidden'name=\"id\" value=\"" . check_input($_REQUEST["edit_id"]) . "\" />"; }  ?>
+						<div><label>Tip Text<span style="color:red;vertical-align:top;">*</span><br/>
+						<span style="font-weight:normal;font-size:.8em;"><em>(Use HTML tags for Formatting.e.g. &lt;strong&gt;, &lt;em&gt;, etc.)</em></span>
+						</label><textarea name="tiptext" rows="5" cols="62"><?php if (isset($_REQUEST['op'])&&isset($_REQUEST['edit_id'])) { echo check_input($_REQUEST["edit_tip_text"]); } ?></textarea></div>
+						
+						<div><label>Display Date</label><input name="display_date" class="regular-text code" value="<?php if (isset($_REQUEST['op'])&&isset($_REQUEST['edit_id'])) { echo check_input($_REQUEST["edit_display_date"]); } ?>"/><span> (YYYY-MM-DD)</span></div>
+						<div><label>Display Day</label><select name="display_day">
+						<option value='0' <?php if (isset($_REQUEST['op'])&&isset($_REQUEST['edit_id'])) { if(check_input($_REQUEST["edit_display_day"])=='0') {echo "selected=\"selected\"";}} ?>></option>
+						<?php
+							for ($i=1; $i<=7; $i++)
+							{
+								if (isset($_REQUEST['op'])&&isset($_REQUEST['edit_id']))
+								{ 
+										if(check_input($_REQUEST["edit_display_day"])==$i) 
+										{
+											echo "<option value='$i' selected=\"selected\">$weekdays[$i]</option>";
+										}
+										else
+										{
+											echo "<option value='$i'>$weekdays[$i]</option>";
+										}
+								}
+								else
+								{
+									echo "<option value='$i'>$weekdays[$i]</option>";
+								}
+							}
+						?>
+						</select></div>
+						
+						<?php 
+						global $showyearly;
+						if (isset($_REQUEST['op'])&&isset($_REQUEST['edit_id'])) {
+							if($_REQUEST["edit_display_yearly"]=="on")
+							{
+								$showyearly=checked;
+							}
+							else
+							{
+								$showyearly="";
+							}
+						} ?>
+						<div><label>Repeat Yearly?</label><input type="checkbox" name="chkyearly" <?php echo $showyearly;?>></input></div>
+						<div><label>Group Name</label><input name="group_name" class="regular-text code" value="<?php if (isset($_REQUEST['op'])&&isset($_REQUEST['edit_id'])) { echo check_input($_REQUEST["edit_group_name"]); }?>"/><span></span></div>
+						<p class="submit">
+							<input class="button" type="submit" name="Submit" value="Submit" />
+							<input class="button" type="submit" name="Cancel" value="Cancel" />
+						</p>
+					</form>
+				</div>
+			</div>
+			<div id="toc" class="postbox">
+				<div class="handlediv" title="Click to toggle"><br /></div>
+					<h3 class="hndle"><span>Tips</span></h3>
+					<div class="inside">
 		<?php 
 		
 			$count = $wpdb->query("SELECT * FROM $table_name");
@@ -381,8 +390,57 @@ function daily_tip_option_page() {
 			echo $pagelist;
 		?>
 	</div>
-</div>
-
+				</div>
+	
+			</div>
+		</div>
+	</div>
+	<div class="postbox-container side" style="width:20%;">
+	    <div class="metabox-holder">
+			<div class="meta-box-sortables">
+				<div id="toc" class="postbox">
+					<div class="handlediv" title="Click to toggle"><br /></div>
+					<h3 class="hndle"><span>How to Use</span></h3>
+					<div class="inside">
+					<strong>1. Create Tips List</strong><br/>
+					You can upload list of tips from CSV file or Manually Entering Tips<br/>
+					<strong>2. Display Tips</strong>
+					You can use widget or the short code
+					</div>
+				</div>
+				<div id="toc" class="postbox">
+					<div class="handlediv" title="Click to toggle"><br /></div>
+					<h3 class="hndle"><span>Show your Support</span></h3>
+					<div class="inside">
+						<p>
+						<strong>Want to help make this plugin even better? All donations are used to improve this plugin, so donate $20, $50 or $100 now!</strong>
+						</p>
+						<form method="post" action="https://secure.payza.com/checkout" >
+							<input type="hidden" name="ap_productid" value="eLMA2gU1OLMg14iF2RzCUQ=="/>
+							<input type="hidden" name="ap_quantity" value="1"/>
+							<input type="image" name="ap_image" src="https://secure.payza.com/PayNow/1446835800E0468388C857DA1D6DE3B3d0en.gif"/>
+						</form>
+						<p>Or you could:</p>
+						<ul>
+							<li><a href="http://wordpress.org/extend/plugins/st-daily-tip/">Rate the plugin 5 star on WordPress.org</a></li>
+							<li><a href="http://wordpress.org/tags/st-daily-tip">Help out other users in the forums</a></li>
+							<li>Blog about it &amp; link to the <a href="http://sanskrutitech.in/wordpress-plugins/wordpress-plugins-st-daily-tip/">plugin page</a></li>				
+						</ul>
+					</div>
+				</div>
+				<div id="toc" class="postbox">
+				<div class="handlediv" title="Click to toggle"><br /></div>
+					<h3 class="hndle"><span>Connect With Us </span></h3>
+					<div class="inside">
+					<a class="facebook" href="https://www.facebook.com/sanskrutitech"></a>
+					<a class="twitter" href="https://twitter.com/#!/sanskrutitech"></a>
+					<a class="googleplus" href="https://plus.google.com/107541175744077337034/posts"></a>
+					</div>
+				</div>
+		
+			</div>
+		</div>
+	</div>
 <?php
 }
 ?>
