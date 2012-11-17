@@ -1,0 +1,111 @@
+.display_box {
+	display:block;
+	padding:5px;
+margin:15px;
+}
+/*Data Table*/
+#display_data{
+	border:1px solid #686868;
+	border-collapse:collapse;
+	width:70%;				
+}
+#display_data thead{
+	text-align:left;
+}
+#display_data th{
+	background-color:#2a2a2a;
+	color:white;
+	padding:5px;
+}
+#display_data tr:nth-child(even)
+{
+	background-color:#CFCFCF;
+}
+#display_data tr:nth-child(odd)
+{
+	background-color:#EBEBEB;
+}
+#display_data td{
+	padding:5px;
+}
+#display_data a{
+text-decoration:none;
+}
+	
+#edit_data label{
+	display:inline-block;
+	width:250px;
+	height:20px;
+	font-size:1.2em;
+	font-weight:bold;
+	vertical-align:top;
+	cursor:pointer;
+}
+
+.sort a{
+	color:#ffffff;
+}
+.sort a:hover{
+	color:#D54E21;
+}
+
+.pagination {
+clear:both;
+padding:20px 0;
+position:relative;
+font-size:12px;
+line-height:13px;
+}
+
+.pagination span, .pagination a {
+display:block;
+float:left;
+margin: 2px 2px 2px 0;
+padding:6px 9px 5px 9px;
+text-decoration:none;
+width:auto;
+color:#fff;
+background: #555;
+}
+
+.pagination a:hover{
+color:#fff;
+background: #3279BB;
+}
+
+.pagination b{
+padding:6px 9px 5px 9px;
+background: #3279BB;
+color:#fff;
+float:left;
+margin: 2px 2px 2px 0;
+}
+
+.information{
+  display:block;
+  width:250px;
+  float:right;
+  padding:0px 10px 10px 10px;
+  background: #FFFF99;  
+}
+a.facebook {
+	display:inline-block;
+	background-image:url('facebook_small.png');
+	width:33px;
+	height:32px;
+	margin-right:5px;
+}
+a.twitter {
+	display:inline-block;
+	background-image:url('twitter_small.png');
+	width:33px;
+	height:32px;	
+	margin-right:5px;
+}
+a.googleplus {
+	display:inline-block;
+	background-image:url('googleplus_small.png');
+	width:33px;
+	height:32px;	
+	margin-right:5px;
+}
