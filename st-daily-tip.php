@@ -152,6 +152,13 @@ function add_admin_scripts()
 	wp_enqueue_script('sortable.js');
 	wp_register_script('checkuncheck.js',WP_DAILY_TIP_URL.'/scripts/checkuncheck.js');
 	wp_enqueue_script('checkuncheck.js');
+	//wp_register_script('jquery.js',WP_DAILY_TIP_URL.'/scripts/jquery.js');
+	//wp_register_script('jquery.dataTables.js',WP_DAILY_TIP_URL.'/scripts/jquery.dataTables.js');
+	//wp_enqueue_script('jquery.js');
+	//wp_enqueue_script('jquery.dataTables.js');
+	
+	wp_register_style('demo_table_jui.css',WP_DAILY_TIP_URL.'/css/demo_table_jui.css');
+	wp_enqueue_style('demo_table_jui.css');
 	wp_register_style('style.css',WP_DAILY_TIP_URL.'/css/style.css');
 	wp_enqueue_style('style.css');
 }

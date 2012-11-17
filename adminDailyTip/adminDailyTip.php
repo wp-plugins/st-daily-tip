@@ -3,10 +3,15 @@ add_action('admin_menu', 'daily_tip_admin_menu');
 
 function daily_tip_admin_menu() 
 {
-	//add_options_page('Daily Tips', 'Daily Tips', 'administrator',	'daily-tip', 'daily_tip_option_page');
-	add_menu_page( 'Daily Tips Page', 'Daily Tips', 'manage_options','daily-tip','daily_tip_option_page', plugins_url( 'st-daily-tip/images/icon.png' ));
-	
-	//add_submenu_page( __FILE__, 'About My Plugin', 'About', 'manage_options', __FILE__.'_about', daily_tip_about_page );
+	$page = add_menu_page( 'Daily Tips Page', 'Daily Tips', 'manage_options','daily-tip','daily_tip_option_page', plugins_url( 'st-daily-tip/images/icon.png' ));
+	add_action('admin_print_scripts-' . $page, 'daily_tips_admin_scripts');
+
+}
+function daily_tips_admin_scripts() {
+	wp_register_script('jquery.js',WP_DAILY_TIP_URL.'/scripts/jquery.js');
+	wp_enqueue_script('jquery.js');
+	wp_register_script('jquery.dataTables.js',WP_DAILY_TIP_URL.'/scripts/jquery.dataTables.js');
+	wp_enqueue_script('jquery.dataTables.js');
 }
 ?>
 <?php
@@ -37,6 +42,23 @@ function get_abs_path_from_src_file($src_file)
 		$abs_path = realpath($relative_path);
 	}
 	return $abs_path;
+}
+function exporttocsv()
+{
+	/*
+	 * output data rows (if atleast one row exists)
+	 */
+	global $wpdb;
+	global $table_suffix;
+	
+	$table_suffix = "dailytipdata";
+	$table_name = $wpdb->prefix . $table_suffix;
+	
+	$allTips = $wpdb->get_results("SELECT * FROM $table_name");
+	$csv = new parseCSV();
+	$csv->output (true, 'dailytips.csv', $allTips);
+
+
 }
 function readAndDump($src_file,$table_name,$column_string="",$start_row=2)
 {
@@ -70,7 +92,6 @@ function readAndDump($src_file,$table_name,$column_string="",$start_row=2)
 			continue;
 		}
 		$columns = count($line_of_text);
-		//echo "<br />Column Count: ".$columns."<br />";
 		
 		if ($columns>1)
 		{
@@ -109,7 +130,7 @@ function readAndDump($src_file,$table_name,$column_string="",$start_row=2)
 	return $errorMsg;
 }
 function daily_tip_option_page() {
-
+	
 	$weekdays = array(1 => "Sunday",2 => "Monday", 3 => "Tuesday",4 => "Wednessday", 5 => "Thursday",6 => "Friday",7 => "Saturday");
 
 	global $wpdb;
@@ -123,17 +144,12 @@ function daily_tip_option_page() {
 ?>
 
 <div class="wrap">  
-
+	
 	<h2>Daily Tip Plugin</h2>
 	<?php
 		if (isset($_REQUEST['Delete'])) {
-			//$id = check_input($_REQUEST["edit_id"]);
-			//$wpdb->query("DELETE FROM $table_name WHERE ID = " .$id."");
-			//echo "<div id=\"message\" class=\"updated fade\"><p><strong>Tip Deleted Successfully!</strong></p></div>";
-			
 			if(isset($_REQUEST['checkbox']))
 			{
-				//$id = check_input($_REQUEST["edit_id"]);
 				$i=0;
 				foreach($_REQUEST['checkbox']  as $chkid)
 				{
@@ -143,10 +159,9 @@ function daily_tip_option_page() {
 				echo "<div id=\"message\" class=\"updated fade\"><p><strong>$i Tip(s) Deleted Successfully!</strong></p></div>";
 			}
 		}		
-		/*if (isset($_REQUEST['Edit'])) {
-			$id = check_input($_REQUEST["edit_id"]);
-			echo $id;
-		}*/
+		if (isset($_REQUEST['Export'])) {
+			exporttocsv();
+		}
 		
 		if (isset($_REQUEST['op']) && isset($_REQUEST['edit_id'])) {
 			$id = check_input($_REQUEST["edit_id"]);
@@ -246,15 +261,17 @@ function daily_tip_option_page() {
 						<form id="upload" enctype="multipart/form-data" action="<?php echo $_SERVER['PHP_SELF']."?page=daily-tip"; ?>" method="POST">
 							<input type="hidden" name="file_upload" id="file_upload" value="true" />
 							<input type="hidden" name="MAX_FILE_SIZE" value="1000000" />
-							<p><strong>Choose a CSV file to upload: </strong><input name="uploadedfile" id="upload" type="file" size="25" /><br /></p>
-							<p class="submit"><input type="submit" class="button" value="Upload File" /></p>
+							<strong>Choose a CSV file to upload: </strong><input name="uploadedfile" id="upload" type="file" size="25" />
+							<input type="submit" class="button" value="Upload File" />
 						</form>
+						<br/>
 						<h4>Note : </h4>
 						<span class="description"><strong>The Format of CSV File must be as below :</strong><br/>
 							&nbsp;&nbsp;&nbsp;&nbsp;The First line must be headers as it is ignored while uploading on database<br/>
 							&nbsp;&nbsp;&nbsp;&nbsp;From the second line, the data should begin in following order :<br/>
-							&nbsp;&nbsp;&nbsp;&nbsp;Tip Text, Display Date,Display Day,Group Name,Repeat Yearly.<br/>
+							&nbsp;&nbsp;&nbsp;&nbsp;<strong>Tip Text, Display Date,Display Day,Group Name,Repeat Yearly.</strong><br/>
 							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Tip Text : The Actual Statement to be displayed.<br/>
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>To insert a tip with comma (,) place the tip between two inverted commas ". e.g. "Like , this" </strong><br/>
 							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Display Date : Any Specific Date in format YYYY-MM-DD when you want to display the Tip.<br/>
 							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Display Day : Day of week (number format) on which the Tip Should Come. (1 = Sunday ,2 = Monday , 3 = Tuesday, 4 = Wednessday ...7 = Saturday) <br/>
 							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Group Name : Group Name in which the tip is to be added. <strong>Group name is Must. Keep "Tip" Group Name in case single group</strong><br/>
@@ -322,72 +339,51 @@ function daily_tip_option_page() {
 				<div class="handlediv" title="Click to toggle"><br /></div>
 					<h3 class="hndle"><span>Tips</span></h3>
 					<div class="inside">
-		<?php 
-		
-			$count = $wpdb->query("SELECT * FROM $table_name");
-											
-			/* Instantiate class */
-			//require_once("pager.php");
-			//require_once dirname( __FILE__ ) . '/adminDailyTip/pager.php';
-			require_once dirname( __FILE__ ) . '/pager.php';
-			$p = new pager();
- 
-			/* Show many results per page? */
-			$limit = 15;
- 
-			/* Find the start depending on $_GET['page'] (declared if it's null) */
-			$start = $p->findStart($limit);
- 
-			/* Find the number of rows returned from a query; Note: Do NOT use a LIMIT clause in this query */
-			$count = $wpdb->query("SELECT * FROM $table_name");
- 
-			/* Find the number of pages based on $count and $limit */
-			$pages = $p->findPages($count, $limit);
- 
-			/* Now we use the LIMIT clause to grab a range of rows */
-			$table_result = $wpdb->get_results("SELECT * FROM $table_name LIMIT ".$start.", ".$limit);
-	
-			/* Or you can use a simple "Previous | Next" listing if you don't want the numeric page listing */
-			//$next_prev = $p->nextPrev($_GET['paged'], $pages);
-			//echo $next_prev;
-			/* From here you can do whatever you want with the data from the $result link. */
-			
-			
-			echo "<table class=\"sort\" id=\"display_data\" >";
-			echo "<thead><tr><th class=\"unsortable\"><input type='checkbox' name='checkall' onclick='checkedAll();'></th><th>Tip Text</th><th>Display Date</th><th>Display Day</th><th class=\"unsortable\">Last Shown On</th><th>Group Name</th><th class=\"unsortable\"></th></tr></thead>";	
-			echo "<tbody>";
-			echo "<form id=\"myform\" action=\"" .$_SERVER["PHP_SELF"] . "?page=daily-tip\" method=\"post\">";
-			echo "<input type=\"submit\" name=\"Delete\" value=\"Delete\" id=\"btnsubmit\" class=\"button\" />";
-			
-			foreach ( $table_result as $table_row ) 
-			{
-				echo "<tr>";
-				//echo "<form action=\"" .$_SERVER["REQUEST_URI"] . "\" method=\"post\">";
-				echo "<input type=\"hidden\" name=\"edit_id\" value=\"" . $table_row->id . "\" />";
-				echo "<input type=\"hidden\" name=\"edit_tip_text\" value=\"" . $table_row->tip_text . "\" />";
-				echo "<input type=\"hidden\" name=\"edit_display_date\" value=\"" . $table_row->display_date . "\" />";
-				echo "<input type=\"hidden\" name=\"edit_display_day\" value=\"" . $table_row->display_day . "\" />";
-				echo "<input type=\"hidden\" name=\"edit_display_yearly\" value=\"" . $table_row->Display_yearly . "\" />";
-				echo "<input type=\"hidden\" name=\"edit_group_name\" value=\"" . $table_row->group_name . "\" />";
-				echo "<td><input type=\"checkbox\" name=\"checkbox[]\" value=\"" . $table_row->id . "\"></input></td>";
-				//echo "<td>" . $table_row->id . "</td>";
-				echo "<td>" . $table_row->tip_text . "</td>";
-				echo "<td>" . $table_row->display_date . "</td>";
-				echo "<td>" . $weekdays[$table_row->display_day] . "</td>";
-				echo "<td>" . $table_row->shown_date . "</td>";
-				echo "<td>" . $table_row->group_name . "</td>";
-				//echo "<td><input type=\"submit\" name=\"Edit[]\" value=\"Edit\" id=\"btnsubmit\" class=\"button\" /></td>";
-				echo "<td><a href=\"".$_SERVER['PHP_SELF']."?page=daily-tip&op=edit&edit_id=".$table_row->id."&edit_tip_text=".$table_row->tip_text."&edit_display_date=".$table_row->display_date."&edit_display_day=".$table_row->display_day."&edit_display_yearly=".$table_row->Display_yearly."&edit_group_name=".$table_row->group_name."\" class=\"button\" style=\"color:#41411D;\">Edit</a></td>";
-				//echo "</form>";
-				echo "</tr>";
-			}
-			echo "</form>";
-			echo "</tbody>";
-			echo "</table>";
-			
-			/* Now get the page list and echo it */
-			$pagelist = $p->pageList($_GET['paged'], $pages);
-			echo $pagelist;
+					<script type="text/javascript" charset="utf-8">
+						$(document).ready(function() {
+							$('#display_data').dataTable( {
+								"aaSorting": [[ 1, "desc" ]]
+							} );
+						} );
+					</script>
+					<?php 
+						$table_result = $wpdb->get_results("SELECT * FROM $table_name ");
+						echo "<form id=\"myform\" action=\"" .$_SERVER["PHP_SELF"] . "?page=daily-tip\" method=\"post\">";
+						echo "<div class=\"dataTables_wrapper\" role=\"grid\">";
+						echo "<table class=\"display\" id=\"display_data\" style=\"width:100%;\" >";
+						echo "<thead><tr><th><input type='checkbox' name='checkall' onclick='checkedAll();'> Select All </th><th>Id</th><th>Tip Text</th><th>Display Date</th><th>Display Day</th><th>Last Shown On</th><th>Group Name</th><th>Repeat Yearly</th><th></th></tr></thead>";	
+						echo "<tbody>";
+						
+						echo "<input type=\"submit\" name=\"Delete\" value=\"Delete\" id=\"btnsubmit\" class=\"button\" />";
+						//echo "<input type=\"submit\" name=\"Export\" value=\"Export to CSV\" id=\"btnexport\" class=\"button\" />";
+						
+						foreach ( $table_result as $table_row ) 
+						{
+							echo "<tr>";
+							echo "<input type=\"hidden\" name=\"edit_id\" value=\"" . $table_row->id . "\" />";
+							echo "<input type=\"hidden\" name=\"edit_tip_text\" value=\"" . $table_row->tip_text . "\" />";
+							echo "<input type=\"hidden\" name=\"edit_display_date\" value=\"" . $table_row->display_date . "\" />";
+							echo "<input type=\"hidden\" name=\"edit_display_day\" value=\"" . $table_row->display_day . "\" />";
+							echo "<input type=\"hidden\" name=\"edit_display_yearly\" value=\"" . $table_row->Display_yearly . "\" />";
+							echo "<input type=\"hidden\" name=\"edit_group_name\" value=\"" . $table_row->group_name . "\" />";
+							echo "<td><input type=\"checkbox\" name=\"checkbox[]\" value=\"" . $table_row->id . "\"></input></td>";
+							echo "<td>" . $table_row->id . "</td>";
+							echo "<td>" . $table_row->tip_text . "</td>";
+							echo "<td>" . $table_row->display_date . "</td>";
+							echo "<td>" . $weekdays[$table_row->display_day] . "</td>";
+							echo "<td>" . $table_row->shown_date . "</td>";
+							echo "<td>" . $table_row->group_name . "</td>";
+							echo "<td>" . $table_row->Display_yearly . "</td>";
+							echo "<td><a href=\"".$_SERVER['PHP_SELF']."?page=daily-tip&op=edit&edit_id=".$table_row->id."&edit_tip_text=".$table_row->tip_text."&edit_display_date=".$table_row->display_date."&edit_display_day=".$table_row->display_day."&edit_display_yearly=".$table_row->Display_yearly."&edit_group_name=".$table_row->group_name."\" class=\"button\" style=\"color:#41411D;\">Edit</a></td>";
+							echo "</tr>";
+						}
+						
+						echo "</tbody>";
+						echo "</table>";
+						echo "<div style=\"clear:both;\"></div>";
+						echo "</div>";
+						echo "</form>";
+						
 		?>
 	</div>
 				</div>
@@ -405,7 +401,7 @@ function daily_tip_option_page() {
 					<strong>1. Create Tips List</strong><br/>
 					You can upload list of tips from CSV file or Manually Entering Tips<br/>
 					<strong>2. Display Tips</strong>
-					You can use widget or the short code
+					You can use widget or the short code [stdailytip group="Tip"]
 					</div>
 				</div>
 				<div id="toc" class="postbox">
@@ -437,7 +433,13 @@ function daily_tip_option_page() {
 					<a class="googleplus" href="https://plus.google.com/107541175744077337034/posts"></a>
 					</div>
 				</div>
-		
+				<div id="toc" class="postbox">
+				<div class="handlediv" title="Click to toggle"><br /></div>
+					<h3 class="hndle"><span>Special Thanks</span></h3>
+					<div class="inside">
+						<a href="http://www.datatables.net">DataTables</a>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
