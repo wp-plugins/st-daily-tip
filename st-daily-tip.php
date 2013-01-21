@@ -64,7 +64,6 @@ function select_today_tip($group){
 		{
 			//Case 3: No tip is set to specifically display today(date or day), then select a tip where Shown Date is null or today
 			$tips = $wpdb->get_row("SELECT * FROM $table_name WHERE (Display_Date='0000-00-00' AND Display_Day = 0 AND Shown_Date='0000-00-00' AND group_name='$group');", ARRAY_A);
-			return "SELECT * FROM $table_name WHERE (Display_Date='0000-00-00' AND Display_Day = 0 AND Shown_Date='0000-00-00' AND group_name='$group');";
 			if($tips['tip_text'] == null) 
 			{ 	
 				//Case 4: No tip is set to specifically display today, and no tip found that is not shown then select the oldest tip that is not set to display for a specific date
