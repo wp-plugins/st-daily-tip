@@ -7,12 +7,12 @@ if (function_exists('add_daily_tip')) {
 		print add_daily_tip('[stdailytip group="Tip"]');
 	}
 	?>
-Version: 1.0
+Version: 1.1
 Author: Dhara Shah
 Author URI: http://sanskrutitech.in/
 License: GPL
 */
-define('WP_DAILY_TIP_VERSION', "1.0");
+define('WP_DAILY_TIP_VERSION', "1.1");
 define('WP_DAILY_TIP_FOLDER', dirname(plugin_basename(__FILE__)));
 define('WP_DAILY_TIP_URL', plugins_url('',__FILE__));
 
@@ -52,16 +52,19 @@ function select_today_tip($group){
 	$table_suffix = "dailytipdata";
 	$table_name = $wpdb->prefix . $table_suffix;
 	
+	$todate = current_time('mysql',0);
+	
 	//Case 1 : If a tip is set to display today (date), display it
-	$tips = $wpdb->get_row("SELECT * FROM $table_name WHERE (DATE(Display_Date)=DATE(NOW()) OR DATE(Shown_Date)=DATE(NOW())) AND group_name='$group';", ARRAY_A);
+	$tips = $wpdb->get_row("SELECT * FROM $table_name WHERE (DATE(Display_Date)=DATE('$todate') OR DATE(Shown_Date)=DATE('$todate')) AND group_name='$group';", ARRAY_A);
 	if($tips['tip_text'] == null) 
 	{ 	
 		//Case 2: No tip is set to specifically display today, then select a tip that is to be displayed based on Day
-		$tips = $wpdb->get_row("SELECT * FROM $table_name WHERE (Display_Date='0000-00-00' AND Display_Day = DAYOFWEEK(NOW()) AND group_name='$group') ORDER BY Shown_Date;", ARRAY_A);
+		$tips = $wpdb->get_row("SELECT * FROM $table_name WHERE (Display_Date='0000-00-00' AND Display_Day = DAYOFWEEK('$todate') AND group_name='$group') ORDER BY Shown_Date;", ARRAY_A);
 		if($tips['tip_text'] == null) 
 		{
 			//Case 3: No tip is set to specifically display today(date or day), then select a tip where Shown Date is null or today
 			$tips = $wpdb->get_row("SELECT * FROM $table_name WHERE (Display_Date='0000-00-00' AND Display_Day = 0 AND Shown_Date='0000-00-00' AND group_name='$group');", ARRAY_A);
+			return "SELECT * FROM $table_name WHERE (Display_Date='0000-00-00' AND Display_Day = 0 AND Shown_Date='0000-00-00' AND group_name='$group');";
 			if($tips['tip_text'] == null) 
 			{ 	
 				//Case 4: No tip is set to specifically display today, and no tip found that is not shown then select the oldest tip that is not set to display for a specific date

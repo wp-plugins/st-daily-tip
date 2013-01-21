@@ -60,11 +60,12 @@ function exporttocsv()
 
 
 }
+//Upload CSV File
 function readAndDump($src_file,$table_name,$column_string="",$start_row=2)
 {
+	ini_set('auto_detect_line_endings', true);
 	global $wpdb;
 	$errorMsg = "";
-	
 	if(empty($src_file))
 	{
             $errorMsg .= "<br />Input file is not specified";
@@ -224,31 +225,38 @@ function daily_tip_option_page() {
 			$target_path = WP_CONTENT_DIR.'/plugins/'.WP_DAILY_TIP_FOLDER."/uploads/";
 			$target_path = $target_path . basename( $_FILES['uploadedfile']['name']);
 			
-			echo '<div id="message" class="updated fade"><p><strong>';
+			
 			if(move_uploaded_file($_FILES['uploadedfile']['tmp_name'], $target_path))
 			{
-				//echo "The file ".  basename( $_FILES['uploadedfile']['name'])." has been uploaded";
+				echo '<div id="message" class="updated fade"><p><strong>';
 				$file_name = WP_DAILY_TIP_URL.'/uploads/'.basename( $_FILES['uploadedfile']['name']);
+				echo '</strong></p></div>';
 			} 
 			else
 			{
+				echo '<div id="message" class="error"><p><strong>';
 				echo "There was an error uploading the file, please try again!";
+				echo '</strong></p></div>';
 			}
-            echo '</strong></p></div>';
+            
 			
 			$errorMsg = readAndDump($file_name,$table_name,$column_string);
         
-			echo '<div id="message" class="updated fade"><p><strong>';
+			
 			if(empty($errorMsg))
 			{
+				echo '<div id="message" class="updated fade"><p><strong>';
 				echo 'File content has been successfully imported into the database!';
+				echo '</strong></p></div>';
 			}
 			else
 			{
+				echo '<div id="message" class="error"><p><strong>';
 				echo "Error occured while trying to import!<br />";
 				echo $errorMsg;
+				echo '</strong></p></div>';
 			}
-			echo '</strong></p></div>';
+			
 		}
 	?>
 	<div class="postbox-container" style="width:70%;padding-right:25px;">
@@ -262,7 +270,7 @@ function daily_tip_option_page() {
 							<input type="hidden" name="file_upload" id="file_upload" value="true" />
 							<input type="hidden" name="MAX_FILE_SIZE" value="1000000" />
 							<strong>Choose a CSV file to upload: </strong><input name="uploadedfile" id="upload" type="file" size="25" />
-							<input type="submit" class="button" value="Upload File" />
+							<input type="submit" class="button-primary" value="Upload File" />
 						</form>
 						<br/>
 						<h4>Note : </h4>
@@ -329,8 +337,8 @@ function daily_tip_option_page() {
 						<div><label>Repeat Yearly?</label><input type="checkbox" name="chkyearly" <?php echo $showyearly;?>></input></div>
 						<div><label>Group Name</label><input name="group_name" class="regular-text code" value="<?php if (isset($_REQUEST['op'])&&isset($_REQUEST['edit_id'])) { echo check_input($_REQUEST["edit_group_name"]); }?>"/><span></span></div>
 						<p class="submit">
-							<input class="button" type="submit" name="Submit" value="Submit" />
-							<input class="button" type="submit" name="Cancel" value="Cancel" />
+							<input class="button-primary" type="submit" name="Submit" value="Submit" />
+							<input class="button-secondary" type="submit" name="Cancel" value="Cancel" />
 						</p>
 					</form>
 				</div>
@@ -411,11 +419,7 @@ function daily_tip_option_page() {
 						<p>
 						<strong>Want to help make this plugin even better? All donations are used to improve this plugin, so donate $20, $50 or $100 now!</strong>
 						</p>
-						<form method="post" action="https://secure.payza.com/checkout" >
-							<input type="hidden" name="ap_productid" value="eLMA2gU1OLMg14iF2RzCUQ=="/>
-							<input type="hidden" name="ap_quantity" value="1"/>
-							<input type="image" name="ap_image" src="https://secure.payza.com/PayNow/1446835800E0468388C857DA1D6DE3B3d0en.gif"/>
-						</form>
+						<a href="http://sanskrutitech.in/wordpress-plugins/wordpress-plugins-st-daily-tip/">Donate</a>
 						<p>Or you could:</p>
 						<ul>
 							<li><a href="http://wordpress.org/extend/plugins/st-daily-tip/">Rate the plugin 5 star on WordPress.org</a></li>
