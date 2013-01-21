@@ -163,9 +163,22 @@ function daily_tip_option_page() {
 		if (isset($_REQUEST['Export'])) {
 			exporttocsv();
 		}
-		
 		if (isset($_REQUEST['op']) && isset($_REQUEST['edit_id'])) {
+			global $wpdb;
+			global $table_suffix;
+	
+			$table_suffix = "dailytipdata";
+			$table_name = $wpdb->prefix . $table_suffix;
+			
 			$id = check_input($_REQUEST["edit_id"]);
+			$edit_tip = $wpdb->get_row("SELECT * FROM $table_name WHERE id='$id';", ARRAY_A);
+			$edit_added_date = $edit_tip['added_date'];
+			$edit_tip_text = check_input($edit_tip['tip_text']);
+			$edit_group_name = $edit_tip['group_name'];
+			$edit_display_yearly = $edit_tip['Display_yearly'];
+			$edit_display_date = $edit_tip['display_date'];
+			$edit_shown_date = $edit_tip['shown_date'];
+			$edit_display_day = $edit_tip['display_day'];
 		}		
 		
 		//Store the Data input if data is submitted
@@ -292,20 +305,32 @@ function daily_tip_option_page() {
 					<h3 class="hndle"><span>Enter Manual Data</span></h3>
 					<div class="inside">
 					<form id="edit_data" action="<?php echo $_SERVER['PHP_SELF']."?page=daily-tip"; ?>" method="post">
-						<?php  if (isset($_REQUEST['op'])&&isset($_REQUEST['edit_id'])) { echo "<input type='hidden'name=\"id\" value=\"" . check_input($_REQUEST["edit_id"]) . "\" />"; }  ?>
-						<div><label>Tip Text<span style="color:red;vertical-align:top;">*</span><br/>
-						<span style="font-weight:normal;font-size:.8em;"><em>(Use HTML tags for Formatting.e.g. &lt;strong&gt;, &lt;em&gt;, etc.)</em></span>
-						</label><textarea name="tiptext" rows="5" cols="62"><?php if (isset($_REQUEST['op'])&&isset($_REQUEST['edit_id'])) { echo check_input($_REQUEST["edit_tip_text"]); } ?></textarea></div>
-						
-						<div><label>Display Date</label><input name="display_date" class="regular-text code" value="<?php if (isset($_REQUEST['op'])&&isset($_REQUEST['edit_id'])) { echo check_input($_REQUEST["edit_display_date"]); } ?>"/><span> (YYYY-MM-DD)</span></div>
-						<div><label>Display Day</label><select name="display_day">
-						<option value='0' <?php if (isset($_REQUEST['op'])&&isset($_REQUEST['edit_id'])) { if(check_input($_REQUEST["edit_display_day"])=='0') {echo "selected=\"selected\"";}} ?>></option>
+						<?php  if (isset($_REQUEST['op'])&&isset($_REQUEST['edit_id'])) 
+								{ 
+									echo "<input type='hidden' name=\"id\" value=\"" . check_input($_REQUEST["edit_id"]) . "\" />"; 
+								}  
+						?>
+						<div>
+							<label>Tip Text<span style="color:red;vertical-align:top;">*</span><br/>
+								<span style="font-weight:normal;font-size:.8em;"><em>(Use HTML tags for Formatting.e.g. &lt;strong&gt;, &lt;em&gt;, etc.)</em></span>
+							</label>
+							<textarea name="tiptext" rows="5" cols="62"><?php if (isset($_REQUEST['op'])&&isset($_REQUEST['edit_id'])) { echo $edit_tip_text; } ?></textarea>
+						</div>
+						<div>
+							<label>Display Date</label>
+							<input name="display_date" class="regular-text code" value="<?php if (isset($_REQUEST['op'])&&isset($_REQUEST['edit_id'])) { echo $edit_display_date; } ?>"/>
+							<span> (YYYY-MM-DD)</span>
+						</div>
+						<div>
+							<label>Display Day</label>
+							<select name="display_day">
+						<option value='0' <?php if (isset($_REQUEST['op'])&&isset($_REQUEST['edit_id'])) { if($edit_display_day=='0') {echo "selected=\"selected\"";}} ?>></option>
 						<?php
 							for ($i=1; $i<=7; $i++)
 							{
 								if (isset($_REQUEST['op'])&&isset($_REQUEST['edit_id']))
 								{ 
-										if(check_input($_REQUEST["edit_display_day"])==$i) 
+										if($edit_display_day==$i) 
 										{
 											echo "<option value='$i' selected=\"selected\">$weekdays[$i]</option>";
 										}
@@ -325,7 +350,7 @@ function daily_tip_option_page() {
 						<?php 
 						global $showyearly;
 						if (isset($_REQUEST['op'])&&isset($_REQUEST['edit_id'])) {
-							if($_REQUEST["edit_display_yearly"]=="on")
+							if($edit_display_yearly=="on")
 							{
 								$showyearly=checked;
 							}
@@ -335,7 +360,7 @@ function daily_tip_option_page() {
 							}
 						} ?>
 						<div><label>Repeat Yearly?</label><input type="checkbox" name="chkyearly" <?php echo $showyearly;?>></input></div>
-						<div><label>Group Name</label><input name="group_name" class="regular-text code" value="<?php if (isset($_REQUEST['op'])&&isset($_REQUEST['edit_id'])) { echo check_input($_REQUEST["edit_group_name"]); }?>"/><span></span></div>
+						<div><label>Group Name</label><input name="group_name" class="regular-text code" value="<?php if (isset($_REQUEST['op'])&&isset($_REQUEST['edit_id'])) { echo $edit_group_name; }?>"/><span></span></div>
 						<p class="submit">
 							<input class="button-primary" type="submit" name="Submit" value="Submit" />
 							<input class="button-secondary" type="submit" name="Cancel" value="Cancel" />
@@ -369,11 +394,6 @@ function daily_tip_option_page() {
 						{
 							echo "<tr>";
 							echo "<input type=\"hidden\" name=\"edit_id\" value=\"" . $table_row->id . "\" />";
-							echo "<input type=\"hidden\" name=\"edit_tip_text\" value=\"" . $table_row->tip_text . "\" />";
-							echo "<input type=\"hidden\" name=\"edit_display_date\" value=\"" . $table_row->display_date . "\" />";
-							echo "<input type=\"hidden\" name=\"edit_display_day\" value=\"" . $table_row->display_day . "\" />";
-							echo "<input type=\"hidden\" name=\"edit_display_yearly\" value=\"" . $table_row->Display_yearly . "\" />";
-							echo "<input type=\"hidden\" name=\"edit_group_name\" value=\"" . $table_row->group_name . "\" />";
 							echo "<td><input type=\"checkbox\" name=\"checkbox[]\" value=\"" . $table_row->id . "\"></input></td>";
 							echo "<td>" . $table_row->id . "</td>";
 							echo "<td>" . $table_row->tip_text . "</td>";
@@ -382,7 +402,7 @@ function daily_tip_option_page() {
 							echo "<td>" . $table_row->shown_date . "</td>";
 							echo "<td>" . $table_row->group_name . "</td>";
 							echo "<td>" . $table_row->Display_yearly . "</td>";
-							echo "<td><a href=\"".$_SERVER['PHP_SELF']."?page=daily-tip&op=edit&edit_id=".$table_row->id."&edit_tip_text=".$table_row->tip_text."&edit_display_date=".$table_row->display_date."&edit_display_day=".$table_row->display_day."&edit_display_yearly=".$table_row->Display_yearly."&edit_group_name=".$table_row->group_name."\" class=\"button\" style=\"color:#41411D;\">Edit</a></td>";
+							echo "<td><a href=\"".$_SERVER['PHP_SELF']."?page=daily-tip&op=edit&edit_id=".$table_row->id."\" class=\"button\" style=\"color:#41411D;\">Edit</a></td>";
 							echo "</tr>";
 						}
 						
