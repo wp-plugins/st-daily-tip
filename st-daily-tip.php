@@ -7,12 +7,12 @@ if (function_exists('add_daily_tip')) {
 		print add_daily_tip('[stdailytip group="Tip"]');
 	}
 	?>
-Version: 1.1
+Version: 1.2
 Author: Dhara Shah
 Author URI: http://sanskrutitech.in/
 License: GPL
 */
-define('WP_DAILY_TIP_VERSION', "1.1");
+define('WP_DAILY_TIP_VERSION', "1.2");
 define('WP_DAILY_TIP_FOLDER', dirname(plugin_basename(__FILE__)));
 define('WP_DAILY_TIP_URL', plugins_url('',__FILE__));
 
@@ -81,12 +81,13 @@ function select_today_tip($group){
 		$today_tip = $tips['tip_text'];
 		$wpdb->query("UPDATE $table_name SET Shown_Date = DATE(NOW()) WHERE ID = " . $tips['id']);
 		
+		// If Tips needs to be displayed yearly, update the next dis
 		if($tips['Display_yearly']!=null)
 		{
-			global $yearlaterdate;
-			$yearlaterdate=date('Y-m-d', strtotime('+1 year'));
-			
-			$wpdb->query("UPDATE $table_name SET display_date = '$yearlaterdate' WHERE ID = " . $tips['id']);
+			$nextdate=date_create($todate);
+			date_add($nextdate, date_interval_create_from_date_string('1 year'));
+			$nextdate = $nextdate->format('Y-m-d');
+			$wpdb->query("UPDATE $table_name SET display_date = '$nextdate' WHERE ID = " . $tips['id']);
 		}
 	}
 	return $today_tip; 

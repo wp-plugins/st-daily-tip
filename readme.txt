@@ -4,7 +4,9 @@ Donate link: http://sanskrutitech.in/index.php/wordpress-plugins/
 Tags: daily tips 
 Requires at least: 3.3.1
 Tested up to: 3.5
-Stable tag: 1.1
+Stable tag: 1.2
+License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 Simple plugin to display different daily tips from a list. Option to select specific date or day of week to display a tip.
 
@@ -13,7 +15,9 @@ Simple plugin to display different daily tips from a list. Option to select spec
 This plugin simply displays daily tip on your page.
 
 If you want to display different Expert tips on any topic on your website, you can simply upload the tips to this plugin.
+
 ** Features **
+
 1. Use Widget or Short Code to display Tips
 2. Add the tips manually, or upload in batch from a CSV file.
 3. Add Tips with HTML formatting
@@ -70,8 +74,12 @@ b. Adding the tips one by one using the **Enter Manual Data**
 8. 	If *Display Date* is not specified and *Display Day* is specified, the tip will only be shown on that date
 
 == Changelog ==
+= 1.2 =
+* Date Bug Fixed according to suggestion from xenoalien
+
 = 1.1 =
 * Minor Bug Fixing
+
 = 1.0 =
 * Use of DataTables to display Tips
 * Provision to Search Tips
