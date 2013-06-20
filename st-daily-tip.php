@@ -85,8 +85,8 @@ function select_today_tip($group){
 		if($tips['Display_yearly']!=null)
 		{
 			$nextdate=date_create($todate);
-			date_add($nextdate, date_interval_create_from_date_string('1 year'));
-			$nextdate = $nextdate->format('Y-m-d');
+			$nextyear = $nextdate->format('Y') + 1;
+			$nextdate =  $nextyear . $nextdate->format('-m-d');
 			$wpdb->query("UPDATE $table_name SET display_date = '$nextdate' WHERE ID = " . $tips['id']);
 		}
 	}
