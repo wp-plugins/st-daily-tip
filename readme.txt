@@ -75,6 +75,9 @@ b. Adding the tips one by one using the **Enter Manual Data**
 8. 	If *Display Date* is not specified and *Display Day* is specified, the tip will only be shown on that date
 
 == Changelog ==
+= 1.3 = 
+* PHP Code problem solved 
+
 = 1.2 =
 * Date Bug Fixed according to suggestion from xenoalien
 
