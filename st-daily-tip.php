@@ -20,9 +20,9 @@ add_shortcode( 'stdailytip', 'add_daily_tip');
 function add_daily_tip($attr)
 {
 	global $group;
-	if(isset($attr['group']))
+	if(isset($attr))
 	{
-		$group = $attr['group'];
+		$group = $attr;
 	}
 	else
 	{
