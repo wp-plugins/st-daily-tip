@@ -7,7 +7,7 @@ if (function_exists('add_daily_tip')) {
 		print add_daily_tip('[stdailytip group="Tip"]');
 	}
 	?>
-Version: 1.2
+Version: 1.3
 Author: Dhara Shah
 Author URI: http://sanskrutitech.in/
 License: GPL
