@@ -65,8 +65,9 @@ b. Adding the tips one by one using the **Enter Manual Data**
 	b. Use Short Code  [stdailytip group="<group name>"] e.g.[stdailytip group="Tip"]
 	c. Developers may also use the PHP Code 
 	'<?php
-		if (function_exists('add_daily_tip')) {	print add_daily_tip('[stdailytip]');	}
+		if (function_exists('add_daily_tip')) {	print add_daily_tip('<group_name>');	}
 	?>'
+	Replace <group_name> with Tip or any other Group Name you want to display
 4.  The Added Tips will be shown in the table Below
 5. 	You can also edit or Delete the Tip using the **Edit** and **Delete** button 
 6.  If *Display Date* and *Display Day* are not specified, the tip that is not shown yet (or the oldest shown tip) will be displayed
