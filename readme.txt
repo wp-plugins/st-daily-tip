@@ -4,7 +4,7 @@ Donate link: http://sanskrutitech.in/index.php/wordpress-plugins/
 Tags: daily tips 
 Requires at least: 3.3.1
 Tested up to: 3.5
-Stable tag: 1.3
+Stable tag: 1.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -75,6 +75,9 @@ b. Adding the tips one by one using the **Enter Manual Data**
 8. 	If *Display Date* is not specified and *Display Day* is specified, the tip will only be shown on that date
 
 == Changelog ==
+= 1.4 = 
+* Short Code problem solved 
+
 = 1.3 = 
 * PHP Code problem solved 
 

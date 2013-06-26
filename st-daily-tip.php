@@ -7,28 +7,38 @@ if (function_exists('add_daily_tip')) {
 		print add_daily_tip('[stdailytip group="Tip"]');
 	}
 	?>
-Version: 1.3
+Version: 1.4
 Author: Dhara Shah
 Author URI: http://sanskrutitech.in/
 License: GPL
 */
-define('WP_DAILY_TIP_VERSION', "1.2");
+define('WP_DAILY_TIP_VERSION', "1.4");
 define('WP_DAILY_TIP_FOLDER', dirname(plugin_basename(__FILE__)));
 define('WP_DAILY_TIP_URL', plugins_url('',__FILE__));
 
-add_shortcode( 'stdailytip', 'add_daily_tip');
-function add_daily_tip($attr)
+add_shortcode( 'stdailytip', 'show_daily_tip');
+
+function show_daily_tip($atts){
+
+	extract( shortcode_atts( array(
+		'group' => 'Tip',
+	), $atts ) );
+	
+	return add_daily_tip($group);
+}
+function add_daily_tip($grp)
 {
-	global $group;
-	if(isset($attr))
+	
+	if(isset($grp))
 	{
-		$group = $attr;
+		$group = $grp;
 	}
 	else
 	{
 		$group = "Tip";
 	}
 	$today_tip = select_today_tip($group);	
+	
 	return $today_tip;
 }
 ?>
@@ -46,6 +56,7 @@ $st_daily_tip_db_ver = "1.0";
 $table_suffix = "dailytipdata";
 
 function select_today_tip($group){
+	
 	global $wpdb;
 	global $table_suffix;
 	
@@ -90,6 +101,7 @@ function select_today_tip($group){
 			$wpdb->query("UPDATE $table_name SET display_date = '$nextdate' WHERE ID = " . $tips['id']);
 		}
 	}
+	
 	return $today_tip; 
 }
 
