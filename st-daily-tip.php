@@ -134,14 +134,14 @@ function st_daily_tip_install(){
 		$sql = "CREATE TABLE " . $table_name . " (
 			id mediumint(9) NOT NULL AUTO_INCREMENT,
 			added_date date DEFAULT '0000-00-00' NOT NULL,
-			tip_text text NOT NULL,
+			tip_text text CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
 			group_name varchar(20) NOT NULL,
 			Display_yearly text NOT NULL,
 			display_date date DEFAULT '0000-00-00' ,
 			shown_date date DEFAULT '0000-00-00' ,
 			display_day int(2),
 			PRIMARY KEY id (id)
-		);";
+		) ENGINE = InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;";
 		require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
 		dbDelta($sql);
 	
