@@ -75,6 +75,10 @@ b. Adding the tips one by one using the **Enter Manual Data**
 8. 	If *Display Date* is not specified and *Display Day* is specified, the tip will only be shown on that date
 
 == Changelog ==
+
+= 1.5 = 
+* Support added for UTF Characters in Tip text
+
 = 1.4 = 
 * Short Code problem solved 
 

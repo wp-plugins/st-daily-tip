@@ -205,7 +205,7 @@ function daily_tip_option_page() {
 			if (isset($_REQUEST['id'])) { 
 				//Update
 				$id = check_input($_REQUEST["id"]);
-				$tip_text = mysql_real_escape_string($tip_text);
+				//$tip_text = mysql_real_escape_string($tip_text);
 				$qry = "UPDATE $table_name SET tip_text = '" . $tip_text . "',Display_yearly='" . $yearly . "', display_date='" . $display_date . "', display_day = ". $display_day .", group_name = '".$group_name."' WHERE ID = " . $id;
 				
 				$wpdb->query($qry);
