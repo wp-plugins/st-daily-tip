@@ -4,7 +4,7 @@ Donate link: http://sanskrutitech.in/index.php/wordpress-plugins/
 Tags: daily tips 
 Requires at least: 3.3.1
 Tested up to: 3.5
-Stable tag: 1.5
+Stable tag: 1.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -37,7 +37,7 @@ If you want to display different Expert tips on any topic on your website, you c
 3. Add Tips in  Daily Tips (See How to use in Other Notes)
 3. Place [stdailytip] in your page/post where you want to display the daily tip
 4. You may also use the Daily Tip Widget to display the tips
-
+5. To Display previously displayed tips use [stdailytiplist]
 == How To Use ==
 1. Go To **Daily Tips** In Side Menu
 2. Create **List of Tips** by :
@@ -75,6 +75,11 @@ b. Adding the tips one by one using the **Enter Manual Data**
 8. 	If *Display Date* is not specified and *Display Day* is specified, the tip will only be shown on that date
 
 == Changelog ==
+
+= 1.6 = 
+* Shortcode added to display all previously displayed tips
+* Added Tip Title
+* Added classes tip_title, tip_text, single_tip for easy styling
 
 = 1.5 = 
 * Support added for UTF Characters in Tip text

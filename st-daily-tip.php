@@ -17,6 +17,7 @@ define('WP_DAILY_TIP_FOLDER', dirname(plugin_basename(__FILE__)));
 define('WP_DAILY_TIP_URL', plugins_url('',__FILE__));
 
 add_shortcode( 'stdailytip', 'show_daily_tip');
+add_shortcode( 'stdailytiplist', 'show_daily_tip_list');
 
 function show_daily_tip($atts){
 
@@ -41,6 +42,29 @@ function add_daily_tip($grp)
 	
 	return $today_tip;
 }
+function show_daily_tip_list(){
+	global $wpdb;
+	global $table_suffix;
+
+	$tipresult = "";
+	$table_name = $wpdb->prefix . $table_suffix;
+	//select all tips shown already
+	$table_result = $wpdb->get_results("SELECT * FROM $table_name WHERE shown_date != '0000-00-00' AND DATE(shown_date)<DATE(NOW()) ORDER BY DATE(shown_date) DESC;");
+
+	foreach ( $table_result as $table_row )
+	{
+		$item_tip = $table_row->tip_text;
+		$item_title = $table_row->tip_title;
+		$item_lastshown = $table_row->shown_date;
+		$formatted_item_lastshown = date("d-m-Y", strtotime($item_lastshown));
+		if ($item_tip != null) {
+			$tipresult .= "<div class='single_tip'><div class='tip_title'>" . $formatted_item_lastshown . ": " . $item_title . "</div><div class='tip_text'>" . $item_tip . "</div></div>";
+		}
+	}
+
+	return $tipresult;
+}
+
 ?>
 <?php
 /* Runs when plugin is activated */
@@ -52,7 +76,7 @@ register_deactivation_hook( __FILE__, 'st_daily_tip_uninstall' );
 global $st_daily_tip_db_ver;
 global $table_suffix;
 
-$st_daily_tip_db_ver = "1.6";
+$st_daily_tip_db_ver = "1.5";
 $table_suffix = "dailytipdata";
 
 function select_today_tip($group){
@@ -89,8 +113,7 @@ function select_today_tip($group){
 	}
 	if($tips['tip_text'] != null) 
 	{
-		$today_tip = $tips['tip_text'];
-		$wpdb->query("UPDATE $table_name SET Shown_Date = DATE('$todate') WHERE ID = " . $tips['id']);
+		$wpdb->query("UPDATE $table_name SET Shown_Date = DATE(NOW()) WHERE ID = " . $tips['id']);
 		
 		// If Tips needs to be displayed yearly, update the next dis
 		if($tips['Display_yearly']!=null)
@@ -101,8 +124,13 @@ function select_today_tip($group){
 			$wpdb->query("UPDATE $table_name SET display_date = '$nextdate' WHERE ID = " . $tips['id']);
 		}
 	}
+	if ($tips['tip_title'] != null)
+	{
+		return "<div class='tip_title'>" .$tips['tip_title'] . "</div><div class='tip_text'>" .$tips['tip_text'] . "</div>";
+	}else{
+		return "<div class='tip_text'>" .$tips['tip_text'] . "</div>";
+	}
 	
-	return $today_tip; 
 }
 
 function st_daily_tip_install(){
@@ -127,6 +155,9 @@ function st_daily_tip_install(){
 		if($db_ver < 1.5){
 			$wpdb->query("alter table ". $table_name ." change tip_text tip_text TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL");
 		}
+		if($db_ver < 1.6){
+			$wpdb->query("alter table ". $table_name ." add column tip_title text");
+		}
 		update_option("st_daily_tip_db_ver", $st_daily_tip_db_ver);
 	}
 	/* If new installation*/ 
@@ -134,6 +165,7 @@ function st_daily_tip_install(){
 		$sql = "CREATE TABLE " . $table_name . " (
 			id mediumint(9) NOT NULL AUTO_INCREMENT,
 			added_date date DEFAULT '0000-00-00' NOT NULL,
+			tip_title text,
 			tip_text text CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
 			group_name varchar(20) NOT NULL,
 			Display_yearly text NOT NULL,
