@@ -4,15 +4,15 @@ Plugin Name: St-Daily-Tip
 Plugin URI: http://wordpress.org/extend/plugins/st-daily-tip/
 Description: A plugin to automatically refresh daily tip from a list uploaded from CSV file.
 if (function_exists('add_daily_tip')) {
-		print add_daily_tip('[stdailytip group="Tip"]');
+		print add_daily_tip('[stdailytip group="Tip"  date="show"]');
 	}
 	?>
-Version: 1.6
+Version: 1.7
 Author: Dhara Shah
 Author URI: http://sanskrutitech.in/
 License: GPL
 */
-define('WP_DAILY_TIP_VERSION', "1.6");
+define('WP_DAILY_TIP_VERSION', "1.7");
 define('WP_DAILY_TIP_FOLDER', dirname(plugin_basename(__FILE__)));
 define('WP_DAILY_TIP_URL', plugins_url('',__FILE__));
 
@@ -22,12 +22,12 @@ add_shortcode( 'stdailytiplist', 'show_daily_tip_list');
 function show_daily_tip($atts){
 
 	extract( shortcode_atts( array(
-		'group' => 'Tip',
+		'group' => 'Tip',"date"=>"show",
 	), $atts ) );
 	
-	return add_daily_tip($group);
+	return add_daily_tip($group,$date);
 }
-function add_daily_tip($grp)
+function add_daily_tip($grp,$date)
 {
 	
 	if(isset($grp))
@@ -38,7 +38,7 @@ function add_daily_tip($grp)
 	{
 		$group = "Tip";
 	}
-	$today_tip = select_today_tip($group);	
+	$today_tip = select_today_tip($group,$date);	
 	
 	return $today_tip;
 }
@@ -65,8 +65,6 @@ function show_daily_tip_list(){
 	return $tipresult;
 }
 
-?>
-<?php
 /* Runs when plugin is activated */
 register_activation_hook(__FILE__,'st_daily_tip_install'); 
 
@@ -76,10 +74,10 @@ register_deactivation_hook( __FILE__, 'st_daily_tip_uninstall' );
 global $st_daily_tip_db_ver;
 global $table_suffix;
 
-$st_daily_tip_db_ver = "1.5";
+$st_daily_tip_db_ver = "1.6";
 $table_suffix = "dailytipdata";
 
-function select_today_tip($group){
+function select_today_tip($group,$date){
 	
 	global $wpdb;
 	global $table_suffix;
@@ -112,7 +110,8 @@ function select_today_tip($group){
 		}
 	}
 	if($tips['tip_text'] != null) 
-	{
+	{	
+			
 		$wpdb->query("UPDATE $table_name SET Shown_Date = DATE(NOW()) WHERE ID = " . $tips['id']);
 		
 		// If Tips needs to be displayed yearly, update the next dis
@@ -124,11 +123,29 @@ function select_today_tip($group){
 			$wpdb->query("UPDATE $table_name SET display_date = '$nextdate' WHERE ID = " . $tips['id']);
 		}
 	}
+
 	if ($tips['tip_title'] != null)
 	{
-		return "<div class='tip_title'>" .$tips['tip_title'] . "</div><div class='tip_text'>" .$tips['tip_text'] . "</div>";
-	}else{
-		return "<div class='tip_text'>" .$tips['tip_text'] . "</div>";
+		if($date=="show")
+		{	
+		
+			return "<div class='tip_title'>" .$tips['tip_title'] . "</div><div class='tip_text'>" .$tips['tip_text'] ." Last Shown Date: ".$tips['shown_date']."</div>";
+		}
+		else
+		{
+			return "<div class='tip_title'>" .$tips['tip_title'] . "</div><div class='tip_text'>" .$tips['tip_text'] . "</div>";
+		}
+	}
+	else
+	{
+		if($date=="show")
+		{	
+			return "<div class='tip_text'>" .$tips['tip_text'] . " Last Shown Date: ".$tips['shown_date']."</div>";
+		}
+		else
+		{
+			return "<div class='tip_text'>" .$tips['tip_text'] . "</div>";
+		}
 	}
 	
 }
@@ -201,15 +218,13 @@ function add_admin_scripts()
 	wp_enqueue_script('sortable.js');
 	wp_register_script('checkuncheck.js',WP_DAILY_TIP_URL.'/scripts/checkuncheck.js');
 	wp_enqueue_script('checkuncheck.js');
-	//wp_register_script('jquery.js',WP_DAILY_TIP_URL.'/scripts/jquery.js');
-	//wp_register_script('jquery.dataTables.js',WP_DAILY_TIP_URL.'/scripts/jquery.dataTables.js');
-	//wp_enqueue_script('jquery.js');
-	//wp_enqueue_script('jquery.dataTables.js');
-	
+	wp_enqueue_script('jquery-ui-datepicker');
+	wp_enqueue_style('jquery-ui-datepicker.css', WP_EVENT_URL.'/css/jquery-ui-datepicker.css');
+
 	wp_register_style('demo_table_jui.css',WP_DAILY_TIP_URL.'/css/demo_table_jui.css');
 	wp_enqueue_style('demo_table_jui.css');
-	wp_register_style('style.css',WP_DAILY_TIP_URL.'/css/style.css');
-	wp_enqueue_style('style.css');
+	wp_register_style('st-daily-tip-style.css',WP_DAILY_TIP_URL.'/css/style.css');
+	wp_enqueue_style('st-daily-tip-style.css');
 }
 ?>
 <?php

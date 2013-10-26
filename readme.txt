@@ -4,7 +4,7 @@ Donate link: http://sanskrutitech.in/index.php/wordpress-plugins/
 Tags: daily tips 
 Requires at least: 3.3.1
 Tested up to: 3.5
-Stable tag: 1.6
+Stable tag: 1.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -75,6 +75,8 @@ b. Adding the tips one by one using the **Enter Manual Data**
 8. 	If *Display Date* is not specified and *Display Day* is specified, the tip will only be shown on that date
 
 == Changelog ==
+= 1.7 = 
+* Added provision to export tips in CSV format
 
 = 1.6 = 
 * Shortcode added to display all previously displayed tips

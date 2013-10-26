@@ -1,4 +1,6 @@
 <?php
+// This includes gives us all the WordPress functionality
+//include_once($_SERVER['DOCUMENT_ROOT'].'/create_plugin/wp-load.php' );
 add_action('admin_menu', 'daily_tip_admin_menu');
 
 function daily_tip_admin_menu() 
@@ -13,8 +15,7 @@ function daily_tips_admin_scripts() {
 	wp_register_script('jquery.dataTables.js',WP_DAILY_TIP_URL.'/scripts/jquery.dataTables.js');
 	wp_enqueue_script('jquery.dataTables.js');
 }
-?>
-<?php
+
 function check_input($data)
 {
     $data = trim($data);
@@ -48,16 +49,15 @@ function exporttocsv()
 	/*
 	 * output data rows (if atleast one row exists)
 	 */
-	global $wpdb;
-	global $table_suffix;
+	// global $wpdb;
+	// global $table_suffix;
 	
-	$table_suffix = "dailytipdata";
-	$table_name = $wpdb->prefix . $table_suffix;
+	// $table_suffix = "dailytipdata";
+	// $table_name = $wpdb->prefix . $table_suffix;
 	
-	$allTips = $wpdb->get_results("SELECT * FROM $table_name");
-	$csv = new parseCSV();
-	$csv->output (true, 'dailytips.csv', $allTips);
-
+	// $allTips = $wpdb->get_results("SELECT * FROM $table_name");
+	// $csv = new parseCSV();
+	// $csv->output (true, 'dailytips.csv', $allTips);
 
 }
 //Upload CSV File
@@ -141,7 +141,6 @@ function daily_tip_option_page() {
 	
 	$table_name = $wpdb->prefix . $table_suffix;
 	$column_string = "tip_title,tip_text,display_date,display_day,group_name,Display_yearly";
-	
 ?>
 
 <div class="wrap">  
@@ -160,9 +159,7 @@ function daily_tip_option_page() {
 				echo "<div id=\"message\" class=\"updated fade\"><p><strong>$i Tip(s) Deleted Successfully!</strong></p></div>";
 			}
 		}		
-		if (isset($_REQUEST['Export'])) {
-			exporttocsv();
-		}
+		
 		if (isset($_REQUEST['op']) && isset($_REQUEST['edit_id'])) {
 			global $wpdb;
 			global $table_suffix;
@@ -321,8 +318,15 @@ function daily_tip_option_page() {
 							<textarea name="tiptext" rows="5" cols="62"><?php if (isset($_REQUEST['op'])&&isset($_REQUEST['edit_id'])) { echo $edit_tip_text; } ?></textarea>
 						</div>
 						<div>
+						<script type="text/javascript">
+							jQuery(document).ready(function() {
+								jQuery('#display_date').datepicker({
+									dateFormat : 'yy-mm-dd'
+								});
+							});
+						</script>
 							<label>Display Date</label>
-							<input name="display_date" class="regular-text code" value="<?php if (isset($_REQUEST['op'])&&isset($_REQUEST['edit_id'])) { echo $edit_display_date; } ?>"/>
+							<input name="display_date" id="display_date" class="regular-text code" value="<?php if (isset($_REQUEST['op'])&&isset($_REQUEST['edit_id'])) { echo $edit_display_date; } ?>"/>
 							<span> (YYYY-MM-DD)</span>
 						</div>
 						<div>
@@ -392,6 +396,8 @@ function daily_tip_option_page() {
 						echo "<tbody>";
 						
 						echo "<input type=\"submit\" name=\"Delete\" value=\"Delete\" id=\"btnsubmit\" class=\"button\" />";
+						echo "<a href=\"".plugin_dir_url(__FILE__)."export_csv.php"."\" class=\"button\" style=\"color:#41411D;float:right;\">Export to CSV</a>";
+						
 						//echo "<input type=\"submit\" name=\"Export\" value=\"Export to CSV\" id=\"btnexport\" class=\"button\" />";
 						
 						foreach ( $table_result as $table_row ) 
@@ -434,7 +440,8 @@ function daily_tip_option_page() {
 					<strong>1. Create Tips List</strong><br/>
 					You can upload list of tips from CSV file or Manually Entering Tips<br/>
 					<strong>2. Display Tips</strong><br/>
-					You can use widget or the short code [stdailytip group="Tip"]<br/>
+					You can use widget or the short code: <br/>[stdailytip group="Tip" date="show"]<br/>
+					If you do not want to show last date then replace "show" with "Not Show"<br/>
 					<strong>3. Use classes</strong><br/>
 					Use classes tip_title, tip_text, and single_tip to style the tips
 					</div>
