@@ -440,8 +440,7 @@ function daily_tip_option_page() {
 					<strong>1. Create Tips List</strong><br/>
 					You can upload list of tips from CSV file or Manually Entering Tips<br/>
 					<strong>2. Display Tips</strong><br/>
-					You can use widget or the short code: <br/>[stdailytip group="Tip" date="show"]<br/>
-					If you do not want to show last date then replace "show" with "Not Show"<br/>
+					You can use widget or the short code: <br/>[stdailytip group="Tip"]<br/>
 					<strong>3. Use classes</strong><br/>
 					Use classes tip_title, tip_text, and single_tip to style the tips
 					</div>

@@ -22,7 +22,7 @@ add_shortcode( 'stdailytiplist', 'show_daily_tip_list');
 function show_daily_tip($atts){
 
 	extract( shortcode_atts( array(
-		'group' => 'Tip',"date"=>"show",
+		'group' => 'Tip',"date"=>"no show",
 	), $atts ) );
 	
 	return add_daily_tip($group,$date);
@@ -129,7 +129,7 @@ function select_today_tip($group,$date){
 		if($date=="show")
 		{	
 		
-			return "<div class='tip_title'>" .$tips['tip_title'] . "</div><div class='tip_text'>" .$tips['tip_text'] ." Last Shown Date: ".$tips['shown_date']."</div>";
+			return "<div class='tip_date'> Date: ".$tips['shown_date']. "</div><div class='tip_title'>" .$tips['tip_title'] . "</div><div class='tip_text'>" .$tips['tip_text'] . "</div>";
 		}
 		else
 		{
