@@ -13,7 +13,7 @@ require_once( $parse_uri[0] . 'wp-load.php' );
         // Use the WordPress database object to run the query and get
         // the results as an associative array
         $qry = array();
-        $qry[] = "SELECT * FROM $table_name";
+        $qry[] = "SELECT tip_title,tip_text,display_date,display_day,group_name,Display_yearly FROM $table_name";
         
         // Check if any records were returned from the database
         $result = $wpdb->get_results(implode(" ", $qry), ARRAY_A);
@@ -50,4 +50,8 @@ require_once( $parse_uri[0] . 'wp-load.php' );
             // Close the output buffer (Like you would a file)
             fclose($fp);
         }
+		else
+		{
+			header('Location: ' . $_SERVER['HTTP_REFERER']);
+		}
 ?>

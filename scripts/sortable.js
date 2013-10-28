@@ -9,7 +9,7 @@ Version 1.5.7
 */
 
 /* You can change these values */
-var image_path = "D:/wamp/www/wordpress/wp-content/plugins/st-daily-tip/images/";
+//var image_path = "D:/wamp/www/wordpress/wp-content/plugins/st-daily-tip/images/";
 var image_up = "up.gif";
 var image_down = "down.gif";
 var image_none = "arrow-none.gif";
@@ -50,7 +50,7 @@ function ts_makeSortable(t) {
 		var cell = firstRow.cells[i];
 		var txt = ts_getInnerText(cell);
 		if (cell.className != "unsortable" && cell.className.indexOf("unsortable") == -1) {
-			cell.innerHTML = '<a href="#" class="sortheader" onclick="ts_resortTable(this, '+i+');return false;">'+txt+'<span class="sortarrow">&nbsp;&nbsp;</span></a>';
+			cell.innerHTML = '<span class="sortheader" onclick="ts_resortTable(this, '+i+');return false;">'+txt+'<span class="sortarrow">&nbsp;&nbsp;</span></span>';
 		}
 	}
 	if (alternate_row_colors) {

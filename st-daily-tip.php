@@ -128,8 +128,9 @@ function select_today_tip($group,$date){
 	{
 		if($date=="show")
 		{	
-		
-			return "<div class='tip_date'> Date: ".$tips['shown_date']. "</div><div class='tip_title'>" .$tips['tip_title'] . "</div><div class='tip_text'>" .$tips['tip_text'] . "</div>";
+			$dat=$tips['shown_date'];
+			$show_date=date(get_option("st_daily_date_format"),strtotime($dat));
+			return "<div>Date: ".$show_date . "</div><div class='tip_title'>" .$tips['tip_title'] . "</div><div class='tip_text'>" .$tips['tip_text'] ."</div>";
 		}
 		else
 		{
@@ -140,7 +141,9 @@ function select_today_tip($group,$date){
 	{
 		if($date=="show")
 		{	
-			return "<div class='tip_text'>" .$tips['tip_text'] . " Last Shown Date: ".$tips['shown_date']."</div>";
+			$dat=$tips['shown_date'];
+			$show_date=date(get_option("st_daily_date_format"),strtotime($dat));
+			return "<div class='tip_text'>" .$tips['tip_text'] . " Last Shown Date: ".$show_date."</div>";
 		}
 		else
 		{
@@ -195,6 +198,7 @@ function st_daily_tip_install(){
 		dbDelta($sql);
 	
 		add_option("st_daily_tip_db_ver", $st_daily_tip_db_ver);
+		add_option("st_daily_date_format", 'yy-mm-dd');
 	}
 }
 
@@ -216,13 +220,13 @@ function add_admin_scripts()
 {
 	wp_register_script('sortable.js',WP_DAILY_TIP_URL.'/scripts/sortable.js');
 	wp_enqueue_script('sortable.js');
+	
 	wp_register_script('checkuncheck.js',WP_DAILY_TIP_URL.'/scripts/checkuncheck.js');
 	wp_enqueue_script('checkuncheck.js');
-	wp_enqueue_script('jquery-ui-datepicker');
-	wp_enqueue_style('jquery-ui-datepicker.css', WP_EVENT_URL.'/css/jquery-ui-datepicker.css');
 
-	wp_register_style('demo_table_jui.css',WP_DAILY_TIP_URL.'/css/demo_table_jui.css');
-	wp_enqueue_style('demo_table_jui.css');
+	wp_enqueue_script('jquery-ui-datepicker');
+	wp_enqueue_style('jquery-ui-datepicker.css', WP_DAILY_TIP_URL.'/css/jquery-ui-datepicker.css');
+		
 	wp_register_style('st-daily-tip-style.css',WP_DAILY_TIP_URL.'/css/style.css');
 	wp_enqueue_style('st-daily-tip-style.css');
 }

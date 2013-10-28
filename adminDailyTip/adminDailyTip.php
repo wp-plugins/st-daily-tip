@@ -10,10 +10,7 @@ function daily_tip_admin_menu()
 
 }
 function daily_tips_admin_scripts() {
-	wp_register_script('jquery.js',WP_DAILY_TIP_URL.'/scripts/jquery.js');
-	wp_enqueue_script('jquery.js');
-	wp_register_script('jquery.dataTables.js',WP_DAILY_TIP_URL.'/scripts/jquery.dataTables.js');
-	wp_enqueue_script('jquery.dataTables.js');
+	
 }
 
 function check_input($data)
@@ -160,6 +157,30 @@ function daily_tip_option_page() {
 			}
 		}		
 		
+		if (isset($_REQUEST['chngdatefrmt'])){
+			if($_REQUEST["datfrmt"]=="Y-m-d")
+			{
+				update_option("st_daily_date_format", 'Y-m-d');
+			}
+			elseif($_REQUEST["datfrmt"]=="d-m-Y")
+			{
+				update_option("st_daily_date_format", 'd-m-Y');
+			}
+			elseif($_REQUEST["datfrmt"]=="m-d-Y")
+			{
+				update_option("st_daily_date_format", 'm-d-Y');
+			}
+			elseif($_REQUEST["datfrmt"]=="F j, Y")
+			{
+				update_option("st_daily_date_format", 'F j, Y');
+			}
+			elseif($_REQUEST["datfrmt"]=="l jS F, Y")
+			{
+				update_option("st_daily_date_format", 'l jS F, Y');
+			}
+		}
+
+
 		if (isset($_REQUEST['op']) && isset($_REQUEST['edit_id'])) {
 			global $wpdb;
 			global $table_suffix;
@@ -377,6 +398,21 @@ function daily_tip_option_page() {
 				</div>
 			</div>
 			<div id="toc" class="postbox">
+				<h3 class="hndle"><span>Change Date Format to display on Front Page</span></h3>
+				<div class="inside">
+				<form id="chngdatefrmt" enctype="multipart/form-data" action="<?php echo $_SERVER['PHP_SELF']."?page=daily-tip"; ?>" method="POST">
+					<select name="datfrmt">
+						<option value="Y-m-d" <?php if(get_option("st_daily_date_format")=="Y-m-d"){echo "selected=\"selected\"";}?>>yy-mm-dd (e.g. 2013-10-25)</option>
+						<option value="d-m-Y" <?php if(get_option("st_daily_date_format")=="d-m-Y"){echo "selected=\"selected\"";}?>>dd-mm-yy (e.g. 25-10-2013)</option>
+						<option value="m-d-Y" <?php if(get_option("st_daily_date_format")=="m-d-Y"){echo "selected=\"selected\"";}?>>mm-dd-yy (e.g. 10-25-2013)</option>
+						<option value="F j, Y" <?php if(get_option("st_daily_date_format")=="F j, Y"){echo "selected=\"selected\"";}?>>F j, Y (e.g. October 25, 2013)</option>
+						<option value="l jS F, Y" <?php if(get_option("st_daily_date_format")=="l jS F, Y"){echo "selected=\"selected\"";}?>>l jS F, Y (e.g. Friday 25th October, 2013)</option>
+					</select>
+					<input class="button-primary" type="submit" name="chngdatefrmt" value="Change" />
+				</form>
+				</div>
+		</div>
+			<div id="toc" class="postbox">
 				<div class="handlediv" title="Click to toggle"><br /></div>
 					<h3 class="hndle"><span>Tips</span></h3>
 					<div class="inside">
@@ -391,8 +427,8 @@ function daily_tip_option_page() {
 						$table_result = $wpdb->get_results("SELECT * FROM $table_name ");
 						echo "<form id=\"myform\" action=\"" .$_SERVER["PHP_SELF"] . "?page=daily-tip\" method=\"post\">";
 						echo "<div class=\"dataTables_wrapper\" role=\"grid\">";
-						echo "<table class=\"display\" id=\"display_data\" style=\"width:100%;\" >";
-						echo "<thead><tr><th><input type='checkbox' name='checkall' onclick='checkedAll();'> Select All </th><th>Id</th><th>Tip Title</th><th>Tip Text</th><th>Display Date</th><th>Display Day</th><th>Last Shown On</th><th>Group Name</th><th>Repeat Yearly</th><th></th></tr></thead>";	
+						echo "<table class=\"display sortable\" id=\"display_data\" style=\"width:100%;\" >";
+						echo "<thead><tr><th class=\"unsortable\"><span><input type='checkbox' name='checkall' onclick='checkedAll();'/> Select All<span/> </th><th>Id</th><th>Tip Title</th><th>Tip Text</th><th>Display Date</th><th>Display Day</th><th>Last Shown On</th><th>Group Name</th><th>Repeat Yearly</th><th></th></tr></thead>";	
 						echo "<tbody>";
 						
 						echo "<input type=\"submit\" name=\"Delete\" value=\"Delete\" id=\"btnsubmit\" class=\"button\" />";
@@ -440,7 +476,8 @@ function daily_tip_option_page() {
 					<strong>1. Create Tips List</strong><br/>
 					You can upload list of tips from CSV file or Manually Entering Tips<br/>
 					<strong>2. Display Tips</strong><br/>
-					You can use widget or the short code: <br/>[stdailytip group="Tip"]<br/>
+					You can use widget or the short code: <br/>[stdailytip group="Tip" date="show"]<br/>
+					If you do not want to show last date then replace "show" with "Not Show"<br/>
 					<strong>3. Use classes</strong><br/>
 					Use classes tip_title, tip_text, and single_tip to style the tips
 					</div>

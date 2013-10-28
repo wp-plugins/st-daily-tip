@@ -4,7 +4,7 @@ Donate link: http://sanskrutitech.in/index.php/wordpress-plugins/
 Tags: daily tips 
 Requires at least: 3.3.1
 Tested up to: 3.5
-Stable tag: 1.7
+Stable tag: 1.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -26,7 +26,8 @@ If you want to display different Expert tips on any topic on your website, you c
 6. Repeat the tips Yearly on Specific Date
 7. The Tips that are not displayed will be displayed first before repeating the Tips. The oldest tip ( that was displayed first) will be displayed if no un-displayed tips are left.
 9. Repeat the tips Yearly on Specific Date.
- 
+10.  Export Tips to a CSV file
+
 
 == Installation ==
 
@@ -36,8 +37,10 @@ If you want to display different Expert tips on any topic on your website, you c
 2. Activate the plugin through the 'Plugins' menu in WordPress
 3. Add Tips in  Daily Tips (See How to use in Other Notes)
 3. Place [stdailytip] in your page/post where you want to display the daily tip
-4. You may also use the Daily Tip Widget to display the tips
-5. To Display previously displayed tips use [stdailytiplist]
+4. Use attributes : group -> to display only tips that belong to a particular group
+                  : date -> show/no show to display or hide date
+5. You may also use the Daily Tip Widget to display the tips
+6. To Display previously displayed tips use [stdailytiplist]
 == How To Use ==
 1. Go To **Daily Tips** In Side Menu
 2. Create **List of Tips** by :
