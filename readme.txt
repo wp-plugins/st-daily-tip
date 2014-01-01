@@ -1,9 +1,9 @@
 === Plugin Name ===
-Contributors: dharashah
+Contributors: dharashah,kuntal5657
 Donate link: http://sanskrutitech.in/index.php/wordpress-plugins/
 Tags: daily tips 
 Requires at least: 3.3.1
-Tested up to: 3.5
+Tested up to: 3.8
 Stable tag: 1.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
