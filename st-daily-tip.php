@@ -7,12 +7,12 @@ if (function_exists('add_daily_tip')) {
 		print add_daily_tip('[stdailytip group="Tip"  date="show"]');
 	}
 	?>
-Version: 1.7
+Version: 1.9
 Author: Dhara Shah
 Author URI: http://sanskrutitech.in/
 License: GPL
 */
-define('WP_DAILY_TIP_VERSION', "1.7");
+define('WP_DAILY_TIP_VERSION', "1.9");
 define('WP_DAILY_TIP_FOLDER', dirname(plugin_basename(__FILE__)));
 define('WP_DAILY_TIP_URL', plugins_url('',__FILE__));
 

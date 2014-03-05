@@ -209,7 +209,7 @@ function daily_tip_option_page() {
 			$group_name = check_input($_REQUEST["group_name"]);
 			$group_name = htmlspecialchars($group_name);
 			$tip_title = check_input($_REQUEST["tip_title"]);
-			$tip_title = htmlspecialchars($tip_title);
+			//$tip_title = htmlspecialchars($tip_title);
 			if($group_name==null){
 				$group_name="Tip";
 			}
@@ -336,7 +336,7 @@ function daily_tip_option_page() {
 							<label>Tip Text<span style="color:red;vertical-align:top;">*</span><br/>
 								<span style="font-weight:normal;font-size:.8em;"><em>(Use HTML tags for Formatting.e.g. &lt;strong&gt;, &lt;em&gt;, etc.)</em></span>
 							</label>
-							<textarea name="tiptext" rows="5" cols="62"><?php if (isset($_REQUEST['op'])&&isset($_REQUEST['edit_id'])) { echo $edit_tip_text; } ?></textarea>
+							<textarea name="tiptext" class="regular-text code" rows="5" cols="42"><?php if (isset($_REQUEST['op'])&&isset($_REQUEST['edit_id'])) { echo $edit_tip_text; } ?></textarea>
 						</div>
 						<div>
 						<script type="text/javascript">
