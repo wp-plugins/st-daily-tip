@@ -7,12 +7,12 @@ if (function_exists('add_daily_tip')) {
 		print add_daily_tip('[stdailytip group="Tip"  date="show"]');
 	}
 	?>
-Version: 1.9
+Version: 2.0
 Author: Dhara Shah
 Author URI: http://sanskrutitech.in/
 License: GPL
 */
-define('WP_DAILY_TIP_VERSION', "1.9");
+define('WP_DAILY_TIP_VERSION', "2.0");
 define('WP_DAILY_TIP_FOLDER', dirname(plugin_basename(__FILE__)));
 define('WP_DAILY_TIP_URL', plugins_url('',__FILE__));
 
@@ -48,8 +48,11 @@ function show_daily_tip_list(){
 
 	$tipresult = "";
 	$table_name = $wpdb->prefix . $table_suffix;
+	
+	$todate = current_time('mysql',0);
+	
 	//select all tips shown already
-	$table_result = $wpdb->get_results("SELECT * FROM $table_name WHERE shown_date != '0000-00-00' AND DATE(shown_date)<DATE(NOW()) ORDER BY DATE(shown_date) DESC;");
+	$table_result = $wpdb->get_results("SELECT * FROM $table_name WHERE shown_date != '0000-00-00' AND DATE(shown_date)<DATE('$todate') ORDER BY DATE(shown_date) DESC;");
 
 	foreach ( $table_result as $table_row )
 	{
@@ -87,24 +90,29 @@ function select_today_tip($group,$date){
 	
 	$todate = current_time('mysql',0);
 	
-	//Case 1 : If a tip is set to display today (date), display it
-	$tips = $wpdb->get_row("SELECT * FROM $table_name WHERE (DATE(Display_Date)=DATE('$todate') OR DATE(Shown_Date)=DATE('$todate')) AND group_name='$group';", ARRAY_A);
+	//Case 1 : If a tip is to be selected to display today (last shown date), display it
+	$tips = $wpdb->get_row("SELECT * FROM $table_name WHERE DATE(Shown_Date)=DATE('$todate') AND group_name='$group';", ARRAY_A);
 	if($tips['tip_text'] == null) 
-	{ 	
-		//Case 2: No tip is set to specifically display today, then select a tip that is to be displayed based on Day
-		$tips = $wpdb->get_row("SELECT * FROM $table_name WHERE (Display_Date='0000-00-00' AND Display_Day = DAYOFWEEK('$todate') AND group_name='$group') ORDER BY Shown_Date;", ARRAY_A);
+	{
+		//Case 2 : If the display Date is set for today, display today
+		$tips = $wpdb->get_row("SELECT * FROM $table_name WHERE (DATE(Display_Date)=DATE('$todate') OR DATE(Shown_Date)=DATE('$todate')) AND group_name='$group';", ARRAY_A);
 		if($tips['tip_text'] == null) 
-		{
-			//Case 3: No tip is set to specifically display today(date or day), then select a tip where Shown Date is null or today
-			$tips = $wpdb->get_row("SELECT * FROM $table_name WHERE (Display_Date='0000-00-00' AND Display_Day = 0 AND Shown_Date='0000-00-00' AND group_name='$group');", ARRAY_A);
+		{ 	
+			//Case 3: No tip is set to specifically display today, then select a tip that is to be displayed based on Day
+			$tips = $wpdb->get_row("SELECT * FROM $table_name WHERE (Display_Date='0000-00-00' AND Display_Day = DAYOFWEEK('$todate') AND group_name='$group') ORDER BY Shown_Date;", ARRAY_A);
 			if($tips['tip_text'] == null) 
-			{ 	
-				//Case 4: No tip is set to specifically display today, and no tip found that is not shown then select the oldest tip that is not set to display for a specific date
-				$tips = $wpdb->get_row("SELECT * FROM $table_name WHERE Display_Date='0000-00-00' AND group_name='$group' ORDER BY Shown_Date;", ARRAY_A, 0); 
+			{
+				//Case 4: No tip is set to specifically display today(date or day), then select a tip where Shown Date is null or today
+				$tips = $wpdb->get_row("SELECT * FROM $table_name WHERE (Display_Date='0000-00-00' AND Display_Day = 0 AND Shown_Date='0000-00-00' AND group_name='$group');", ARRAY_A);
 				if($tips['tip_text'] == null) 
-				{
-					//Case 5: Show one default tip 
-					$today_tip = "No Tips to Display";
+				{ 	
+					//Case 5: No tip is set to specifically display today, and no tip found that is not shown then select the oldest tip that is not set to display for a specific date
+					$tips = $wpdb->get_row("SELECT * FROM $table_name WHERE Display_Date='0000-00-00' AND group_name='$group' ORDER BY Shown_Date;", ARRAY_A, 0); 
+					if($tips['tip_text'] == null) 
+					{
+						//Case 6: Show one default tip 
+						$today_tip = "No Tips to Display";
+					}
 				}
 			}
 		}
@@ -112,10 +120,10 @@ function select_today_tip($group,$date){
 	if($tips['tip_text'] != null) 
 	{	
 			
-		$wpdb->query("UPDATE $table_name SET Shown_Date = DATE(NOW()) WHERE ID = " . $tips['id']);
+		$wpdb->query("UPDATE $table_name SET Shown_Date = DATE('$todate') WHERE ID = " . $tips['id']);
 		
 		// If Tips needs to be displayed yearly, update the next dis
-		if($tips['Display_yearly']!=null)
+		if($tips['Display_yearly']=='on')
 		{
 			$nextdate=date_create($todate);
 			$nextyear = $nextdate->format('Y') + 1;

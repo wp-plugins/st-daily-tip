@@ -109,6 +109,8 @@ function readAndDump($src_file,$table_name,$column_string="",$start_row=2)
 	                $query_vals .= ",'".$wpdb->escape($line_of_text[$c])."'";
 					
 	        	}
+				//Added Date
+				$query_vals .= ",'" . current_time('mysql') . "'";
 	        	//echo "<br />Query Val: ".$query_vals."<br />";
                         $query = "INSERT INTO $table_name ($column_string) VALUES ($query_vals)";
 						
@@ -137,7 +139,7 @@ function daily_tip_option_page() {
 	$table_suffix = "dailytipdata";
 	
 	$table_name = $wpdb->prefix . $table_suffix;
-	$column_string = "tip_title,tip_text,display_date,display_day,group_name,Display_yearly";
+	$column_string = "tip_title,tip_text,display_date,display_day,group_name,Display_yearly,added_date";
 ?>
 
 <div class="wrap">  
