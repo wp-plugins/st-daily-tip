@@ -193,6 +193,7 @@ function daily_tip_option_page() {
 			$id = check_input($_REQUEST["edit_id"]);
 			$edit_tip = $wpdb->get_row("SELECT * FROM $table_name WHERE id='$id';", ARRAY_A);
 			$edit_added_date = $edit_tip['added_date'];
+			$edit_tip_title = check_input($edit_tip['tip_title']);
 			$edit_tip_text = check_input($edit_tip['tip_text']);
 			$edit_group_name = $edit_tip['group_name'];
 			$edit_display_yearly = $edit_tip['Display_yearly'];
@@ -228,9 +229,10 @@ function daily_tip_option_page() {
 				//Update
 				$id = check_input($_REQUEST["id"]);
 				//$tip_text = mysql_real_escape_string($tip_text);
-				$qry = "UPDATE $table_name SET tip_title = '" . $tip_title . "',tip_text = '" . $tip_text . "',Display_yearly='" . $yearly . "', display_date='" . $display_date . "', display_day = ". $display_day .", group_name = '".$group_name."' WHERE ID = " . $id;
+				//$qry = "UPDATE $table_name SET tip_title = '" . $tip_title . "',tip_text = '" . $tip_text . "',Display_yearly='" . $yearly . "', display_date='" . $display_date . "', display_day = ". $display_day .", group_name = '".$group_name."' WHERE ID = " . $id;
+				//$wpdb->query($qry);
+				$wpdb->update( $table_name , array( 'tip_title' => $tip_title,'tip_text' => $tip_text,'Display_yearly' => $yearly,'display_date'=>$display_date,'display_day'=>$display_day,'group_name'=>$group_name), array('ID' => $id)); 
 				
-				$wpdb->query($qry);
 				echo "<div id=\"message\" class=\"updated fade\"><p><strong>Tip Updated Successfully!</strong></p></div>";
 			}
 			else
