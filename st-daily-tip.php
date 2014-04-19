@@ -7,12 +7,12 @@ if (function_exists('add_daily_tip')) {
 		print add_daily_tip('[stdailytip group="Tip"  date="show"]');
 	}
 	?>
-Version: 2.1
-Author: Dhara Shah
+Version: 2.2
+Author: Sanskruti Technologies
 Author URI: http://sanskrutitech.in/
 License: GPL
 */
-define('WP_DAILY_TIP_VERSION', "2.1");
+define('WP_DAILY_TIP_VERSION', "2.2");
 define('WP_DAILY_TIP_FOLDER', dirname(plugin_basename(__FILE__)));
 define('WP_DAILY_TIP_URL', plugins_url('',__FILE__));
 
@@ -229,8 +229,8 @@ function add_admin_scripts()
 	wp_register_script('sortable.js',WP_DAILY_TIP_URL.'/scripts/sortable.js');
 	wp_enqueue_script('sortable.js');
 	
-	wp_register_script('checkuncheck.js',WP_DAILY_TIP_URL.'/scripts/checkuncheck.js');
-	wp_enqueue_script('checkuncheck.js');
+	wp_register_script('dailytip_checkuncheck.js',WP_DAILY_TIP_URL.'/scripts/checkuncheck.js');
+	wp_enqueue_script('dailytip_checkuncheck.js');
 
 	wp_enqueue_script('jquery-ui-datepicker');
 	wp_enqueue_style('jquery-ui-datepicker.css', WP_DAILY_TIP_URL.'/css/jquery-ui-datepicker.css');

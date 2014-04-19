@@ -1,6 +1,4 @@
 <?php
-// This includes gives us all the WordPress functionality
-//include_once($_SERVER['DOCUMENT_ROOT'].'/create_plugin/wp-load.php' );
 add_action('admin_menu', 'daily_tip_admin_menu');
 
 function daily_tip_admin_menu() 
@@ -41,22 +39,6 @@ function get_abs_path_from_src_file($src_file)
 	}
 	return $abs_path;
 }
-function exporttocsv()
-{
-	/*
-	 * output data rows (if atleast one row exists)
-	 */
-	// global $wpdb;
-	// global $table_suffix;
-	
-	// $table_suffix = "dailytipdata";
-	// $table_name = $wpdb->prefix . $table_suffix;
-	
-	// $allTips = $wpdb->get_results("SELECT * FROM $table_name");
-	// $csv = new parseCSV();
-	// $csv->output (true, 'dailytips.csv', $allTips);
-
-}
 //Upload CSV File
 function readAndDump($src_file,$table_name,$column_string="",$start_row=2)
 {
@@ -93,7 +75,7 @@ function readAndDump($src_file,$table_name,$column_string="",$start_row=2)
 		
 		if ($columns>1)
 		{
-	        	$query_vals = "'".$wpdb->escape($line_of_text[0])."'";
+	        	$query_vals = "'".esc_sql($line_of_text[0])."'";
 	        	for($c=1;$c<$columns;$c++)
 	        	{
 					/** Populate the Group Name if not mentioned in CSV**/
@@ -106,7 +88,7 @@ function readAndDump($src_file,$table_name,$column_string="",$start_row=2)
 					}					
 	        		$line_of_text[$c] = utf8_encode($line_of_text[$c]);
 					$line_of_text[$c] = addslashes($line_of_text[$c]);
-	                $query_vals .= ",'".$wpdb->escape($line_of_text[$c])."'";
+	                $query_vals .= ",'".esc_sql($line_of_text[$c])."'";
 					
 	        	}
 				//Added Date
