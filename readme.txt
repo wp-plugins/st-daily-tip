@@ -16,7 +16,7 @@ This plugin simply displays daily tip on your page.
 
 If you want to display different Expert tips on any topic on your website, you can simply upload the tips to this plugin.
 
-** Features **
+**Features**
 
 1. Use Widget or Short Code to display Tips
 2. Add the tips manually, or upload in batch from a CSV file.
