@@ -16,7 +16,7 @@ This plugin simply displays daily tip on your page.
 
 If you want to display different Expert tips on any topic on your website, you can simply upload the tips to this plugin.
 
-** Features **
+**Features**
 
 1. Use Widget or Short Code to display Tips
 2. Add the tips manually, or upload in batch from a CSV file.
@@ -25,8 +25,8 @@ If you want to display different Expert tips on any topic on your website, you c
 5. Mention a Specific date or Specific Day of Week to Display Tip
 6. Repeat the tips Yearly on Specific Date
 7. The Tips that are not displayed will be displayed first before repeating the Tips. The oldest tip ( that was displayed first) will be displayed if no un-displayed tips are left.
-9. Repeat the tips Yearly on Specific Date.
-10.  Export Tips to a CSV file
+8. Repeat the tips Yearly on Specific Date.
+9.  Export Tips to a CSV file
 
 
 == Installation ==
