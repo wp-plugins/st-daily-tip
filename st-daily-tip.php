@@ -7,14 +7,21 @@ if (function_exists('add_daily_tip')) {
 		print add_daily_tip('[stdailytip group="Tip"  date="show"]');
 	}
 	?>
-Version: 2.2
+Version: 2.3
 Author: Sanskruti Technologies
 Author URI: http://sanskrutitech.in/
 License: GPL
 */
-define('WP_DAILY_TIP_VERSION', "2.2");
+define('WP_DAILY_TIP_VERSION', "2.3");
 define('WP_DAILY_TIP_FOLDER', dirname(plugin_basename(__FILE__)));
 define('WP_DAILY_TIP_URL', plugins_url('',__FILE__));
+
+/* Load Language */
+add_action( 'plugins_loaded', 'st_dailytip_load_textdomain' );
+
+function st_dailytip_load_textdomain() {
+	load_plugin_textdomain('stdailytip', false,  dirname( plugin_basename( __FILE__ ) ) . "/language/");
+}
 
 add_shortcode( 'stdailytip', 'show_daily_tip');
 add_shortcode( 'stdailytiplist', 'show_daily_tip_list');

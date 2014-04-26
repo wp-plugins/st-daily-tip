@@ -4,7 +4,7 @@ Donate link: http://sanskrutitech.in/index.php/wordpress-plugins/
 Tags: daily tips 
 Requires at least: 3.3.1
 Tested up to: 3.9
-Stable tag: 2.2
+Stable tag: 2.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -16,7 +16,7 @@ This plugin simply displays daily tip on your page.
 
 If you want to display different Expert tips on any topic on your website, you can simply upload the tips to this plugin.
 
-**Features**
+** Features **
 
 1. Use Widget or Short Code to display Tips
 2. Add the tips manually, or upload in batch from a CSV file.
@@ -25,8 +25,9 @@ If you want to display different Expert tips on any topic on your website, you c
 5. Mention a Specific date or Specific Day of Week to Display Tip
 6. Repeat the tips Yearly on Specific Date
 7. The Tips that are not displayed will be displayed first before repeating the Tips. The oldest tip ( that was displayed first) will be displayed if no un-displayed tips are left.
-8. Repeat the tips Yearly on Specific Date.
-9.  Export Tips to a CSV file
+9. Repeat the tips Yearly on Specific Date.
+10. Export Tips to a CSV file
+11. Translate ready!
 
 
 == Installation ==
@@ -78,6 +79,9 @@ b. Adding the tips one by one using the **Enter Manual Data**
 8. 	If *Display Date* is not specified and *Display Day* is specified, the tip will only be shown on that date
 
 == Changelog ==
+= 2.3 =
+* Made Translate ready
+
 = 2.2 =
 * Compatible with Wordpress 3.9
 
@@ -149,6 +153,9 @@ b. Adding the tips one by one using the **Enter Manual Data**
 
 
 == Upgrade Notice ==
+= 2.3 =
+* Now transalte ready
+
 = 1.0 =
 * Use of DataTables to display Tips
 
