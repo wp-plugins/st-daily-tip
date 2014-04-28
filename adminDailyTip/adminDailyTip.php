@@ -47,7 +47,7 @@ function readAndDump($src_file,$table_name,$column_string="",$start_row=2)
 	$errorMsg = "";
 	if(empty($src_file))
 	{
-            $errorMsg .= "<br />" . _e('Input file is not specified','stdailytip');
+            $errorMsg .= "<br />Input file is not specified";
             return $errorMsg;
     }
 	
@@ -56,8 +56,8 @@ function readAndDump($src_file,$table_name,$column_string="",$start_row=2)
 	$file_handle = fopen($file_path, "r");
 	if ($file_handle === FALSE) {
 		// File could not be opened...
-		$errorMsg .= _e('Source file could not be opened!','stdailytip') . '<br />';
-		$errorMsg .= _e('Error opening ','stdailytip') . "('$file_path')";	// Catch any fopen() problems.
+		$errorMsg .= "Source file could not be opened!<br />";
+		$errorMsg .= "Error opening ('$file_path')";	// Catch any fopen() problems.
 		return $errorMsg;
 	}
 	
@@ -87,7 +87,7 @@ function readAndDump($src_file,$table_name,$column_string="",$start_row=2)
 						}
 					}					
 	        		$line_of_text[$c] = utf8_encode($line_of_text[$c]);
-					$line_of_text[$c] = addslashes($line_of_text[$c]);
+					//$line_of_text[$c] = addslashes($line_of_text[$c]);
 	                $query_vals .= ",'".esc_sql($line_of_text[$c])."'";
 					
 	        	}
@@ -134,7 +134,9 @@ function daily_tip_option_page() {
 					$wpdb->query("DELETE FROM $table_name WHERE ID = " .$chkid."");
 					$i++;
 				}
-				echo "<div id=\"message\" class=\"updated fade\"><p><strong>$i" . _e(' Tip(s) Deleted Successfully!','stdailytip') . "</strong></p></div>";
+				echo "<div id=\"message\" class=\"updated fade\"><p><strong>$i ";
+				echo _e('Tip(s) Deleted Successfully!','stdailytip');
+				echo "</strong></p></div>";
 			}
 		}		
 		
@@ -241,9 +243,7 @@ function daily_tip_option_page() {
 			
 			if(move_uploaded_file($_FILES['uploadedfile']['tmp_name'], $target_path))
 			{
-				echo '<div id="message" class="updated fade"><p><strong>';
-				$file_name = WP_DAILY_TIP_URL.'/uploads/'.basename( $_FILES['uploadedfile']['name']);
-				echo '</strong></p></div>';
+				/**Do nothing*/
 			} 
 			else
 			{
@@ -464,8 +464,9 @@ function daily_tip_option_page() {
 					<strong><?php _e('1. Create Tips List','stdailytip')?></strong><br/>
 					<?php _e('You can upload list of tips from CSV file or Manually Entering Tips','stdailytip')?><br/>
 					<strong><?php _e('2. Display Tips','stdailytip')?></strong><br/>
-					<?php _e('You can use widget or the short code:','stdailytip')?> <br/>[stdailytip group="Tip" date="show"]<br/>
-					<?php _e('If you do not want to show last date then replace "show" with "Not Show"','stdailytip')?><br/>
+					<?php _e('You can use widget or the short code:','stdailytip')?> <br/>[stdailytip group="Tip" date="show" title="show"]<br/>
+					<?php _e('If you do not want to show last date then replace "show" with "hide" in date','stdailytip')?><br/>
+					<?php _e('If you do not want to show title then replace "show" with "hide" in title','stdailytip')?><br/>
 					<strong><?php _e('3. Use classes','stdailytip')?></strong><br/>
 					<?php _e('Use classes tip_title, tip_text, and single_tip to style the tips','stdailytip')?>
 					</div>

@@ -1,10 +1,10 @@
-=== Plugin Name ===
+=== St-Daily-Tip ===
 Contributors: dharashah,kuntal5657
 Donate link: http://sanskrutitech.in/index.php/wordpress-plugins/
 Tags: daily tips 
 Requires at least: 3.3.1
 Tested up to: 3.9
-Stable tag: 2.3
+Stable tag: 2.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -79,6 +79,10 @@ b. Adding the tips one by one using the **Enter Manual Data**
 8. 	If *Display Date* is not specified and *Display Day* is specified, the tip will only be shown on that date
 
 == Changelog ==
+= 2.4 =
+* Attribute to suppress title
+* Solved bug of addition of slash while CSV upload
+
 = 2.3 =
 * Made Translate ready
 
@@ -153,6 +157,11 @@ b. Adding the tips one by one using the **Enter Manual Data**
 
 
 == Upgrade Notice ==
+
+= 2.4 =
+* Attribute to suppress title
+* Solved bug of addition of slash while CSV upload
+
 = 2.3 =
 * Now transalte ready
 
