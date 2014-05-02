@@ -1,0 +1,11 @@
+tip_title,tip_text,display_date,display_day,group_name,Display_yearly
+<h2>Hello</h2>,"<b>bold</b>apostrophe's
+<i>italics</i>
+<u>underline</u>
+<del>strike</del>",2006-04-14,0,Tip,
+"Tip for 13/03/2013","Tip for 13/03/2013",2019-04-15,2,Tip,on
+"<h2>Hello, How are you</h2>",Test,0000-00-00,0,Tip2,
+"Tip for 13/03/2013","Tip for 13/03/2013",2015-03-13,0,Tip,
+<h2>Hello</h2>,Test,2014-03-05,0,Tip,
+"Tip for 13/03/2013","Tip for 13/03/2013",2015-03-13,0,Tip,on
+"Test Again",Test,2025-03-15,0,Tip,on
