@@ -268,7 +268,7 @@ msgstr "Tip"
 
 #: ../widgetDailytip/widgetDailytip.php:106
 msgid "Title:"
-msgstr "Tip"
+msgstr "Title"
 
 #: ../widgetDailytip/widgetDailytip.php:110
 msgid "Group Name:"

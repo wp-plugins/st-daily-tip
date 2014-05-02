@@ -230,7 +230,7 @@ function daily_tip_option_page() {
 					}
 					else{
 						$rows_affected = $wpdb->insert( $table_name, array( 'added_date' => current_time('mysql'), 'tip_text' => $tip_text,'tip_title' => $tip_title, 'display_date' => $display_date, 'display_day' => $display_day, 'Display_yearly' =>$yearly,'group_name' => $group_name ) );
-						echo "<div id=\"message\" class=\"updated fade\"><p><strong>". _e('Tip Inserted Successfully!','stdailytip') ."</strong></p></div>";
+						echo "<div id=\"message\" class=\"updated fade\"><p><strong>Tip Inserted Successfully!</strong></p></div>";
 					}
 				}
 			}
@@ -243,7 +243,7 @@ function daily_tip_option_page() {
 			
 			if(move_uploaded_file($_FILES['uploadedfile']['tmp_name'], $target_path))
 			{
-				/**Do nothing*/
+				$file_name = $target_path;
 			} 
 			else
 			{
