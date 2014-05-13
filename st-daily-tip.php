@@ -7,12 +7,12 @@ if (function_exists('add_daily_tip')) {
 		print add_daily_tip('[stdailytip group="Tip" date="show" title="show"]');
 	}
 	?>
-Version: 2.5
+Version: 2.6
 Author: Sanskruti Technologies
 Author URI: http://sanskrutitech.in/
 License: GPL
 */
-define('WP_DAILY_TIP_VERSION', "2.3");
+define('WP_DAILY_TIP_VERSION', "2.6");
 define('WP_DAILY_TIP_FOLDER', dirname(plugin_basename(__FILE__)));
 define('WP_DAILY_TIP_URL', plugins_url('',__FILE__));
 
@@ -268,5 +268,5 @@ function add_admin_scripts()
 ?>
 <?php
 /*add widget*/
-require_once dirname( __FILE__ ) . '/widgetDailytip/widgetDailytip.php';
+require_once dirname( __FILE__ ) . '/st-daily-tip-widget.php';
 ?>

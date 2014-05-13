@@ -237,13 +237,15 @@ function daily_tip_option_page() {
 		}
 		if(isset($_REQUEST['file_upload']))
 		{
-			$target_path = WP_CONTENT_DIR.'/plugins/'.WP_DAILY_TIP_FOLDER."/uploads/";
-			$target_path = $target_path . basename( $_FILES['uploadedfile']['name']);
+			$upload_dir = wp_upload_dir();
+			$target_path =  $upload_dir['path'];
 			
+			$tmp_name = $_FILES["uploadedfile"]["tmp_name"];
+			$name = $_FILES["uploadedfile"]["name"];
 			
-			if(move_uploaded_file($_FILES['uploadedfile']['tmp_name'], $target_path))
+			if(move_uploaded_file($tmp_name,"$target_path/$name"))
 			{
-				$file_name = $target_path;
+				$file_name = $target_path . "/" . $name;
 			} 
 			else
 			{

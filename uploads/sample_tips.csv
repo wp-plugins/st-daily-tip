@@ -1,7 +1,0 @@
-Tip Text,Display Date,Display Day,Group Name,Repeat Yearly
-A simple Tip,,,Tip,
-A Tip with 'quotes',,,Tip,
-"A Tip with, comma",,,Tip,
-Tip to display on a specific date,2012-01-01,,Tip,
-Tip to display on Sunday,,1,Tip,
-A tip to display on every 15th Aug,15/08/2012,,,on
