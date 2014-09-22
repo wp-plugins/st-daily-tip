@@ -7,7 +7,7 @@ if (function_exists('add_daily_tip')) {
 		print add_daily_tip('[stdailytip group="Tip" date="show" title="show"]');
 	}
 	?>
-Version: 2.6
+Version: 2.7
 Author: Sanskruti Technologies
 Author URI: http://sanskrutitech.in/
 License: GPL
