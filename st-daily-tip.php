@@ -7,7 +7,7 @@ if (function_exists('add_daily_tip')) {
 		print add_daily_tip('[stdailytip group="Tip" date="show" title="show"]');
 	}
 	?>
-Version: 2.6
+Version: 2.7
 Author: Sanskruti Technologies
 Author URI: http://sanskrutitech.in/
 License: GPL
@@ -245,7 +245,7 @@ function st_daily_tip_uninstall () {
 <?php
 if ( is_admin() )
 {
-	require_once dirname( __FILE__ ) . '/adminDailyTip/adminDailyTip.php';
+	require_once dirname( __FILE__ ) . '/st-daily-tip-admin.php';
 	
 	/* add  css and js */
 	add_action('admin_print_scripts', 'add_admin_scripts');
@@ -253,14 +253,16 @@ if ( is_admin() )
 
 function add_admin_scripts()
 {
+	wp_enqueue_script('jquery');
+	
 	wp_register_script('sortable.js',WP_DAILY_TIP_URL.'/scripts/sortable.js');
 	wp_enqueue_script('sortable.js');
 	
 	wp_register_script('dailytip_checkuncheck.js',WP_DAILY_TIP_URL.'/scripts/checkuncheck.js');
 	wp_enqueue_script('dailytip_checkuncheck.js');
 
-	wp_enqueue_script('jquery-ui-datepicker');
-	wp_enqueue_style('jquery-ui-datepicker.css', WP_DAILY_TIP_URL.'/css/jquery-ui-datepicker.css');
+	wp_register_style('jquery-ui-datepicker.css', WP_DAILY_TIP_URL.'/css/jquery-ui-datepicker.css');
+	wp_enqueue_style('jquery-ui-datepicker');
 		
 	wp_register_style('st-daily-tip-style.css',WP_DAILY_TIP_URL.'/css/style.css');
 	wp_enqueue_style('st-daily-tip-style.css');

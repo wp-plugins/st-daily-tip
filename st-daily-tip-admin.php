@@ -98,7 +98,7 @@ function readAndDump($src_file,$table_name,$column_string="",$start_row=2)
 				$results = $wpdb->query($query);
 				if(empty($results))
 				{
-					$errorMsg .= "<br />" . _e('Insert into the Database failed for the following Query:','stdailytip') . "<br />";
+					$errorMsg .= "<br />" . __('Insert into the Database failed for the following Query:','stdailytip') . "<br />";
 					$errorMsg .= $query;
 				}
 		}
@@ -123,7 +123,7 @@ function daily_tip_option_page() {
 
 <div class="wrap">  
 	
-	<h2><?php _e('Daily Tip Plugin','stdailytip')?></h2>
+	<h2><?php __('Daily Tip Plugin','stdailytip')?></h2>
 	<?php
 		if (isset($_REQUEST['Delete'])) {
 			if(isset($_REQUEST['checkbox']))
@@ -135,7 +135,7 @@ function daily_tip_option_page() {
 					$i++;
 				}
 				echo "<div id=\"message\" class=\"updated fade\"><p><strong>$i ";
-				echo _e('Tip(s) Deleted Successfully!','stdailytip');
+				echo __('Tip(s) Deleted Successfully!','stdailytip');
 				echo "</strong></p></div>";
 			}
 		}		
@@ -211,7 +211,7 @@ function daily_tip_option_page() {
 				$id = check_input($_REQUEST["id"]);
 				$wpdb->update( $table_name , array( 'tip_title' => $tip_title,'tip_text' => $tip_text,'Display_yearly' => $yearly,'display_date'=>$display_date,'display_day'=>$display_day,'group_name'=>$group_name), array('ID' => $id)); 
 				
-				echo "<div id=\"message\" class=\"updated fade\"><p><strong>" . _e('Tip Updated Successfully!','stdailytip') . "</strong></p></div>";
+				echo "<div id=\"message\" class=\"updated fade\"><p><strong>" . __('Tip Updated Successfully!','stdailytip') . "</strong></p></div>";
 			}
 			else
 			{
@@ -221,16 +221,16 @@ function daily_tip_option_page() {
 					if($display_date!=null)
 					{
 						$rows_affected = $wpdb->insert( $table_name, array( 'added_date' => current_time('mysql'), 'tip_text' => $tip_text,'tip_title' => $tip_title, 'display_date' => $display_date, 'display_day' => $display_day, 'Display_yearly' =>$yearly,'group_name' => $group_name ) );
-						echo "<div id=\"message\" class=\"updated fade\"><p><strong>". _e('Tip Inserted Successfully!','stdailytip') ."</strong></p></div>";
+						echo "<div id=\"message\" class=\"updated fade\"><p><strong>". __('Tip Inserted Successfully!','stdailytip') ."</strong></p></div>";
 					}
 					else if($display_day!=0 )
 					{
 						$rows_affected = $wpdb->insert( $table_name, array( 'added_date' => current_time('mysql'), 'tip_text' => $tip_text,'tip_title' => $tip_title, 'display_date' => $display_date, 'display_day' => $display_day,'group_name' => $group_name ) );
-						echo "<div id=\"message\" class=\"updated fade\"><p><strong>". _e('Tip Inserted Successfully!','stdailytip') ."</strong></p></div>";
+						echo "<div id=\"message\" class=\"updated fade\"><p><strong>". __('Tip Inserted Successfully!','stdailytip') ."</strong></p></div>";
 					}
 					else{
 						$rows_affected = $wpdb->insert( $table_name, array( 'added_date' => current_time('mysql'), 'tip_text' => $tip_text,'tip_title' => $tip_title, 'display_date' => $display_date, 'display_day' => $display_day, 'Display_yearly' =>$yearly,'group_name' => $group_name ) );
-						echo "<div id=\"message\" class=\"updated fade\"><p><strong>Tip Inserted Successfully!</strong></p></div>";
+						echo "<div id=\"message\" class=\"updated fade\"><p><strong>". __('Tip Inserted Successfully!','stdailytip') ."</strong></p></div>";
 					}
 				}
 			}
@@ -250,7 +250,7 @@ function daily_tip_option_page() {
 			else
 			{
 				echo '<div id="message" class="error"><p><strong>';
-				echo  _e('There was an error uploading the file, please try again!','stdailytip');
+				echo  __('There was an error uploading the file, please try again!','stdailytip');
 				echo '</strong></p></div>';
 			}
             
@@ -261,13 +261,13 @@ function daily_tip_option_page() {
 			if(empty($errorMsg))
 			{
 				echo '<div id="message" class="updated fade"><p><strong>';
-				echo _e('File content has been successfully imported into the database!','stdailytip');
+				echo __('File content has been successfully imported into the database!','stdailytip');
 				echo '</strong></p></div>';
 			}
 			else
 			{
 				echo '<div id="message" class="error"><p><strong>';
-				echo _e('Error occurred while trying to import!','stdailytip') . "<br />";
+				echo __('Error occurred while trying to import!','stdailytip') . "<br />";
 				echo $errorMsg;
 				echo '</strong></p></div>';
 			}
@@ -424,7 +424,7 @@ function daily_tip_option_page() {
 						echo "</tr></thead><tbody>";
 						
 						echo "<input type=\"submit\" name=\"Delete\" value=\"Delete\" id=\"btnsubmit\" class=\"button\" />";
-						echo "<a href=\"".plugin_dir_url(__FILE__)."export_csv.php"."\" class=\"button\" style=\"color:#41411D;float:right;\">Export to CSV</a>";
+						echo "<a href=\"".plugin_dir_url(__FILE__)."st-daily-tip-export-csv.php"."\" class=\"button\" style=\"color:#41411D;float:right;\">Export to CSV</a>";
 						
 						foreach ( $table_result as $table_row ) 
 						{
