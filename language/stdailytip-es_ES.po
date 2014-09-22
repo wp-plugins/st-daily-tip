@@ -1,0 +1,297 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: St Daily Tip\n"
+"POT-Creation-Date: 2014-04-26 12:47+0530\n"
+"PO-Revision-Date: 2014-04-26 12:47+0530\n"
+"Last-Translator: Sanskruti Technologies <info@sanskrutitech.in>\n"
+"Language-Team: \n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.6.4\n"
+"X-Poedit-Basepath: .\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-KeywordsList: _e;__\n"
+"X-Poedit-SearchPath-0: ..\n"
+
+#: ../adminDailyTip/adminDailyTip.php:50
+msgid "Input file is not specified"
+msgstr "No se especifica el archivo de entrada"
+
+#: ../adminDailyTip/adminDailyTip.php:59
+msgid "Source file could not be opened!"
+msgstr "Archivo de origen no se ha podido abrir!"
+
+#: ../adminDailyTip/adminDailyTip.php:60
+msgid "Error opening "
+msgstr "Error al abrir"
+
+#: ../adminDailyTip/adminDailyTip.php:101
+msgid "Insert into the Database failed for the following Query:"
+msgstr "Inserte en la base de datos Error de la siguiente consulta:"
+
+#: ../adminDailyTip/adminDailyTip.php:126
+msgid "Daily Tip Plugin"
+msgstr "Daily Tip Plugin"
+
+#: ../adminDailyTip/adminDailyTip.php:137
+msgid " Tip(s) Deleted Successfully!"
+msgstr "Consejo (s) eliminado correctamente!"
+
+#: ../adminDailyTip/adminDailyTip.php:212
+msgid "Tip Updated Successfully!"
+msgstr "Sugerencia actualizado correctamente!"
+
+#: ../adminDailyTip/adminDailyTip.php:222
+#: ../adminDailyTip/adminDailyTip.php:227
+#: ../adminDailyTip/adminDailyTip.php:231
+msgid "Tip Inserted Successfully!"
+msgstr "Tip insertado con éxito!"
+
+#: ../adminDailyTip/adminDailyTip.php:251
+msgid "There was an error uploading the file, please try again!"
+msgstr ""
+"Se ha producido un error al subir el archivo, por favor intente de nuevo!"
+
+#: ../adminDailyTip/adminDailyTip.php:262
+msgid "File content has been successfully imported into the database!"
+msgstr ""
+"El contenido del archivo se ha importado con éxito en la base de datos!"
+
+#: ../adminDailyTip/adminDailyTip.php:268
+msgid "Error occurred while trying to import!"
+msgstr "Se produjo un error al intentar importar!"
+
+#: ../adminDailyTip/adminDailyTip.php:280
+msgid "Upload a File"
+msgstr "Cargar un archivo"
+
+#: ../adminDailyTip/adminDailyTip.php:285
+msgid "Choose a CSV file to upload:"
+msgstr "Elija un archivo CSV para cargar:"
+
+#: ../adminDailyTip/adminDailyTip.php:290
+msgid "The Format of CSV File must be as below :"
+msgstr "El formato del archivo CSV debe ser de la siguiente manera:"
+
+#: ../adminDailyTip/adminDailyTip.php:291
+msgid ""
+"The First line must be headers as it is ignored while uploading on database"
+msgstr ""
+"La primera línea debe ser encabezados como se ignora mientras se cargan en "
+"la base de datos"
+
+#: ../adminDailyTip/adminDailyTip.php:292
+msgid "From the second line, the data should begin in following order :"
+msgstr "Desde la segunda línea, los datos deben comenzar en este orden:"
+
+#: ../adminDailyTip/adminDailyTip.php:293
+msgid "Tip Title, Tip Text, Display Date,Display Day,Group Name,Repeat Yearly."
+msgstr ""
+"Tip Título, Texto de sugerencia, la pantalla Fecha, Muestra de Niños, Nombre "
+"de grupo, repita anual."
+
+#: ../adminDailyTip/adminDailyTip.php:294
+msgid "Tip Title : If you want to add title to tip."
+msgstr "Tip Título: Si desea añadir un título a la punta."
+
+#: ../adminDailyTip/adminDailyTip.php:295
+msgid "Tip Text : The Actual Statement to be displayed."
+msgstr "Sugerencia Texto: La declaración real que se mostrará."
+
+#: ../adminDailyTip/adminDailyTip.php:296
+msgid ""
+"To insert a tip with comma (,) place the tip between two inverted commas \". "
+"e.g. \"Like , this\" "
+msgstr ""
+"Para insertar una punta con una coma (,) coloque la punta entre dos "
+"comillas  \". Ej \" Al igual, este \""
+
+#: ../adminDailyTip/adminDailyTip.php:297
+msgid ""
+"Display Date : Any Specific Date in format YYYY-MM-DD when you want to "
+"display the Tip."
+msgstr ""
+"Mostrar fecha: Cualquier Específica Fecha en formato YYYY-MM-DD cuando se "
+"quiere mostrar el Consejo."
+
+#: ../adminDailyTip/adminDailyTip.php:298
+msgid ""
+"Display Day : Day of week (number format) on which the Tip Should Come. (1 = "
+"Sunday ,2 = Monday , 3 = Tuesday, 4 = Wednesday  ...7 = Saturday) "
+msgstr ""
+"Pantalla del día: Día de la semana (formato de número) en la que el Consejo "
+"debe venir. (1 = Domingo, 2 = Lunes 3 = Martes 4 = Miércoles ... 7 = sábado)"
+
+#: ../adminDailyTip/adminDailyTip.php:299
+msgid ""
+"Group Name : Group Name in which the tip is to be added. <strong>Group name "
+"is Must. Keep \"Tip\" Group Name in case single group"
+msgstr ""
+"Nombre del grupo: nombre del grupo en el que se va a agregar la punta. "
+"Nombre <strong> Grupo es visita obligada. Mantenga  \"Tip \" Nombre del "
+"grupo en caso de que un solo grupo "
+
+#: ../adminDailyTip/adminDailyTip.php:300
+msgid "Repeat Yearly"
+msgstr "Repita anual"
+
+#: ../adminDailyTip/adminDailyTip.php:300
+msgid "To repeat yearly. Leave blank otherwise."
+msgstr "Para repetir anualmente. Dejar en blanco lo contrario."
+
+#: ../adminDailyTip/adminDailyTip.php:301
+msgid "Please Note"
+msgstr "Por favor Nota"
+
+#: ../adminDailyTip/adminDailyTip.php:301
+msgid "Display Day is ignored if Display Date is mentioned."
+msgstr "Visualización de día se ignora si se menciona la fecha."
+
+#: ../adminDailyTip/adminDailyTip.php:306
+msgid "Enter Single Tip"
+msgstr "Ingrese simple Punta"
+
+#: ../adminDailyTip/adminDailyTip.php:314
+msgid "Tip Title"
+msgstr "Tip Título"
+
+#: ../adminDailyTip/adminDailyTip.php:316
+msgid "Tip Text"
+msgstr "Texto de sugerencia"
+
+#: ../adminDailyTip/adminDailyTip.php:317
+msgid "(Use HTML tags for Formatting.e.g. &lt;strong&gt;, &lt;em&gt;, etc.)"
+msgstr ""
+"(Utilice etiquetas HTML para &lt;strong&gt; Formatting.eg, &lt;em&gt;, etc)"
+
+#: ../adminDailyTip/adminDailyTip.php:371
+msgid "Repeat Yearly?"
+msgstr "Repita anual?"
+
+#: ../adminDailyTip/adminDailyTip.php:372
+msgid "Group Name"
+msgstr "Nombre del grupo"
+
+#: ../adminDailyTip/adminDailyTip.php:381
+msgid "Change Date Format to display on Front Page"
+msgstr "Cambie Formato de fecha para mostrar en la página principal"
+
+#: ../adminDailyTip/adminDailyTip.php:397
+msgid "Tips"
+msgstr "Consejos"
+
+#: ../adminDailyTip/adminDailyTip.php:462
+msgid "How to Use"
+msgstr "Cómo utilizar"
+
+#: ../adminDailyTip/adminDailyTip.php:464
+msgid "1. Create Tips List"
+msgstr "1. Crear lista Tips"
+
+#: ../adminDailyTip/adminDailyTip.php:465
+msgid "You can upload list of tips from CSV file or Manually Entering Tips"
+msgstr ""
+"Puedes subir lista de consejos de archivo CSV o Introducción manual de "
+"Consejos"
+
+#: ../adminDailyTip/adminDailyTip.php:466
+msgid "2. Display Tips"
+msgstr "2. Consejos de visualización"
+
+#: ../adminDailyTip/adminDailyTip.php:467
+msgid "You can use widget or the short code:"
+msgstr "Puedes usar tu currículum o el código de acceso:"
+
+#: ../adminDailyTip/adminDailyTip.php:468
+msgid ""
+"If you do not want to show last date then replace \"show\" with \"Not Show\""
+msgstr ""
+"Si no desea mostrar la última fecha a continuación, reemplace  \"espectáculo "
+"\" con  \"no mostrar \""
+
+#: ../adminDailyTip/adminDailyTip.php:469
+msgid "3. Use classes"
+msgstr "3. Utilice las clases"
+
+#: ../adminDailyTip/adminDailyTip.php:470
+msgid "Use classes tip_title, tip_text, and single_tip to style the tips"
+msgstr "Use clases tip_title, tip_text y single_tip al estilo de los consejos"
+
+#: ../adminDailyTip/adminDailyTip.php:475
+msgid "Show your Support"
+msgstr "Muestre su Apoyo"
+
+#: ../adminDailyTip/adminDailyTip.php:478
+msgid ""
+"Want to help make this plugin even better? All donations are used to improve "
+"this plugin, so donate now!"
+msgstr ""
+"¿Quieres ayudar a hacer este plugin aún mejor? Todas las donaciones se "
+"utilizan para mejorar este plugin, para donar ahora!"
+
+#: ../adminDailyTip/adminDailyTip.php:480
+msgid "Donate"
+msgstr "donar"
+
+#: ../adminDailyTip/adminDailyTip.php:483
+msgid "Rate the plugin 5 star on WordPress.org"
+msgstr "Valore el plugin de 5 estrellas en WordPress.org"
+
+#: ../adminDailyTip/adminDailyTip.php:484
+msgid "Help out other users in the forums"
+msgstr "Ayuda a otros usuarios de los foros"
+
+#: ../adminDailyTip/adminDailyTip.php:485
+msgid "Blog about it &amp; link to the "
+msgstr "Blog sobre el mismo y un enlace a la"
+
+#: ../adminDailyTip/adminDailyTip.php:485
+msgid "plugin page"
+msgstr "página del plugin"
+
+#: ../adminDailyTip/adminDailyTip.php:491
+msgid "Connect With Us "
+msgstr "Conecte con Nosotros"
+
+#: ../adminDailyTip/adminDailyTip.php:500
+msgid "Special Thanks"
+msgstr "Agradecimiento Especial"
+
+#: ../widgetDailytip/widgetDailytip.php:28
+msgid "An Widget that display Daily Tip"
+msgstr "Un Widget que deben mostrarse Daily Tip"
+
+#: ../widgetDailytip/widgetDailytip.php:34
+msgid "Daily Tip Widget"
+msgstr "Daily Tip Widget"
+
+#: ../widgetDailytip/widgetDailytip.php:99
+msgid "Daily Tip"
+msgstr "Daily Tip"
+
+#: ../widgetDailytip/widgetDailytip.php:100
+msgid "Tip"
+msgstr "Tip"
+
+#: ../widgetDailytip/widgetDailytip.php:106
+msgid "Title:"
+msgstr "Título:"
+
+#: ../widgetDailytip/widgetDailytip.php:110
+msgid "Group Name:"
+msgstr "Nombre del grupo:"
+
+#: ../widgetDailytip/widgetDailytip.php:114
+msgid "Show last date:"
+msgstr "Mostrar última fecha:"
+
+#~ msgid "Display Date"
+#~ msgstr "Mostrar fecha"
+
+#~ msgid "Display Day"
+#~ msgstr "Visualizar Día"
+
+#~ msgid "Last Shown On"
+#~ msgstr "Última mostrados en"
