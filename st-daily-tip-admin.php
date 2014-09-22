@@ -498,13 +498,6 @@ function daily_tip_option_page() {
 					<a class="googleplus" href="https://plus.google.com/107541175744077337034/posts"></a>
 					</div>
 				</div>
-				<div id="toc" class="postbox">
-				<div class="handlediv" title="Click to toggle"><br /></div>
-					<h3 class="hndle"><span><?php _e('Special Thanks','stdailytip')?></span></h3>
-					<div class="inside">
-						<a href="http://www.datatables.net">DataTables</a>
-					</div>
-				</div>
 			</div>
 		</div>
 	</div>
