@@ -4,7 +4,7 @@ Donate link: http://sanskrutitech.in/index.php/wordpress-plugins/
 Tags: daily tips 
 Requires at least: 3.3.1
 Tested up to: 4.0
-Stable tag: 2.7
+Stable tag: 2.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -79,6 +79,9 @@ b. Adding the tips one by one using the **Enter Manual Data**
 8. 	If *Display Date* is not specified and *Display Day* is specified, the tip will only be shown on that date
 
 == Changelog ==
+= 2.8 =
+* Allowed upload of Unicode Characters through CSV
+
 = 2.7 =
 * Bug Fixes
 
@@ -168,6 +171,9 @@ b. Adding the tips one by one using the **Enter Manual Data**
 
 
 == Upgrade Notice ==
+= 2.8 =
+* Allowed upload of Unicode Characters through CSV
+
 = 2.7 =
 * Bug Fixes
 

@@ -86,7 +86,7 @@ function readAndDump($src_file,$table_name,$column_string="",$start_row=2)
 							$line_of_text[$c]='Tip';
 						}
 					}					
-	        		$line_of_text[$c] = utf8_encode($line_of_text[$c]);
+	        		//$line_of_text[$c] = utf8_encode($line_of_text[$c]);
 					//$line_of_text[$c] = addslashes($line_of_text[$c]);
 	                $query_vals .= ",'".esc_sql($line_of_text[$c])."'";
 					
