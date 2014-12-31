@@ -1,5 +1,5 @@
 === St-Daily-Tip ===
-Contributors: dharashah,kuntal5657
+Contributors: dharashah
 Donate link: http://sanskrutitech.in/index.php/wordpress-plugins/
 Tags: daily tips 
 Requires at least: 4.0
