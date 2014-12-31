@@ -1,6 +1,6 @@
 <?php
+//Display Admin Menu
 add_action('admin_menu', 'daily_tip_admin_menu');
-
 function daily_tip_admin_menu() 
 {
 	$page = add_menu_page( 'Daily Tips Page', 'Daily Tips', 'manage_options','daily-tip','daily_tip_option_page', plugins_url( 'st-daily-tip/images/icon.png' ));
@@ -10,15 +10,14 @@ function daily_tip_admin_menu()
 function daily_tips_admin_scripts() {
 	
 }
-
-function check_input($data)
+function st_daily_tip_check_input($data)
 {
     $data = trim($data);
     $data = stripslashes($data);
     
     return $data;
 }
-
+/********************************Upload CSV ***********************************/
 function get_abs_path_from_src_file($src_file)
 {
 	if(preg_match("/http/",$src_file))
@@ -108,6 +107,8 @@ function readAndDump($src_file,$table_name,$column_string="",$start_row=2)
 	
 	return $errorMsg;
 }
+/********************************Upload CSV ***********************************/
+
 function daily_tip_option_page() {
 	
 	$weekdays = array(1 => "Sunday",2 => "Monday", 3 => "Tuesday",4 => "Wednesday ", 5 => "Thursday",6 => "Friday",7 => "Saturday");
@@ -171,11 +172,11 @@ function daily_tip_option_page() {
 			$table_suffix = "dailytipdata";
 			$table_name = $wpdb->prefix . $table_suffix;
 			
-			$id = check_input($_REQUEST["edit_id"]);
+			$id = st_daily_tip_check_input($_REQUEST["edit_id"]);
 			$edit_tip = $wpdb->get_row("SELECT * FROM $table_name WHERE id='$id';", ARRAY_A);
 			$edit_added_date = $edit_tip['added_date'];
-			$edit_tip_title = check_input($edit_tip['tip_title']);
-			$edit_tip_text = check_input($edit_tip['tip_text']);
+			$edit_tip_title = st_daily_tip_check_input($edit_tip['tip_title']);
+			$edit_tip_text = st_daily_tip_check_input($edit_tip['tip_text']);
 			$edit_group_name = $edit_tip['group_name'];
 			$edit_display_yearly = $edit_tip['Display_yearly'];
 			$edit_display_date = $edit_tip['display_date'];
@@ -185,14 +186,14 @@ function daily_tip_option_page() {
 		
 		//Store the Data input if data is submitted
 		if (isset($_REQUEST['Submit'])) { 
-			$tip_text = check_input($_REQUEST["tiptext"]);
-			$display_date = check_input($_REQUEST["display_date"]); 
+			$tip_text = st_daily_tip_check_input($_REQUEST["tiptext"]);
+			$display_date = st_daily_tip_check_input($_REQUEST["display_date"]); 
 			$display_date = htmlspecialchars($display_date);
-			$display_day = check_input($_REQUEST["display_day"]);
+			$display_day = st_daily_tip_check_input($_REQUEST["display_day"]);
 			$display_day = htmlspecialchars($display_day);
-			$group_name = check_input($_REQUEST["group_name"]);
+			$group_name = st_daily_tip_check_input($_REQUEST["group_name"]);
 			$group_name = htmlspecialchars($group_name);
-			$tip_title = check_input($_REQUEST["tip_title"]);
+			$tip_title = st_daily_tip_check_input($_REQUEST["tip_title"]);
 			//$tip_title = htmlspecialchars($tip_title);
 			if($group_name==null){
 				$group_name="Tip";
@@ -208,7 +209,7 @@ function daily_tip_option_page() {
 							
 			if (isset($_REQUEST['id'])) { 
 				//Update
-				$id = check_input($_REQUEST["id"]);
+				$id = st_daily_tip_check_input($_REQUEST["id"]);
 				$wpdb->update( $table_name , array( 'tip_title' => $tip_title,'tip_text' => $tip_text,'Display_yearly' => $yearly,'display_date'=>$display_date,'display_day'=>$display_day,'group_name'=>$group_name), array('ID' => $id)); 
 				
 				echo "<div id=\"message\" class=\"updated fade\"><p><strong>" . __('Tip Updated Successfully!','stdailytip') . "</strong></p></div>";
@@ -310,7 +311,7 @@ function daily_tip_option_page() {
 					<form id="edit_data" action="<?php echo $_SERVER['PHP_SELF']."?page=daily-tip"; ?>" method="post">
 						<?php  if (isset($_REQUEST['op'])&&isset($_REQUEST['edit_id'])) 
 								{ 
-									echo "<input type='hidden' name=\"id\" value=\"" . check_input($_REQUEST["edit_id"]) . "\" />"; 
+									echo "<input type='hidden' name=\"id\" value=\"" . st_daily_tip_check_input($_REQUEST["edit_id"]) . "\" />"; 
 								}  
 						?>
 						<div><label><?php _e('Tip Title','stdailytip') ?></label><input name="tip_title" class="regular-text code" value="<?php if (isset($_REQUEST['op'])&&isset($_REQUEST['edit_id'])) { echo $edit_tip_title; }?>"/><span></span></div>
@@ -423,9 +424,10 @@ function daily_tip_option_page() {
 						echo "<th></th>";
 						echo "</tr></thead><tbody>";
 						
-						echo "<input type=\"submit\" name=\"Delete\" value=\"Delete\" id=\"btnsubmit\" class=\"button\" />";
-						echo "<a href=\"".plugin_dir_url(__FILE__)."st-daily-tip-export-csv.php"."\" class=\"button\" style=\"color:#41411D;float:right;\">Export to CSV</a>";
-						
+						echo "<input type=\"submit\" name=\"Delete\" value=\"Delete\" id=\"btnsubmit\" class=\"button-secondary\" />";
+						?>
+							<a href="<?=$_SERVER['PHP_SELF']."?page=daily-tip&export_csv=yes" ;?>" class="button-primary alignright">Export CSV</a>
+						<?php
 						foreach ( $table_result as $table_row ) 
 						{
 							echo "<tr>";

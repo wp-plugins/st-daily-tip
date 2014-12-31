@@ -1,9 +1,9 @@
 <?php
 // This includes gives us all the WordPress functionality
 
-$parse_uri = explode( 'wp-content', $_SERVER['SCRIPT_FILENAME'] );
-require_once( $parse_uri[0] . 'wp-load.php' );
-
+//$parse_uri = explode( 'wp-content', $_SERVER['SCRIPT_FILENAME'] );
+//require_once( $parse_uri[0] . 'wp-load.php' );
+	if (isset($_REQUEST['export_csv'])) {
         global $wpdb;
         global $table_suffix;
 		
@@ -54,4 +54,5 @@ require_once( $parse_uri[0] . 'wp-load.php' );
 		{
 			header('Location: ' . $_SERVER['HTTP_REFERER']);
 		}
+	}
 ?>

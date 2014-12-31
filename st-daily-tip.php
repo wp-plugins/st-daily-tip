@@ -7,7 +7,7 @@ if (function_exists('add_daily_tip')) {
 		print add_daily_tip('[stdailytip group="Tip" date="show" title="show"]');
 	}
 	?>
-Version: 2.8
+Version: 2.9
 Author: Sanskruti Technologies
 Author URI: http://sanskrutitech.in/
 License: GPL
@@ -241,11 +241,64 @@ function st_daily_tip_uninstall () {
 	/* do nothing */
 } 
 
+/********************************Download CSV ***********************************/
+function st_daily_tip_csv_export() {
+	global $wpdb;
+	global $table_suffix;
+	
+	$table_suffix = "dailytipdata";
+	$table_name = $wpdb->prefix . $table_suffix;
+	
+	$qry = "SELECT tip_title,tip_text,display_date,display_day,group_name,Display_yearly FROM $table_name";
+	$result = $wpdb->get_results($qry, ARRAY_A);
+	
+	if ($wpdb->num_rows > 0) 
+	{
+		// Make a DateTime object and get a time stamp for the filename
+		$date = new DateTime();
+		$ts = $date->format("Y-m-d-G-i-s");
+		
+		// A name with a time stamp, to avoid duplicate filenames
+		$filename = "dailytips-$ts.csv";
+		
+		// Tells the browser to expect a CSV file and bring up the
+		// save dialog in the browser
+		header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+		header('Content-Description: File Transfer');
+		header('Content-Type: text/csv');
+		header('Content-Disposition: attachment;filename='.$filename);
+		header("Expires: 0");
+		header("Pragma: public");
+		
+		// This opens up the output buffer as a "file"
+		$fp = fopen('php://output', 'w');
+		
+		// Get the first record
+		$hrow = $result[0];
+
+		// Extracts the keys of the first record and writes them
+		// to the output buffer in CSV format
+		fputcsv($fp, array_keys($hrow));
+		
+		// Then, write every record to the output buffer in CSV format            
+		foreach ($result as $data) {
+			fputcsv($fp, $data);
+		}
+		
+		// Close the output buffer (Like you would a file)
+		fclose($fp);
+		// Make sure nothing else is sent, our file is done
+		exit;
+	}
+}
+/********************************Download CSV ***********************************/
+
 ?>
 <?php
 if ( is_admin() )
 {
 	require_once dirname( __FILE__ ) . '/st-daily-tip-admin.php';
+	require_once dirname( __FILE__ ) . '/st-daily-tip-export-csv.php';
 	
 	/* add  css and js */
 	add_action('admin_print_scripts', 'add_admin_scripts');
