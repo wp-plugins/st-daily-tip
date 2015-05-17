@@ -1,0 +1,288 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: St Daily Tip\n"
+"POT-Creation-Date: 2014-04-26 12:47+0530\n"
+"PO-Revision-Date: 2014-05-06 14:50+0100\n"
+"Last-Translator: Borisa Djuraskovic <borisad@webhostinghub.com>\n"
+"Language-Team: \n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.7\n"
+"X-Poedit-Basepath: .\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-KeywordsList: _e;__\n"
+"X-Poedit-SearchPath-0: ..\n"
+
+#: ../adminDailyTip/adminDailyTip.php:50
+msgid "Input file is not specified"
+msgstr "Input fajla nie odredjen"
+
+#: ../adminDailyTip/adminDailyTip.php:59
+msgid "Source file could not be opened!"
+msgstr "Source fajl ne može da se otvori!"
+
+#: ../adminDailyTip/adminDailyTip.php:60
+msgid "Error opening "
+msgstr "Greška prilikom otvaranja"
+
+#: ../adminDailyTip/adminDailyTip.php:101
+msgid "Insert into the Database failed for the following Query:"
+msgstr "Unošenje u bazu podataka nije uspelo za sledeću pretragu:"
+
+#: ../adminDailyTip/adminDailyTip.php:126
+msgid "Daily Tip Plugin"
+msgstr "Plugin za dnevne savete"
+
+#: ../adminDailyTip/adminDailyTip.php:137
+msgid " Tip(s) Deleted Successfully!"
+msgstr "Savet(i) uspešno obrisani(i)"
+
+#: ../adminDailyTip/adminDailyTip.php:212
+msgid "Tip Updated Successfully!"
+msgstr "Savet uspešno updateovan"
+
+#: ../adminDailyTip/adminDailyTip.php:222
+#: ../adminDailyTip/adminDailyTip.php:227
+#: ../adminDailyTip/adminDailyTip.php:231
+msgid "Tip Inserted Successfully!"
+msgstr "Savet unešen uspešno"
+
+#: ../adminDailyTip/adminDailyTip.php:251
+msgid "There was an error uploading the file, please try again!"
+msgstr "Nastala je greška prilikom uploadovanja fajla, pokušajte opet!"
+
+#: ../adminDailyTip/adminDailyTip.php:262
+msgid "File content has been successfully imported into the database!"
+msgstr "Sadržaj fajla je uspešno unet u bazu podataka!"
+
+#: ../adminDailyTip/adminDailyTip.php:268
+msgid "Error occurred while trying to import!"
+msgstr "Greška je nastala prilikom pokušaja unošenja!"
+
+#: ../adminDailyTip/adminDailyTip.php:280
+msgid "Upload a File"
+msgstr "Uploaduj fajl"
+
+#: ../adminDailyTip/adminDailyTip.php:285
+msgid "Choose a CSV file to upload:"
+msgstr "Izaberite CSV fajl za unos"
+
+#: ../adminDailyTip/adminDailyTip.php:290
+msgid "The Format of CSV File must be as below :"
+msgstr "Format CSV fajla mora biti isti kao:"
+
+#: ../adminDailyTip/adminDailyTip.php:291
+msgid ""
+"The First line must be headers as it is ignored while uploading on database"
+msgstr "Prva rečenica moraju biri header-i jer je ignorisana prilikom uploada"
+
+#: ../adminDailyTip/adminDailyTip.php:292
+msgid "From the second line, the data should begin in following order :"
+msgstr "Sa druge rečenice podaci treba da prate sledeći red:"
+
+#: ../adminDailyTip/adminDailyTip.php:293
+msgid "Tip Title, Tip Text, Display Date,Display Day,Group Name,Repeat Yearly."
+msgstr ""
+"Naslov savet, Tekst saveta, Prikazati datum, Prikazati dan, Ime grupe, "
+"Ponavljati godišnje"
+
+#: ../adminDailyTip/adminDailyTip.php:294
+msgid "Tip Title : If you want to add title to tip."
+msgstr "Naslov saveta: Ako želie da dodate naslov savetu."
+
+#: ../adminDailyTip/adminDailyTip.php:295
+msgid "Tip Text : The Actual Statement to be displayed."
+msgstr "Tekst saveta : Izjava mora biti prikazana."
+
+#: ../adminDailyTip/adminDailyTip.php:296
+msgid ""
+"To insert a tip with comma (,) place the tip between two inverted commas \". "
+"e.g. \"Like , this\" "
+msgstr ""
+"Da biste uneli savet sa zarezima (,) stavite savet izmedju dva razdvojena "
+"navodnika \".  . \"Npr, ovako\""
+
+#: ../adminDailyTip/adminDailyTip.php:297
+msgid ""
+"Display Date : Any Specific Date in format YYYY-MM-DD when you want to "
+"display the Tip."
+msgstr ""
+"Prikazatu datum : Bilo koji datum u formatu GGGG-MM-DD kada želite da "
+"prikažete savet."
+
+#: ../adminDailyTip/adminDailyTip.php:298
+msgid ""
+"Display Day : Day of week (number format) on which the Tip Should Come. (1 = "
+"Sunday ,2 = Monday , 3 = Tuesday, 4 = Wednesday  ...7 = Saturday) "
+msgstr ""
+"Prikazati dan: Dan u nedelji  ( format broj) u kojem treba da se pojavi "
+"Savet. (1 = Nedelja ,2 = Ponedeljak , 3 = Utorak,, 4 = Sreda ...7 = Subota)"
+
+#: ../adminDailyTip/adminDailyTip.php:299
+msgid ""
+"Group Name : Group Name in which the tip is to be added. <strong>Group name "
+"is Must. Keep \"Tip\" Group Name in case single group"
+msgstr ""
+"Ime grupe : Ime grupe u kojoj savet treba da se doda.<strong>Ime grupe je "
+"Obavezno. Zadržite \"Savet\" ime grupe kao samostalnu grupu"
+
+#: ../adminDailyTip/adminDailyTip.php:300
+msgid "Repeat Yearly"
+msgstr "Ponavljati godišnje"
+
+#: ../adminDailyTip/adminDailyTip.php:300
+msgid "To repeat yearly. Leave blank otherwise."
+msgstr "Da bi se ponavljalo godišnje. Ostavite prazno ako nećete."
+
+#: ../adminDailyTip/adminDailyTip.php:301
+msgid "Please Note"
+msgstr "Imajte na umu"
+
+#: ../adminDailyTip/adminDailyTip.php:301
+msgid "Display Day is ignored if Display Date is mentioned."
+msgstr "Prikaži dan je ignorisano ako je Prikaži dan pomenuto"
+
+#: ../adminDailyTip/adminDailyTip.php:306
+msgid "Enter Single Tip"
+msgstr "Uneti jedan savet"
+
+#: ../adminDailyTip/adminDailyTip.php:314
+msgid "Tip Title"
+msgstr "Naslov saveta"
+
+#: ../adminDailyTip/adminDailyTip.php:316
+msgid "Tip Text"
+msgstr "Tekst saveta"
+
+#: ../adminDailyTip/adminDailyTip.php:317
+msgid "(Use HTML tags for Formatting.e.g. &lt;strong&gt;, &lt;em&gt;, etc.)"
+msgstr ""
+"(Koristite HTML tagove za formatiranje, npr. for&lt;strong&gt;, &lt;em&gt;, "
+"itd.)"
+
+#: ../adminDailyTip/adminDailyTip.php:371
+msgid "Repeat Yearly?"
+msgstr "Ponavljati godišnje?"
+
+#: ../adminDailyTip/adminDailyTip.php:372
+msgid "Group Name"
+msgstr "Ime grupe"
+
+#: ../adminDailyTip/adminDailyTip.php:381
+msgid "Change Date Format to display on Front Page"
+msgstr "Promeniti format datuma za prikaz na glavnoj stranici"
+
+#: ../adminDailyTip/adminDailyTip.php:397
+msgid "Tips"
+msgstr "Saveti"
+
+#: ../adminDailyTip/adminDailyTip.php:462
+msgid "How to Use"
+msgstr "Kako da koristite"
+
+#: ../adminDailyTip/adminDailyTip.php:464
+msgid "1. Create Tips List"
+msgstr "1. Napravite listu sa savetima"
+
+#: ../adminDailyTip/adminDailyTip.php:465
+msgid "You can upload list of tips from CSV file or Manually Entering Tips"
+msgstr ""
+"Možete da uploadujete listu saveta iz CSV fajl ili Ručno unešenje saveta"
+
+#: ../adminDailyTip/adminDailyTip.php:466
+msgid "2. Display Tips"
+msgstr "2. Prikaži savete"
+
+#: ../adminDailyTip/adminDailyTip.php:467
+msgid "You can use widget or the short code:"
+msgstr "Možete da koristite widget ili skraćeni kod ovde:"
+
+#: ../adminDailyTip/adminDailyTip.php:468
+msgid ""
+"If you do not want to show last date then replace \"show\" with \"Not Show\""
+msgstr ""
+"Ako ne želite da se prikaže  poslednji datum nda zamenite \"prikazati\" sa "
+"\"Ne prikazati\""
+
+#: ../adminDailyTip/adminDailyTip.php:469
+msgid "3. Use classes"
+msgstr "3. Koristite klase"
+
+#: ../adminDailyTip/adminDailyTip.php:470
+msgid "Use classes tip_title, tip_text, and single_tip to style the tips"
+msgstr ""
+"Koristite klase savet_naslovi, savet_tekst, i jedan_savet za stilizovanje "
+"saveta"
+
+#: ../adminDailyTip/adminDailyTip.php:475
+msgid "Show your Support"
+msgstr "Prikažite podršku"
+
+#: ../adminDailyTip/adminDailyTip.php:478
+msgid ""
+"Want to help make this plugin even better? All donations are used to improve "
+"this plugin, so donate now!"
+msgstr ""
+"Želite li da pomognete da ovaj plugin bude bolji? Sve donacije se koriste "
+"upravo u te svrhe, pa donirajte odmah!"
+
+#: ../adminDailyTip/adminDailyTip.php:480
+msgid "Donate"
+msgstr "Donirajte"
+
+#: ../adminDailyTip/adminDailyTip.php:483
+msgid "Rate the plugin 5 star on WordPress.org"
+msgstr "Ocenite sa 5 zvezdica na WordPress.org"
+
+#: ../adminDailyTip/adminDailyTip.php:484
+msgid "Help out other users in the forums"
+msgstr "Pomozite ostalim korisnicima foruma"
+
+#: ../adminDailyTip/adminDailyTip.php:485
+msgid "Blog about it &amp; link to the "
+msgstr "Blogujte o tome &amp; link za"
+
+#: ../adminDailyTip/adminDailyTip.php:485
+msgid "plugin page"
+msgstr "stranica plugina"
+
+#: ../adminDailyTip/adminDailyTip.php:491
+msgid "Connect With Us "
+msgstr "Povežite se sa nama"
+
+#: ../adminDailyTip/adminDailyTip.php:500
+msgid "Special Thanks"
+msgstr "Zahvalnost"
+
+#: ../widgetDailytip/widgetDailytip.php:28
+msgid "An Widget that display Daily Tip"
+msgstr "Widget koji prikazuje Dnevni savet"
+
+#: ../widgetDailytip/widgetDailytip.php:34
+msgid "Daily Tip Widget"
+msgstr "Widget za dnevni savet"
+
+#: ../widgetDailytip/widgetDailytip.php:99
+msgid "Daily Tip"
+msgstr "Dnevni savet"
+
+#: ../widgetDailytip/widgetDailytip.php:100
+msgid "Tip"
+msgstr "Savet"
+
+#: ../widgetDailytip/widgetDailytip.php:106
+msgid "Title:"
+msgstr "Naslov:"
+
+#: ../widgetDailytip/widgetDailytip.php:110
+msgid "Group Name:"
+msgstr "Ime grupe:"
+
+#: ../widgetDailytip/widgetDailytip.php:114
+msgid "Show last date:"
+msgstr "Prikazati poslednji datum:"
+
+#~ msgid "Sunday"
+#~ msgstr "Ravivaar"
