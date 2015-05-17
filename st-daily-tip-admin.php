@@ -330,8 +330,7 @@ function daily_tip_option_page() {
 							});
 						</script>
 							<label>Display Date</label>
-							<input name="display_date" id="display_date" class="regular-text code" value="<?php if (isset($_REQUEST['op'])&&isset($_REQUEST['edit_id'])) { echo $edit_display_date; } ?>"/>
-							<span> (YYYY-MM-DD)</span>
+							<input type="date" name="display_date" id="display_date" class="regular-text code" value="<?php if (isset($_REQUEST['op'])&&isset($_REQUEST['edit_id'])) { echo $edit_display_date; } ?>"/>
 						</div>
 						<div>
 							<label>Display Day</label>

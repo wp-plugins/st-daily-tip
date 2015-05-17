@@ -1,10 +1,10 @@
 === St-Daily-Tip ===
-Contributors: dharashah
+Contributors: dharashah,kuntal5657
 Donate link: http://sanskrutitech.in/index.php/wordpress-plugins/
 Tags: daily tips 
 Requires at least: 4.0
-Tested up to: 4.1
-Stable tag: 2.9
+Tested up to: 4.2.2
+Stable tag: 3.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -77,6 +77,13 @@ b. Adding the tips one by one using the **Enter Manual Data**
 6.  If *Display Date* and *Display Day* are not specified, the tip that is not shown yet (or the oldest shown tip) will be displayed
 7.  If you have specified a *Display Date* , the tip will be displayed only on that particular date
 8. 	If *Display Date* is not specified and *Display Day* is specified, the tip will only be shown on that date
+9.  We have not used any styling for Daily Tip. So that it can merge easily in your website.
+    To Apply CSS. Use following classes.
+	a. tip_container - The main div that contains daily tip, has this class.
+	b. tip_text - the div that contains tip_text.
+	c. tip_last_shown - div that contains Last Shown Date
+	d. tip_title - the div that contains tip_title.
+	e. tip_date -  the div that contains date.
 
 == Changelog ==
 = 2.9 =

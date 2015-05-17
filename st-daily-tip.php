@@ -3,16 +3,12 @@
 Plugin Name: St-Daily-Tip
 Plugin URI: http://wordpress.org/extend/plugins/st-daily-tip/
 Description: A plugin to automatically refresh daily tip from a list uploaded from CSV file.
-if (function_exists('add_daily_tip')) {
-		print add_daily_tip('[stdailytip group="Tip" date="show" title="show"]');
-	}
-	?>
-Version: 2.9
+Version: 3.0
 Author: Sanskruti Technologies
 Author URI: http://sanskrutitech.in/
 License: GPL
 */
-define('WP_DAILY_TIP_VERSION', "2.8");
+define('WP_DAILY_TIP_VERSION', "3.0");
 define('WP_DAILY_TIP_FOLDER', dirname(plugin_basename(__FILE__)));
 define('WP_DAILY_TIP_URL', plugins_url('',__FILE__));
 
@@ -160,11 +156,11 @@ function select_today_tip($group,$date,$title){
 			{	
 				$dat=$tips['shown_date'];
 				$show_date=date(get_option("st_daily_date_format"),strtotime($dat));
-				return "<div>Date: ".$show_date . "</div><div class='tip_title'>" .$tips['tip_title'] . "</div><div class='tip_text'>" .$tips['tip_text'] ."</div>";
+				return "<div class='tip_container'><div class='tip_date'>Date: ".$show_date . "</div><div class='tip_title'>" .$tips['tip_title'] . "</div><div class='tip_text'>" .$tips['tip_text'] ."</div></div>";
 			}
 			else
 			{
-				return "<div class='tip_title'>" .$tips['tip_title'] . "</div><div class='tip_text'>" .$tips['tip_text'] . "</div>";
+				return "<div class='tip_container'><div class='tip_title'>" .$tips['tip_title'] . "</div><div class='tip_text'>" .$tips['tip_text'] . "</div></div>";
 			}
 		}
 		else
@@ -173,15 +169,15 @@ function select_today_tip($group,$date,$title){
 			{	
 				$dat=$tips['shown_date'];
 				$show_date=date(get_option("st_daily_date_format"),strtotime($dat));
-				return "<div class='tip_text'>" .$tips['tip_text'] . " Last Shown Date: ".$show_date."</div>";
+				return "<div class='tip_container'><div class='tip_text'>" .$tips['tip_text'] . "</div><div class='tip_last_shown'> Last Shown Date: ".$show_date."</div></div>";
 			}
 			else
 			{
-				return "<div class='tip_text'>" .$tips['tip_text'] . "</div>";
+				return "<div class='tip_container'><div class='tip_text'>" .$tips['tip_text'] . "</div></div>";
 			}
 		}
 	}else{
-		return "<div class='tip_text'>$today_tip</div>";
+		return "<div class='tip_container'><div class='tip_text'>$today_tip</div></div>";
 	}
 	
 	
